@@ -1,0 +1,29 @@
+import { defineConfig } from "vite";
+import reactRefresh from "@vitejs/plugin-react-refresh";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [reactRefresh()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        rewrite: (path) => path.replace(/\/api/, ""),
+        secure: false,
+        //ws: true,
+        configure: (proxy) => {
+          proxy.on("error", function (err, req, res) {
+            res.writeHead(500, {
+              "Content-Type": "text/plain",
+            });
+
+            res.end(
+              "Something went wrong. And we are reporting a custom error message." +
+                err
+            );
+          });
+        },
+      },
+    },
+  },
+});

@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
-const io = require("socket.io")(server);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/message", (req, res) => {
+  console.log("hello");
   io.emit("message", req.body);
   red.sent(req.body);
 });

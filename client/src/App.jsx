@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 
 function App() {
   const [value, setValue] = useState("");
   const [message, setMessage] = useState([]);
-  const socket = io("/");
+  //const socket = io("/api");
 
-  useEffect(() => {
+  /*useEffect(() => {
     socket.on("message", (message) => {
       setMessage((prevMess) => {
         return { ...prevMess, message };
       });
     });
-  }, [socket]);
+  }, [socket]);*/
+
+  const handleClick = () => {
+    fetch("/api/message", {
+      method: "POST",
+      body: value,
+    });
+  };
 
   return (
     <div className="App">
@@ -28,11 +35,11 @@ function App() {
             setValue(e.target.value);
           }}
         ></input>
-        <button>Submit</button>
+        <button onClick={() => handleClick()}>Submit</button>
+        {message.map((text) => (
+          <div style={{ fontColor: "white" }}>{text}</div>
+        ))}
       </header>
-      {message.map((text) => (
-        <div>{text}</div>
-      ))}
     </div>
   );
 }
