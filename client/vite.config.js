@@ -9,8 +9,8 @@ export default defineConfig({
       "/api": {
         target: "http://localhost:8000",
         rewrite: (path) => path.replace(/\/api/, ""),
+        changeOrigin: true,
         secure: false,
-        //ws: true,
         configure: (proxy) => {
           proxy.on("error", function (err, req, res) {
             res.writeHead(500, {
@@ -23,6 +23,10 @@ export default defineConfig({
             );
           });
         },
+      },
+      "/socket.io": {
+        target: "ws://localhost:8000",
+        ws: true,
       },
     },
   },

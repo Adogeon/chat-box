@@ -1,26 +1,43 @@
 import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-//import io from "socket.io-client";
+import io from "socket.io-client";
+
+const socket = io();
 
 function App() {
   const [value, setValue] = useState("");
   const [message, setMessage] = useState([]);
-  //const socket = io("/api");
 
-  /*useEffect(() => {
-    socket.on("message", (message) => {
+  useEffect(() => {
+    console.log("Joining test room");
+    socket.emit("room", { room: "test-room" });
+
+    return () => {
+      console.log("Leaving room");
+      socket.emit("leave room", {
+        room: "test-room",
+      });
+    };
+  });
+
+  useEffect(() => {
+    socket.on("message", (payload) => {
+      console.log("receiving message");
+      console.log(payload);
       setMessage((prevMess) => {
-        return { ...prevMess, message };
+        return [...prevMess, payload];
       });
     });
-  }, [socket]);*/
+  }, []);
 
   const handleClick = () => {
-    fetch("/api/message", {
-      method: "POST",
-      body: value,
+    console.log("emitting new message");
+    socket.emit("newMessage", { room: "test-room", message: value });
+    setMessage((prevMess) => {
+      return [...prevMess, value];
     });
+    setValue("");
   };
 
   return (

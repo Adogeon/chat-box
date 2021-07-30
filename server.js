@@ -13,14 +13,32 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.post("/message", (req, res) => {
+/*app.post("/message", (req, res) => {
   console.log("hello");
   io.emit("message", req.body);
-  red.sent(req.body);
-});
+  res.send(req.body);
+});*/
 
-io.on("connection", () => {
+io.on("connection", (socket) => {
   console.log("a user is connected");
+  console.log(socket.id);
+
+  socket.on("room", (data) => {
+    console.log("room join");
+    console.log(data);
+    socket.join(data.room);
+  });
+
+  socket.on("leave room", (data) => {
+    console.log("leaving room");
+    console.log(data);
+    socket.leave(data.room);
+  });
+
+  socket.on("newMessage", (data) => {
+    console.log(data);
+    socket.broadcast.to(data.room).emit("message", data.message);
+  });
 });
 
 server.listen(PORT, () => {
