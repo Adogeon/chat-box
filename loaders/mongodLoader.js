@@ -1,4 +1,4 @@
-const MongoClient = require("mongodb").MongoClient;
+const mongoose = require("mongoose");
 
 //URL to Mongo DB
 const URL = process.env.MONGODB_URL || "mongodb://localhost:27017";
@@ -9,12 +9,7 @@ const URL = process.env.MONGODB_URL || "mongodb://localhost:27017";
  * @return  database object
  */
 
-module.exports = () => {
-  return new Promise((resolve, reject) => {
-    MongoClient.connect(URL, (error, client) => {
-      if (error) return reject(error);
-      const database = client.db("chat-box");
-      resolve(database);
-    });
-  });
+module.exports = async () => {
+  const connection = await mongoose.connect(URL, { useNewURLParser: true });
+  return connection.connection.db;
 };

@@ -1,35 +1,14 @@
-const { Db } = require("mongodb")
+const mongoose = require("mongoose");
 
-/**
- * Initilize User documentation with validation
- * @param {Db} db 
- */
-const initUserCollection = (db) => {
-  db.listCollections({name: "users"}).next((err, collinfo) => {
-    if(collinfo) {
-      return db.collection("users")
-    } else {
-      return db.createCollection("users", {
-        vaidator: {
-          $jsonSchema: {
-            bjonType: "object",
-            properties: {
-              username: {
-                bsonType: 'string',
-                description: "must be a string and is required"
-              },
-              password: {
-                bsonType: 'string',
-                description: "must be a string and is required"
-              },
-              contact: {
-                
-              }
-              
-            }
-          }
-        }
-      })
-    }
-  })
-}
+const { Schema, ObjectId } = mongoose;
+
+const userSchema = new Schema({
+  username: String,
+  password: String,
+  contact: [ObjectId],
+  box: [ObjectId],
+});
+
+const User = mongoose.model("user", userSchema);
+
+module.exports = {default: User};
