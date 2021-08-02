@@ -10,6 +10,9 @@ const URL = process.env.MONGODB_URL || "mongodb://localhost:27017";
  */
 
 module.exports = async () => {
-  const connection = await mongoose.connect(URL, { useNewURLParser: true });
+  const connection = await mongoose.connect(URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   return connection.connection.db;
 };
