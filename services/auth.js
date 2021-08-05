@@ -1,17 +1,19 @@
 const bcrypt = require("bcrypt");
-const UserModel = require("../models/User");
 
-module.exports = {
+class AuthService {
+  constructor(userModel) {
+    this.UserModel = userModel;
+  }
   /**
    * Create a new instance of user and sign up
    * @param {userAuthObject} user
    * @returns User object
    */
-  Signup: async (user) => {
+  async Signup(userInput) {
     try {
-      const { username, password } = user;
+      const { username, password } = userInput;
       const hash = await bcrypt.hash(password, 10);
-      const userRecord = UserModel.create({
+      const userRecord = this.UserModel.create({
         username: username,
         hash: hash,
       });
@@ -22,15 +24,15 @@ module.exports = {
     } catch (e) {
       throw e;
     }
-  },
+  }
   /**
    * Sign in user
    * @param {userAuthObject} user
    * @returns User object
    */
-  Signin: async (user) => {
-    const { username, password } = user;
-    const userRecord = await UserModel.findOne({ username });
+  async Signin(userInput) {
+    const { username, password } = userInput;
+    const userRecord = await this.UserModel.findOne({ username });
     if (!userRecord) {
       throw new Error("User not registered");
     }
@@ -43,5 +45,7 @@ module.exports = {
     } else {
       throw new Error("Invalid Password");
     }
-  },
-};
+  }
+}
+
+module.exports = AuthService;

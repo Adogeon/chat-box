@@ -8,6 +8,7 @@
     "client:build": "cd client && npm run build",
     "server:dev": "nodemon server.js",
     "server:build": "node server.js",
+    "server:test": "jest",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\""
   },
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "concurrently": "^6.2.0",
+    "jest": "^27.0.6",
     "nodemon": "^2.0.12"
   }
 }
