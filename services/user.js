@@ -12,6 +12,7 @@ class UserService {
     this.BoxModel = boxModel;
     this.currentUserId = currentUserId;
   }
+
   /**
    * Check if a User is Login or not
    * @returns {Boolean}
@@ -19,6 +20,7 @@ class UserService {
   isLogin() {
     return this.currentUserId ? this.currentUserId.trim() !== "" : false;
   }
+
   /**
    * Public, get user information according to userId
    * @param {string} userId
@@ -28,6 +30,7 @@ class UserService {
     const user = await this.UserModel.findById(userId);
     return user;
   }
+
   /**
    * Private, get current user information
    * @returns user information object
@@ -40,6 +43,7 @@ class UserService {
       throw new Error("User is not logged in");
     }
   }
+
   /**
    * Private, add new contact to the current user and also update the other user contact list
    * @param {string} newContactId
@@ -57,7 +61,6 @@ class UserService {
         new: true,
       }
     );
-
     return updateCurrentUserRecord;
   }
 
@@ -76,9 +79,10 @@ class UserService {
       { $push: { box: [roomId] } },
       { new: true }
     );
-
     return updateCurrentUserRecord;
   }
+
+  
 }
 
 module.exports = UserService;
