@@ -28,6 +28,33 @@ class BoxService {
 
     return newBoxRecord;
   }
+
+  /**
+   * add a message to a room
+   * 
+   */
+  addMessage(roomId, message) {
+
+  }
+
+  /**
+   * Update conversation detail
+   * @param {*} roomeId 
+   * @param {*} update 
+   */
+  editConversation(roomId, update) {
+
+  }
+  
+  /**
+   * Add member to an ongoing conversation
+   * @param {string} roomId 
+   * @param {string | Array} userId 
+   */
+  addMember(roomId, userId) {
+
+  }
+
 }
 
 module.exports = BoxService;
