@@ -57,4 +57,98 @@ describe("User service unit test", () => {
       }
     });
   });
+
+  describe("addContact", () => {
+    test("Should update both current user and contact user", async () => {
+      const mockUpdate = jest.fn((x) => {
+        return x;
+      });
+      const mockFind = jest.fn((x) => ({
+        ...x,
+        update: mockUpdate,
+      }));
+      const mockUserModel = {
+        findById: mockFind,
+        findByIdAndUpdate: mockUpdate,
+      };
+
+      const userService = new UserService(
+        mockUserModel,
+        {},
+        "mock-current-user"
+      );
+      const updateRecord = await userService.addContact("mock-other-user");
+
+      expect(updateRecord).toBeTruthy();
+      expect(mockFind.mock.calls.length).toBe(1);
+      expect(mockFind.mock.calls[0][0]).toBe("mock-other-user");
+      expect(mockUpdate.mock.calls.length).toBe(2);
+      expect(mockUpdate.mock.calls[1][0]).toBe("mock-current-user");
+    });
+
+    test("Should throw error if the other user id can't be found", async () => {
+      const mockFind = jest.fn((x) => null);
+
+      const mockUserModel = {
+        findById: mockFind,
+      };
+
+      const userService = new UserService(
+        mockUserModel,
+        {},
+        "mock-current-user"
+      );
+      try {
+        const updateRecord = await userService.addContact("mock-other-user");
+      } catch (e) {
+        expect(e.message).toMatch("Invalid userId for new contact");
+      }
+    });
+  });
+
+  describe("joinRoom", () => {
+    describe("successful run", () => {
+      const mockUpdate = jest.fn((x) => x);
+      const mockFind = jest.fn((x) => ({
+        ...x,
+        update: mockUpdate,
+      }));
+      const mockUserModel = {
+        findByIdAndUpdate: mockUpdate,
+      };
+
+      const mockRoomModel = {
+        findById: mockFind,
+      };
+      beforeAll(async () => {
+        const userService = new UserService(
+          mockUserModel,
+          mockRoomModel,
+          "mock-current-user"
+        );
+
+        await userService.joinRoom("mock-room-id");
+      });
+
+      test("Should add userId to room", () => {
+        expect(mockFind).toBeCalledTimes(1);
+        expect(mockFind).toBeCalledWith("mock-room-id");
+        expect(mockUpdate).toBeCalledTimes(2);
+        expect(mockUpdate).toHaveBeenNthCalledWith(1, {
+          $push: { member: ["mock-current-user"] },
+        });
+      });
+
+      test("Should add roomId to current user", () => {
+        expect(mockUpdate).toHaveBeenNthCalledWith(
+          2,
+          "mock-current-user",
+          {
+            $push: { box: ["mock-room-id"] },
+          },
+          { new: true }
+        );
+      });
+    });
+  });
 });

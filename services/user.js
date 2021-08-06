@@ -46,25 +46,39 @@ class UserService {
    * @returns
    */
   async addContact(newContactId) {
-    if (this.isLogin()) {
-      const contactRecord = await this.UserModel.findById(newContactId);
-      if (!contactRecord) throw new Error("Invalid userId for new contact");
-      await contactRecord.update({ $push: { contact: [this.currentUserId] } });
-      const updateCurrentUserRecord = await this.UserModel.findByIdAndUpdate(
-        this.currentUserId,
-        { $push: { contact: [newContactId] } },
-        {
-          new: true,
-        }
-      );
+    if (!this.isLogin()) throw new Error("User is not logged in");
+    const contactRecord = await this.UserModel.findById(newContactId);
+    if (!contactRecord) throw new Error("Invalid userId for new contact");
+    await contactRecord.update({ $push: { contact: [this.currentUserId] } });
+    const updateCurrentUserRecord = await this.UserModel.findByIdAndUpdate(
+      this.currentUserId,
+      { $push: { contact: [newContactId] } },
+      {
+        new: true,
+      }
+    );
 
-      return updateCurrentUserRecord;
-    } else {
-      throw new Error("User is not logged in");
-    }
+    return updateCurrentUserRecord;
   }
 
-  async joinRoom(roomId) {}
+  /**
+   * Private, have current user join a room that is already created
+   * @param {string} roomId
+   * @returns
+   */
+  async joinRoom(roomId) {
+    if (!this.isLogin()) throw new Error("User is not logged in");
+    const roomRecord = await this.BoxModel.findById(roomId);
+    if (!roomRecord) throw new Error("Can't find room");
+    await roomRecord.update({ $push: { member: [this.currentUserId] } });
+    const updateCurrentUserRecord = await this.UserModel.findByIdAndUpdate(
+      this.currentUserId,
+      { $push: { box: [roomId] } },
+      { new: true }
+    );
+
+    return updateCurrentUserRecord;
+  }
 }
 
 module.exports = UserService;
