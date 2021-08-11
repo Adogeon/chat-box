@@ -1,6 +1,7 @@
 import React from "react";
 import Form from "../common/Form";
 import TextInput from "../common/TextInput";
+import FormSubmitButton from "../common/FormSubmitButton";
 
 const SignInForm = () => {
   <main>
@@ -21,6 +22,13 @@ const SignInForm = () => {
           onChange: (data) => console.log(data),
         }}
       />
+      <FormSubmitButton
+        events={{
+          onSubmit: (data) => console.log(data),
+        }}
+      >
+        Submit
+      </FormSubmitButton>
     </Form>
   </main>;
 };

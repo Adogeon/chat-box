@@ -39,6 +39,13 @@ const SignUpForm = () => {
           onChange: (data) => console.log(data),
         }}
       />
+      <FormSubmitButton
+        events={{
+          onSubmit: (data) => console.log(data),
+        }}
+      >
+        Submit
+      </FormSubmitButton>
     </Form>
   </main>;
 };
