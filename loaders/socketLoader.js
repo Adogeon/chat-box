@@ -1,4 +1,9 @@
 const { Server: SocketServer } = require("socket.io");
+const isAuth = require("../controllers/middleware/isAuth.js");
+const registerRoomHandlers = require("../controllers/socket/roomHandler.js");
+
+const wrap = (middleware) => (socket, next) =>
+  middleware(socket.request, {}, next);
 
 /**
  * Async loader to initilze socket io
@@ -8,29 +13,21 @@ const { Server: SocketServer } = require("socket.io");
 module.exports = async (httpServer) => {
   const io = new SocketServer(httpServer);
 
-  io.on("connection", (socket) => {
-    console.log("a user is connected");
-    console.log(socket.id);
+  io.use(wrap(isAuth));
 
-    socket.on("room", (data) => {
-      console.log("room join");
-      console.log(data);
-      socket.join(data.room);
-    });
-
-    socket.on("leave room", (data) => {
-      console.log("leaving room");
-      console.log(data);
-      socket.leave(data.room);
-    });
-
-    socket.on("newMessage", (data) => {
-      console.log(data);
-      socket.broadcast.to(data.room).emit("message", data.message);
-    });
+  io.use((socket, next) => {
+    if (socket.requrest.token) {
+      next();
+    } else {
+      next(new Error("Unauthorized"));
+    }
   });
 
-  //adding socketio middleware
+  const onConnection = (socket) => {
+    registerRoomHandlers(io, socket);
+  };
+
+  io.on("connection", onConnection);
 
   return io;
 };

@@ -54,8 +54,19 @@ class BoxService {
         new: true,
       }
     );
-    //emit the log to the user
     return updateBoxRecord;
+  }
+
+  /**
+   * Get data from the box
+   * @param {string} boxId
+   */
+  async loadBox(boxId) {
+    if (!this.currentUserId) throw new Error("User is not login");
+    const boxRecord = this.boxModel.findById(boxId);
+    if (!boxRecord) throw new Error("can't find box with id " + boxId);
+
+    return boxRecord;
   }
 
   /**
@@ -71,7 +82,6 @@ class BoxService {
       new: true,
     });
 
-    //emit change of log to member
     return updateBoxRecord;
   }
 
@@ -81,9 +91,6 @@ class BoxService {
    * @param {string | Array} userId - userId or list of userIds need to be invite to the box
    */
   async addMember(boxId, userId) {
-    //sending invite ?
-    //should be private but also owner of the conversation / groups
-    //may be the box/ group can be a choice of public or private
     const boxRecord = this.boxModel.findById(boxId);
     if (!boxRecord) throw new Error("Can't find box with id " + boxId);
     if (boxRecord.creator !== this.currentUserId)
