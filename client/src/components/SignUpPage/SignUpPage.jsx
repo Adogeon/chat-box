@@ -2,7 +2,7 @@ import React from "react";
 import Form from "../common/Form";
 import TextInput from "../common/TextInput";
 
-const SignInForm = () => {
+const SignUpForm = () => {
   <main>
     <Form>
       <TextInput
@@ -14,9 +14,27 @@ const SignInForm = () => {
         }}
       />
       <TextInput
+        name="email"
+        validate="required"
+        label="Password"
+        events={{
+          onChange: (data) => console.log(data),
+        }}
+      />
+      <TextInput
         name="password"
         validate="required"
         label="Password"
+        type="password"
+        events={{
+          onChange: (data) => console.log(data),
+        }}
+      />
+      <TextInput
+        name="repassword"
+        validate="required"
+        label="Confirm password"
+        type="password"
         events={{
           onChange: (data) => console.log(data),
         }}
@@ -25,4 +43,4 @@ const SignInForm = () => {
   </main>;
 };
 
-export default SignInForm;
+export default SignUpForm;
