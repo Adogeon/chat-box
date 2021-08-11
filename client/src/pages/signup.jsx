@@ -4,8 +4,8 @@ import SignUpForm from "../components/SignUpPage/SignUpForm";
 
 const SignUpPage = () => {
   return (
-    <main class="signUpMain">
-      <div class="box">
+    <main className="signUpMain">
+      <div className="box">
         <h1>Sign Up</h1>
         <SignUpForm />
       </div>

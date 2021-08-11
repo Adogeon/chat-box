@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 
 import validations from "./validations";
 
@@ -7,7 +7,7 @@ export const FormCtx = createContext({
   error: {},
 });
 
-export default Form = (props) => {
+const Form = (props) => {
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -17,6 +17,7 @@ export default Form = (props) => {
       value: "",
       ...field,
     };
+    console.log(field);
     if (name) {
       setFields((prevField) => {
         return {
@@ -24,9 +25,9 @@ export default Form = (props) => {
           [name]: field,
         };
       });
+    } else {
+      throw new Error(`Please add "name" field to the input: ${field}`);
     }
-
-    throw new Error(`Pplease add "key" field to the input: ${field}`);
   };
 
   const validateField = (name) => {
@@ -50,7 +51,7 @@ export default Form = (props) => {
             : validation.rule().test(fieldValue.toString());
 
         if (!isRuleSatisfied) {
-          error = validation.formatter.apply(null, [displayName || id]);
+          error = validation.formatter.apply(null, [displayName || name]);
         }
         if (error !== "") {
           break;
@@ -63,11 +64,11 @@ export default Form = (props) => {
     });
   };
 
-  const setFields = (event, { key, value }) => {
+  const updateFields = (event, { name, value }) => {
     if (event) {
       event.persist();
     }
-    const field = fields[key];
+    const field = fields[name];
     addField({
       field: {
         ...field,
@@ -79,7 +80,7 @@ export default Form = (props) => {
   const formContextValue = {
     fields,
     errors,
-    setFields,
+    updateFields,
     addField,
     validateField,
   };
@@ -92,3 +93,5 @@ export default Form = (props) => {
     </form>
   );
 };
+
+export default Form;

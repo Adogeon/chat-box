@@ -1,14 +1,13 @@
-import { id } from "prelude-ls";
-import React, { useCOntext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { FormCtx } from "./Form";
 
 const TextInput = (props) => {
   const { name } = props;
-  const { setFields, addFields, fields, errors } = useContext(FormCtx);
+  const { updateFields, addField, validateField, fields, errors } =
+    useContext(FormCtx);
 
-  const field = fields[name] || name;
+  const field = fields[name] || { name };
   const {
-    name,
     value,
     rows,
     validate,
@@ -19,11 +18,11 @@ const TextInput = (props) => {
   } = field;
   const fieldError = errors[name];
 
-  const { fieldClass, errorClass } = classes;
+  const { contClass, fieldClass, errorClass } = classes;
 
   const handleChange = (event) => {
     try {
-      setFields(event, field);
+      updateFields(event, field);
     } catch (error) {
       throw error;
     }
@@ -40,14 +39,14 @@ const TextInput = (props) => {
     if (value !== undefined) {
       validateField(name);
     }
-  }, [value, name]);
+  }, [value]);
 
   useEffect(() => {
-    addFields({
+    addField({
       field: props,
       value,
     });
-  });
+  }, []);
 
   const fieldProps = {
     name,
