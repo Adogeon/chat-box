@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./pages/home";
 import ChatPage from "./pages/chat";
 
-function App() {
+const MainRouter = () => {
   return (
     <Router>
       <Switch>
@@ -17,6 +17,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
-export default App;
+export default MainRouter;
