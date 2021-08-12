@@ -1,0 +1,28 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  min-width: 300px;
+  height: 100vh;
+  margin: auto;
+  align-content: center;
+}
+
+.formContainer {
+  box-shadow: 0px 3px 7px gray;
+  margin: auto;
+  width: 25%;
+  min-width: 300px;
+  padding: 4em 2em 6em 2em;
+}
+
+.textInputContainer {
+  display: flex;
+  flex-flow: column;
+  margin: 1em 0;
+}
+
+.errorClass {
+  color: red;
+  margin: 0;
+}

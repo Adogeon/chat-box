@@ -4,9 +4,10 @@ import { FormCtx } from "./Form";
 const FormSubmitButton = (props) => {
   const { events } = props;
   const { onSubmit } = events;
-  const { fields, errors } = useContext(FormCtx);
+  const { fields, errors, validateAll } = useContext(FormCtx);
 
   const handleSubmit = () => {
+    validateAll();
     onSubmit(fields);
   };
 

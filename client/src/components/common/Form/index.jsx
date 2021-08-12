@@ -30,6 +30,12 @@ const Form = (props) => {
     }
   };
 
+  const validateAll = () => {
+    Object.keys(fields).map((key) => {
+      validateField(key);
+    });
+  };
+
   const validateField = (name) => {
     let error = "";
     const {
@@ -66,12 +72,14 @@ const Form = (props) => {
 
   const updateFields = (event, { name, value }) => {
     if (event) {
+      console.log(event);
       event.persist();
     }
     const field = fields[name];
     addField({
       field: {
         ...field,
+        runValidate: true,
         value: event ? event.currentTarget.value : value,
       },
     });
@@ -83,6 +91,7 @@ const Form = (props) => {
     updateFields,
     addField,
     validateField,
+    validateAll,
   };
 
   return (

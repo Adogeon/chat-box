@@ -15,11 +15,11 @@ const TextInput = (props) => {
     label = "",
     type = "text",
     classes = {},
+    runValidate,
   } = field;
   const fieldError = errors[name];
 
   const { contClass, fieldClass, errorClass } = classes;
-
   const handleChange = (event) => {
     try {
       updateFields(event, field);
@@ -36,10 +36,10 @@ const TextInput = (props) => {
   };
 
   useEffect(() => {
-    if (value !== undefined) {
+    if (value !== undefined && runValidate) {
       validateField(name);
     }
-  }, [value]);
+  }, [value, name]);
 
   useEffect(() => {
     addField({
