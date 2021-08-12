@@ -35,13 +35,19 @@ const SignInForm = () => {
           onChange: (data) => console.log(data),
         }}
       />
-      <FormSubmitButton
-        events={{
-          onSubmit: (data) => console.log(data),
-        }}
-      >
-        Submit
-      </FormSubmitButton>
+      <div className={style.actionArea}>
+        <button className="">Sign Up</button>
+        <div>
+          <button className="">Cancel</button>
+          <FormSubmitButton
+            events={{
+              onSubmit: (data) => console.log(data),
+            }}
+          >
+            Submit
+          </FormSubmitButton>
+        </div>
+      </div>
     </Form>
   );
 };
