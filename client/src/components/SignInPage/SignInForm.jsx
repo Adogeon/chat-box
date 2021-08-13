@@ -2,11 +2,15 @@ import React from "react";
 
 //style import
 import style from "../../styles/SignInPages/style.module.css";
+import button from "../../styles/Button/button.module.css";
 
 //component import
 import Form from "../common/Form";
 import TextInput from "../common/TextInput";
 import FormSubmitButton from "../common/FormSubmitButton";
+
+//action import
+import { login } from "../../contexts/authContext";
 
 const SignInForm = () => {
   return (
@@ -36,17 +40,14 @@ const SignInForm = () => {
         }}
       />
       <div className={style.actionArea}>
-        <button className="">Sign Up</button>
-        <div>
-          <button className="">Cancel</button>
-          <FormSubmitButton
-            events={{
-              onSubmit: (data) => console.log(data),
-            }}
-          >
-            Submit
-          </FormSubmitButton>
-        </div>
+        <FormSubmitButton
+          styleClass={button.full}
+          events={{
+            onSubmit: (data) => login(data),
+          }}
+        >
+          SIGN IN
+        </FormSubmitButton>
       </div>
     </Form>
   );

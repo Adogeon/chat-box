@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { FormCtx } from "./Form";
 
 const FormSubmitButton = (props) => {
-  const { events } = props;
+  const { events, styleClass } = props;
   const { onSubmit } = events;
   const { fields, errors, validateAll } = useContext(FormCtx);
 
@@ -14,6 +14,7 @@ const FormSubmitButton = (props) => {
   return (
     <button
       type="submit"
+      className={styleClass}
       disabled={errors && Object.values(errors).join("").length !== 0}
       onClick={(event) => {
         event.preventDefault();

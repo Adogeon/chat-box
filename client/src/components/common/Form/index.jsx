@@ -72,7 +72,6 @@ const Form = (props) => {
 
   const updateFields = (event, { name, value }) => {
     if (event) {
-      console.log(event);
       event.persist();
     }
     const field = fields[name];
