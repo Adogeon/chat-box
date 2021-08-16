@@ -11,8 +11,11 @@ import FormSubmitButton from "../common/FormSubmitButton";
 
 //action import
 import { login } from "../../contexts/authContext";
+import { useAuthDispatch } from "../../contexts/authContext";
 
 const SignInForm = () => {
+  const dispatch = useAuthDispatch();
+  console.log(dispatch);
   return (
     <Form>
       <TextInput
@@ -43,7 +46,7 @@ const SignInForm = () => {
         <FormSubmitButton
           styleClass={button.full}
           events={{
-            onSubmit: (data) => login(data),
+            onSubmit: (data) => login(data, dispatch),
           }}
         >
           SIGN IN

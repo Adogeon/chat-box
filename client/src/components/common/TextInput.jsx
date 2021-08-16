@@ -15,7 +15,7 @@ const TextInput = (props) => {
     label = "",
     type = "text",
     classes = {},
-    runValidate,
+    showValidate,
   } = field;
   const fieldError = errors[name];
 
@@ -36,7 +36,7 @@ const TextInput = (props) => {
   };
 
   useEffect(() => {
-    if (value !== undefined && runValidate) {
+    if (value !== undefined) {
       validateField(name);
     }
   }, [value, name]);
@@ -74,7 +74,7 @@ const TextInput = (props) => {
       ) : (
         <input {...fieldProps} />
       )}
-      <p className={errorClass}>{fieldError}</p>
+      {showValidate ? <p className={errorClass}>{fieldError}</p> : null}
     </div>
   ) : (
     ""

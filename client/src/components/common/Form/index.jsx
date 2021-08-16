@@ -33,6 +33,12 @@ const Form = (props) => {
   const validateAll = () => {
     Object.keys(fields).map((key) => {
       validateField(key);
+      addField({
+        field: {
+          ...fields[key],
+          showValidate: true,
+        },
+      });
     });
   };
 
@@ -78,7 +84,6 @@ const Form = (props) => {
     addField({
       field: {
         ...field,
-        runValidate: true,
         value: event ? event.currentTarget.value : value,
       },
     });

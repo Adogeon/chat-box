@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 
 import { AuthReducer, initialState } from "./reducer";
 
@@ -10,22 +10,24 @@ export const useAuthState = () => {
   if (context === undefined) {
     throw new Error("useAuthState must be used within a AuthProvider");
   }
+  return context;
 };
 
 export const useAuthDispatch = () => {
-  const context = React.useContext(AuthDispatchContext);
+  const context = useContext(AuthDispatchContext);
   if (context === undefined) {
     throw new Error("useAuthDispatch must be used within a Auth Provider");
   }
+  return context;
 };
 
-export default AuthProvider = (props) => {
+export const AuthProvider = (props) => {
   const [auth, dispatch] = useReducer(AuthReducer, initialState);
 
   return (
     <AuthStateContext.Provider value={auth}>
       <AuthDispatchContext.Provider value={dispatch}>
-        {children}
+        {props.children}
       </AuthDispatchContext.Provider>
     </AuthStateContext.Provider>
   );

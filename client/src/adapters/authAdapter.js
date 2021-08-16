@@ -1,8 +1,11 @@
-export const logInUser = async (data) => {
+export const logInUser = async (userData) => {
   const loginFetch = await fetch({
     url: "/api/signin",
     method: "POST",
-    body: { data },
+    body: {
+      username: userData.username.value,
+      password: userData.password.value,
+    },
   });
 
   const loginData = await loginFetch.json();

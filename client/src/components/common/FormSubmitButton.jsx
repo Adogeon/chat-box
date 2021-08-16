@@ -8,14 +8,18 @@ const FormSubmitButton = (props) => {
 
   const handleSubmit = () => {
     validateAll();
-    onSubmit(fields);
+    console.log(errors);
+    if (errors && Object.values(errors).join("").length !== 0) {
+      console.log(errors);
+    } else {
+      onSubmit(fields);
+    }
   };
 
   return (
     <button
       type="submit"
       className={styleClass}
-      disabled={errors && Object.values(errors).join("").length !== 0}
       onClick={(event) => {
         event.preventDefault();
         handleSubmit();
