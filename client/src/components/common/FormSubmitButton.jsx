@@ -8,9 +8,8 @@ const FormSubmitButton = (props) => {
 
   const handleSubmit = () => {
     validateAll();
-    console.log(errors);
     if (errors && Object.values(errors).join("").length !== 0) {
-      console.log(errors);
+      console.error(errors);
     } else {
       onSubmit(fields);
     }

@@ -1,14 +1,36 @@
-export const logInUser = async (userData) => {
-  const loginFetch = await fetch({
-    url: "/api/signin",
+export const signInUser = async (userData) => {
+  console.log(userData);
+  const data = {
+    username: userData.username.value,
+    password: userData.password.value,
+  };
+  console.log(data);
+  const signInFetch = await fetch("/api/signin", {
     method: "POST",
-    body: {
-      username: userData.username.value,
-      password: userData.password.value,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify(data),
   });
 
-  const loginData = await loginFetch.json();
+  const signInData = await signInFetch.json();
+  console.log(signInData);
+  return;
+};
 
-  return loginData;
+export const signUpUser = async (userData) => {
+  const data = {
+    username: userData.username.value,
+    email: userData.username.value,
+    password: userData.password.value,
+  };
+  const signUpFetch = await fetch({
+    url: "/api/signup",
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+  const signUpdata = await signUpFetch.json();
+  console.log(signUpData);
+  return;
 };

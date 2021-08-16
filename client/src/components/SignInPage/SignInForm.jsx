@@ -10,12 +10,12 @@ import TextInput from "../common/TextInput";
 import FormSubmitButton from "../common/FormSubmitButton";
 
 //action import
-import { login } from "../../contexts/authContext";
+import { signIn } from "../../contexts/authContext";
 import { useAuthDispatch } from "../../contexts/authContext";
 
 const SignInForm = () => {
   const dispatch = useAuthDispatch();
-  console.log(dispatch);
+
   return (
     <Form>
       <TextInput
@@ -26,9 +26,6 @@ const SignInForm = () => {
           contClass: style.textInputContainer,
           errorClass: style.errorClass,
         }}
-        events={{
-          onChange: (data) => console.log(data),
-        }}
       />
       <TextInput
         name="password"
@@ -38,15 +35,12 @@ const SignInForm = () => {
           contClass: style.textInputContainer,
           errorClass: style.errorClass,
         }}
-        events={{
-          onChange: (data) => console.log(data),
-        }}
       />
       <div className={style.actionArea}>
         <FormSubmitButton
           styleClass={button.full}
           events={{
-            onSubmit: (data) => login(data, dispatch),
+            onSubmit: (data) => signIn(data, dispatch),
           }}
         >
           SIGN IN
