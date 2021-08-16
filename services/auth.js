@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jsonwebtoken = require("jsonwebtoken");
 
 class AuthService {
   constructor(userModel) {
@@ -9,15 +10,16 @@ class AuthService {
    * @param {userAuthObject} user
    * @returns User object
    */
-  async Signup(userInput) {
+  async signUp(userInput) {
     try {
-      const { username, password } = userInput;
+      const { username, email, password } = userInput;
       const hash = await bcrypt.hash(password, 10);
-      const userRecord = this.UserModel.create({
+      const userRecord = await this.UserModel.create({
         username: username,
+        email: email,
         hash: hash,
       });
-
+      console.log(userRecord);
       const user = userRecord.toObject();
       delete user.hash;
       return user;
@@ -30,7 +32,7 @@ class AuthService {
    * @param {userAuthObject} user
    * @returns User object
    */
-  async Signin(userInput) {
+  async signIn(userInput) {
     const { username, password } = userInput;
     const userRecord = await this.UserModel.findOne({ username });
     if (!userRecord) {
@@ -45,6 +47,16 @@ class AuthService {
     } else {
       throw new Error("Invalid Password");
     }
+  }
+
+  async generateToken(user) {
+    const today = new Date();
+    const exp = new Date(today);
+    exp.setDate(today.getDate() + 30);
+
+    const secret = "swordfishforhistoricalsake";
+
+    return jsonwebtoken.sign({ userId: user._id }, secret);
   }
 }
 

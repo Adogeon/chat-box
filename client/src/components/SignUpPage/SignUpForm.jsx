@@ -1,25 +1,39 @@
 import React from "react";
+
+//style import
+import style from "../../styles/SignInPages/style.module.css";
+import button from "../../styles/Button/button.module.css";
+
+//component import
 import Form from "../common/Form";
 import TextInput from "../common/TextInput";
 import FormSubmitButton from "../common/FormSubmitButton";
 
+//action import
+import { signUp } from "../../contexts/authContext";
+import { useAuthDispatch } from "../../contexts/authContext";
+
 const SignUpForm = () => {
+  const dispatch = useAuthDispatch();
+
   return (
     <Form>
       <TextInput
         name="username"
         validate="required"
         label="Username"
-        events={{
-          onChange: (data) => console.log(data),
+        classes={{
+          contClass: style.textInputContainer,
+          errorClass: style.errorClass,
         }}
       />
       <TextInput
         name="email"
         validate="required"
-        label="Password"
-        events={{
-          onChange: (data) => console.log(data),
+        label="Email"
+        classes={{
+          contClass: style.textInputContainer,
+          errorClass: style.errorClass,
         }}
       />
       <TextInput
@@ -27,8 +41,9 @@ const SignUpForm = () => {
         validate="required"
         label="Password"
         type="password"
-        events={{
-          onChange: (data) => console.log(data),
+        classes={{
+          contClass: style.textInputContainer,
+          errorClass: style.errorClass,
         }}
       />
       <TextInput
@@ -36,13 +51,15 @@ const SignUpForm = () => {
         validate="required"
         label="Confirm password"
         type="password"
-        events={{
-          onChange: (data) => console.log(data),
+        classes={{
+          contClass: style.textInputContainer,
+          errorClass: style.errorClass,
         }}
       />
       <FormSubmitButton
+        styleClass={button.full}
         events={{
-          onSubmit: (data) => console.log(data),
+          onSubmit: (data) => signUp(data, dispatch),
         }}
       >
         Submit

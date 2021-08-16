@@ -4,7 +4,6 @@ export const signInUser = async (userData) => {
     username: userData.username.value,
     password: userData.password.value,
   };
-  console.log(data);
   const signInFetch = await fetch("/api/signin", {
     method: "POST",
     headers: {
@@ -13,10 +12,8 @@ export const signInUser = async (userData) => {
     },
     body: JSON.stringify(data),
   });
-
   const signInData = await signInFetch.json();
-  console.log(signInData);
-  return;
+  return signInData;
 };
 
 export const signUpUser = async (userData) => {
@@ -25,12 +22,14 @@ export const signUpUser = async (userData) => {
     email: userData.username.value,
     password: userData.password.value,
   };
-  const signUpFetch = await fetch({
-    url: "/api/signup",
+  const signUpFetch = await fetch("/api/signup", {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
     method: "POST",
     body: JSON.stringify(data),
   });
-  const signUpdata = await signUpFetch.json();
-  console.log(signUpData);
-  return;
+  const signUpData = await signUpFetch.json();
+  return signUpData;
 };
