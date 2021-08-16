@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
 import HomePage from "../pages/home";
 import ChatPage from "../pages/chat";
@@ -10,9 +11,9 @@ const MainRouter = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/chat">
+        <PrivateRoute path="/chat">
           <ChatPage />
-        </Route>
+        </PrivateRoute>
         <Route path="/signin">
           <SignInPage />
         </Route>

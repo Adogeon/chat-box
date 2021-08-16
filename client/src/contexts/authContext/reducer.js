@@ -1,4 +1,5 @@
 export const initialState = {
+  isAuth: false,
   token: "",
   user: null,
   loading: false,
@@ -16,6 +17,7 @@ export const AuthReducer = (state, action) => {
     case "SIGNUP_SUCCESS":
       return {
         ...state,
+        isAuth: true,
         user: action.payload.user,
         token: action.payload.token,
         loading: false,
@@ -23,6 +25,7 @@ export const AuthReducer = (state, action) => {
     case "LOGOUT":
       return {
         ...state,
+        isAuth: false,
         user: null,
         token: "",
       };
