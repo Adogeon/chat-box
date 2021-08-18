@@ -1,7 +1,7 @@
 import React from "react";
 
 //style import
-import style from "../../styles/SignInPages/style.module.css";
+import style from "../../styles/AuthPages/style.module.css";
 import button from "../../styles/Button/button.module.css";
 
 //component import

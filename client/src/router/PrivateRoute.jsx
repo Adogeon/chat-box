@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRoute as Route, Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { useAuthState } from "../contexts/authContext";
 
 const PrivateRoute = ({ children, ...rest }) => {

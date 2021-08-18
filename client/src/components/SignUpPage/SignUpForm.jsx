@@ -1,7 +1,7 @@
 import React from "react";
 
 //style import
-import style from "../../styles/SignInPages/style.module.css";
+import style from "../../styles/AuthPages/style.module.css";
 import button from "../../styles/Button/button.module.css";
 
 //component import
@@ -56,14 +56,16 @@ const SignUpForm = () => {
           errorClass: style.errorClass,
         }}
       />
-      <FormSubmitButton
-        styleClass={button.full}
-        events={{
-          onSubmit: (data) => signUp(data, dispatch),
-        }}
-      >
-        Submit
-      </FormSubmitButton>
+      <div className={style.actionArea}>
+        <FormSubmitButton
+          styleClass={button.full}
+          events={{
+            onSubmit: (data) => signUp(data, dispatch),
+          }}
+        >
+          Submit
+        </FormSubmitButton>
+      </div>
     </Form>
   );
 };
