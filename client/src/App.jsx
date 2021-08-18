@@ -1,22 +1,12 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import HomePage from "./pages/home";
-import ChatPage from "./pages/chat";
+import MainRouter from "./router/router";
+import { AuthProvider } from "./contexts/authContext";
 
-function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/chat">
-          <ChatPage />
-        </Route>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-      </Switch>
-    </Router>
-  );
-}
+const App = () => (
+  <AuthProvider>
+    <MainRouter />
+  </AuthProvider>
+);
 
 export default App;
