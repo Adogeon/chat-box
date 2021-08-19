@@ -17,7 +17,6 @@ const Form = (props) => {
       value: "",
       ...field,
     };
-    console.log(field);
     if (name) {
       setFields((prevField) => {
         return {

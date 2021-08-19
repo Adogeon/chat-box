@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 
-import HomePage from "../pages/home";
 import ChatPage from "../pages/chat";
 import SignInPage from "../pages/signin";
 import SignUpPage from "../pages/signup";
@@ -20,9 +19,7 @@ const MainRouter = () => {
         <Route path="/signup">
           <SignUpPage />
         </Route>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
+        
       </Switch>
     </Router>
   );

@@ -1,5 +1,8 @@
 const { Server: SocketServer } = require("socket.io");
-const isAuth = require("../controllers/middleware/isAuth.js");
+const {
+  verifyToken,
+  registerUserHandlers,
+} = require("../controllers/socket/userHandler.js");
 const registerRoomHandlers = require("../controllers/socket/roomHandler.js");
 
 const wrap = (middleware) => (socket, next) =>
@@ -13,17 +16,10 @@ const wrap = (middleware) => (socket, next) =>
 module.exports = async (httpServer) => {
   const io = new SocketServer(httpServer);
 
-  io.use(wrap(isAuth));
-
-  io.use((socket, next) => {
-    if (socket.requrest.token) {
-      next();
-    } else {
-      next(new Error("Unauthorized"));
-    }
-  });
+  io.use(verifyToken);
 
   const onConnection = (socket) => {
+    registerUserHandlers(socket);
     registerRoomHandlers(io, socket);
   };
 

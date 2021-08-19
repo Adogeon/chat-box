@@ -58,6 +58,19 @@ class AuthService {
 
     return jsonwebtoken.sign({ userId: user._id }, secret);
   }
+
+  async validateToken(token) {
+    const secret = "swordfishforhistoricalsake";
+    const decoded = jsonwebtoken.verify(token, secret);
+    const userRecord = await this.UserModel.findById(decoded.userId);
+    if (!userRecord) {
+      throw new Error("Can't find user with id" + decoded.userId);
+    } else {
+      const user = userRecord.toObject();
+      delete user.hash;
+      return user;
+    }
+  }
 }
 
 module.exports = AuthService;

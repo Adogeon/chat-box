@@ -9,6 +9,7 @@ class BoxService {
     this.userModel = userModel;
     this.currentUserId = currentUserId;
   }
+  
   /**
    * Create a conversation with other user
    * @param {string | Array} userId

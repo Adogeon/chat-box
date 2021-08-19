@@ -1,7 +1,7 @@
 export const initialState = {
   isAuth: false,
   token: "",
-  user: null,
+  userId: null,
   loading: false,
   errorMessage: null,
 };
@@ -18,7 +18,7 @@ export const AuthReducer = (state, action) => {
       return {
         ...state,
         isAuth: true,
-        user: action.payload.user,
+        userId: action.payload.userId,
         token: action.payload.token,
         loading: false,
       };
@@ -26,14 +26,14 @@ export const AuthReducer = (state, action) => {
       return {
         ...state,
         isAuth: false,
-        user: null,
+        userId: null,
         token: "",
       };
     case "AUTH_ERROR":
       return {
         ...state,
         loading: false,
-        errorMessage: action.error,
+        errorMessage: action.payload.error,
       };
     default:
       throw new Error(`Can't handle ${action.type}`);
