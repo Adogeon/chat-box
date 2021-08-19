@@ -35,6 +35,8 @@ module.exports = (io, socket) => {
 
   socket.on("newMessage", ({ room, message }) => {
     console.log("sending new message");
-    socket.to(room).emit("message", { text: message, user: socket.user });
+    socket
+      .to(room)
+      .emit("message", { text: message, username: socket.username });
   });
 };

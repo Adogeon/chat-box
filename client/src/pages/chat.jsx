@@ -5,7 +5,7 @@ import { useAuthState } from "../contexts/authContext";
 function ChatPage() {
   const authState = useAuthState();
   const [value, setValue] = useState("");
-  const [message, setMessage] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     if (authState.isAuth) {
@@ -19,7 +19,7 @@ function ChatPage() {
       socket.on("message", (payload) => {
         console.log("receiving message");
         console.log(payload);
-        setMessage((prevMess) => {
+        setMessages((prevMess) => {
           return [...prevMess, payload];
         });
       });
@@ -36,11 +36,12 @@ function ChatPage() {
   const handleClick = () => {
     console.log("emitting new message");
     socket.emit("newMessage", { room: "test-room", message: value });
-    const newMessage = { text: value, user: {} };
-    setMessage((prevMess) => {
+    const newMessage = { text: value, username: authState.username };
+    console.log(newMessage);
+    setMessages((prevMess) => {
       return [...prevMess, newMessage];
     });
-    console.log(message);
+    console.log(messages);
     setValue("");
   };
 
@@ -48,9 +49,9 @@ function ChatPage() {
     <main>
       <h1>Chat Page</h1>
       <div className="textArea">
-        {message.map((message) => (
+        {messages.map((message) => (
           <div>
-            <span>{message.user} say:</span>
+            <span>{message.username} say:</span>
             <span>{message.text}</span>
           </div>
         ))}

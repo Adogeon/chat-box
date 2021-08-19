@@ -9,6 +9,7 @@ const verifyToken = async (socket, next) => {
       const user = await authService.validateToken(token);
       socket.user = user;
       socket.userId = user._id;
+      socket.username = user.username;
       next();
     } catch (error) {
       console.log(error);

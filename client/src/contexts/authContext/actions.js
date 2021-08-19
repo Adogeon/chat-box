@@ -3,6 +3,7 @@ import { signInUser, signUpUser } from "../../adapters/authAdapter";
 export const signIn = async (data, dispatch) => {
   dispatch({ type: "AUTH_REQUEST" });
   const loginResult = await signInUser(data);
+  console.log(loginResult);
   if (loginResult.error) {
     dispatch({ type: "AUTH_ERROR", payload: loginResult });
   } else {
