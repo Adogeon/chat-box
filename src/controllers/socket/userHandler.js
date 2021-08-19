@@ -6,11 +6,12 @@ const verifyToken = async (socket, next) => {
   if (token) {
     const authService = new AuthService(UserModel);
     try {
-      const user = await authService.verifyToken(token);
+      const user = await authService.validateToken(token);
       socket.user = user;
       socket.userId = user._id;
       next();
     } catch (error) {
+      console.log(error);
       return next(new Error("Invalid authorization"));
     }
   } else {
@@ -18,7 +19,7 @@ const verifyToken = async (socket, next) => {
   }
 };
 
-const registerUserHandler = (socket) => {
+const registerUserHandlers = (socket) => {
   socket.join(socket.userId);
 
   socket.user.contact.concat(socket.user.box).map((roomId) => {
@@ -32,4 +33,4 @@ const registerUserHandler = (socket) => {
   });
 };
 
-module.exports = { verifyToken, registerUserHandler };
+module.exports = { verifyToken, registerUserHandlers };
