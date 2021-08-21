@@ -9,22 +9,41 @@ class BoxService {
     this.userModel = userModel;
     this.currentUserId = currentUserId;
   }
-  
+
   /**
-   * Create a conversation with other user
-   * @param {string | Array} userId
+   * Create a new conversation
+   * @param {Object} detail - Optional detail of the new conversation
    * @return Box
    */
-  createConversation(userId) {
+  async createConversation(detail) {
+    const newBoxDetail = detail ? { ...detail } : {};
+    const newBoxRecord = await this.boxModel.create(newBoxDetail);
+
+    return newBoxRecord;
+  }
+
+  /**
+   * Create a private conversation doc
+   * @param {*} boxId
+   * @param {*} message
+   * @returns
+   */
+  async storePrivateConversation(userId) {
     if (!this.currentUserId) throw new Error("User is not loggin");
-    let member = [this.currentUserId];
+    let members = [this.currentUserId];
     if (typeof userId === "string") {
-      member.push(userId);
+      members.push(userId);
     } else {
-      member = [...member, ...userId];
+      members = [...member, ...userId];
     }
-    const newBoxRecord = this.boxModel.create({
-      member,
+    const newBoxRecord = await this.boxModel.create({
+      members,
+    });
+
+    members.map((member) => {
+      this.userModel.findByIdAndUpdate(member, {
+        $push: { box: newBoxRecord._id },
+      });
     });
 
     return newBoxRecord;
@@ -35,39 +54,34 @@ class BoxService {
    * @param {string} boxId - id of the chat box
    * @param {string} message - user message
    *
-   * @return updated box record
    */
-  async addMessage(boxId, message) {
+  async addMessage(boxId, message, username) {
     if (!this.currentUserId) throw new Error("User is not loggin");
     const boxRecord = this.boxModel.findById(boxId);
     if (!boxRecord) throw new Error("Can't find box with id " + boxId);
-    const updateBoxRecord = await boxRecord.update(
-      {
-        $push: {
-          log: {
-            body: message,
-            date: Date.now(),
-            by: this.currentUserId,
-          },
-        },
-      },
-      {
-        new: true,
-      }
-    );
-    return updateBoxRecord;
+    const newRecord = {
+      body: message,
+      user: this.currentUserId,
+      username: username,
+      date: new Date(),
+    };
+    boxRecord.log.push(newRecord);
+    await boxRecord.save();
   }
 
   /**
    * Get data from the box
-   * @param {string} boxId
+   * @param {Object} searchOption
    */
-  async loadBox(boxId) {
+  async loadBox(searchOption) {
     if (!this.currentUserId) throw new Error("User is not login");
-    const boxRecord = this.boxModel.findById(boxId);
-    if (!boxRecord) throw new Error("can't find box with id " + boxId);
-
-    return boxRecord;
+    const boxRecord = await this.boxModel.findOne(searchOption);
+    if (!boxRecord) throw new Error("can't find the box");
+    const { log, ...rest } = boxRecord.toObject();
+    return {
+      log,
+      boxDetail: rest,
+    };
   }
 
   /**

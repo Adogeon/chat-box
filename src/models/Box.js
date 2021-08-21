@@ -4,7 +4,9 @@ const { Schema } = mongoose;
 
 const boxSchema = Schema({
   member: [mongoose.ObjectId],
-  log: [{ body: String, date: Date, by: mongoose.ObjectId }],
+  log: [
+    { body: String, date: Date, user: mongoose.ObjectId, username: String },
+  ],
   name: String,
   tag: String,
 });
