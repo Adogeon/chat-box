@@ -13,7 +13,7 @@ const SignInPage = () => {
 
   useEffect(() => {
     if (authState.isAuth) {
-      history.push("/chat");
+      history.push("/home");
     }
   }, [authState]);
 

@@ -2,10 +2,13 @@ import React from "react";
 
 import MainRouter from "./router/router";
 import { AuthProvider } from "./contexts/authContext";
+import { UserProvider } from "./contexts/userContext";
 
 const App = () => (
   <AuthProvider>
-    <MainRouter />
+    <UserProvider>
+      <MainRouter />
+    </UserProvider>
   </AuthProvider>
 );
 

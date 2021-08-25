@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FormCtx } from "./Form";
+import { FormCtx } from ".";
 
 const FormSubmitButton = (props) => {
   const { events, styleClass } = props;

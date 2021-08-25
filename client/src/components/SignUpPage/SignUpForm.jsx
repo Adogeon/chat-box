@@ -6,8 +6,8 @@ import button from "../../styles/Button/button.module.css";
 
 //component import
 import Form from "../common/Form";
-import TextInput from "../common/TextInput";
-import FormSubmitButton from "../common/FormSubmitButton";
+import TextInput from "../common/Form/TextInput";
+import FormSubmitButton from "../common/Form/FormSubmitButton";
 
 //action import
 import { signUp } from "../../contexts/authContext";

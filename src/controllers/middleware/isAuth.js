@@ -11,7 +11,7 @@ const getTokenFromHeader = (req) => {
 };
 
 const isAuth = jwt({
-  secret: "tempsecret",
+  secret: "swordfishforhistoricalsake",
   algorithms: ["HS256"],
   userProperty: "token",
   getToken: getTokenFromHeader,

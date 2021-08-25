@@ -1,5 +1,4 @@
 export const signInUser = async (userData) => {
-  console.log(userData);
   const data = {
     username: userData.username.value,
     password: userData.password.value,

@@ -1,8 +1,6 @@
 export const initialState = {
   isAuth: false,
   token: "",
-  userId: "",
-  username: "",
   loading: false,
   errorMessage: null,
 };
@@ -19,8 +17,6 @@ export const AuthReducer = (state, action) => {
       return {
         ...state,
         isAuth: true,
-        userId: action.payload.userId,
-        username: action.payload.username,
         token: action.payload.token,
         loading: false,
       };
@@ -28,9 +24,8 @@ export const AuthReducer = (state, action) => {
       return {
         ...state,
         isAuth: false,
-        userId: "",
-        username: "",
         token: "",
+        user: null,
       };
     case "AUTH_ERROR":
       return {

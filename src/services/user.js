@@ -38,6 +38,11 @@ class UserService {
   async getCurrent() {
     if (this.isLogin()) {
       const user = await this.UserModel.findById(this.currentUserId);
+      console.log(user.populated("box"));
+      await user.populate({ path: "box", model: "Box" });
+      console.log(user);
+      user.populated("box");
+      console.log(user);
       return user;
     } else {
       throw new Error("User is not logged in");
@@ -81,8 +86,6 @@ class UserService {
     );
     return updateCurrentUserRecord;
   }
-
-  
 }
 
 module.exports = UserService;
