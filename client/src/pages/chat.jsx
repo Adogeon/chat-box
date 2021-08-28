@@ -5,7 +5,7 @@ import { useAuthState } from "../contexts/authContext";
 import main from "../styles/ChatPages/main.module.css";
 import button from "../styles/Button/button.module.css";
 
-import ChatSideBar from "../components/common/Layout/ChatSideBar";
+import Layout from "../components/common/Layout";
 
 function ChatPage() {
   const authState = useAuthState();
@@ -35,12 +35,11 @@ function ChatPage() {
         });
       });
     }
-  }, []);
 
-  useEffect(() => {
     return () => {
       socket.emit("leave");
       socket.disconnect();
+      console.log("should remove socket");
     };
   }, []);
 
@@ -56,8 +55,7 @@ function ChatPage() {
   };
 
   return (
-    <>
-      <ChatSideBar />
+    <Layout>
       <main className={main.container}>
         <h1>Chat Page</h1>
         <div className={main.textArea}>
@@ -83,7 +81,7 @@ function ChatPage() {
           </div>
         </div>
       </main>
-    </>
+    </Layout>
   );
 }
 

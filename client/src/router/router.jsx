@@ -11,7 +11,7 @@ const MainRouter = () => {
   return (
     <Router>
       <Switch>
-        <PrivateRoute path="/chat">
+        <PrivateRoute path="/chat/:boxId">
           <ChatPage />
         </PrivateRoute>
         <PrivateRoute path="/home">

@@ -1,7 +1,7 @@
 import React from "react";
 import ChatSideBar from "./ChatSideBar";
 
-import style from "../../../styles/Layout/main.module.css";
+import style from "./main.module.css";
 
 const Layout = (props) => (
   <div className={style.layout}>

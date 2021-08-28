@@ -24,12 +24,12 @@ const registerUserHandlers = (socket) => {
   socket.join(socket.userId);
 
   socket.user.contact.concat(socket.user.box).map((roomId) => {
-    socket.to(roomId).emit("a user is online", { user: userId });
+    socket.to(roomId).emit("a user is online", { user: socket.userId });
   });
 
   socket.on("disconnect", () => {
     socket.user.contact.concat(socket.user.box).map((roomId) => {
-      socket.to(roomId).emit("a user is offline", { user: userId });
+      socket.to(roomId).emit("a user is offline", { user: socket.userId });
     });
   });
 };

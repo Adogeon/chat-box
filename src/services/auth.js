@@ -19,7 +19,7 @@ class AuthService {
         email: email,
         hash: hash,
       });
-      console.log(userRecord);
+
       const user = userRecord.toObject();
       delete user.hash;
       return user;
@@ -41,6 +41,7 @@ class AuthService {
     const validPassword = await bcrypt.compare(password, userRecord.hash);
 
     if (validPassword) {
+      
       const user = userRecord.toObject();
       delete user.hash;
       return user;

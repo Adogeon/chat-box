@@ -1,0 +1,27 @@
+.tab {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin: 1em 0;
+}
+
+.photo {
+  background-color: grey;
+  border-radius: 100%;
+  width: 20%;
+  padding-bottom: 20%;
+}
+
+.detail {
+  display: flex;
+  flex-flow: column;
+  width: 60%;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom {
+}

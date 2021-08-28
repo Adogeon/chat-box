@@ -37,12 +37,26 @@ class UserService {
    */
   async getCurrent() {
     if (this.isLogin()) {
-      const user = await this.UserModel.findById(this.currentUserId);
-      console.log(user.populated("box"));
-      await user.populate({ path: "box", model: "Box" });
-      console.log(user);
-      user.populated("box");
-      console.log(user);
+      const userRecord = await this.UserModel.findById(
+        this.currentUserId,
+        "-hash"
+      );
+      await userRecord.populate({
+        path: "box",
+        model: "Box",
+        select: "name id member log",
+      });
+      let user = userRecord.toObject();
+      user.box = user.box.map((box) => {
+        const latestMessage = box.log
+          .slice()
+          .sort((a, b) => b.date - a.date)[0];
+        delete box.log;
+        return {
+          ...box,
+          latestMessage,
+        };
+      });
       return user;
     } else {
       throw new Error("User is not logged in");

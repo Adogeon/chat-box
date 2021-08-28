@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useUserState } from "../../../../contexts/userContext";
 import ConversationList from "./ConversationList";
 
+import style from "./chatbar.module.css";
+
 const ChatSideBar = () => {
   const userState = useUserState();
   const [mode, setMode] = useState("all");
@@ -26,7 +28,7 @@ const ChatSideBar = () => {
   }, [mode, userState]);
 
   return (
-    <div className="sidebar">
+    <div className={style.sidebar}>
       <h2 className="logo">Chat Box</h2>
       <div className="sectionList">
         <button>All Message</button>
