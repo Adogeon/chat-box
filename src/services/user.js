@@ -43,11 +43,16 @@ class UserService {
       );
       await userRecord.populate({
         path: "box",
-        model: "Box",
-        select: "name id member log",
+        select: "name id member log isDM",
+        populate: {
+          path: "member",
+          select: "username id",
+        },
       });
+      console.log(userRecord);
       let user = userRecord.toObject();
       user.box = user.box.map((box) => {
+        console.log(box.member);
         const latestMessage = box.log
           .slice()
           .sort((a, b) => b.date - a.date)[0];

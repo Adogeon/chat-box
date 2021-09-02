@@ -3,11 +3,14 @@ import React from "react";
 import MainRouter from "./router/router";
 import { AuthProvider } from "./contexts/authContext";
 import { UserProvider } from "./contexts/userContext";
+import { BoxProvider } from "./contexts/boxContext";
 
 const App = () => (
   <AuthProvider>
     <UserProvider>
-      <MainRouter />
+      <BoxProvider>
+        <MainRouter />
+      </BoxProvider>
     </UserProvider>
   </AuthProvider>
 );

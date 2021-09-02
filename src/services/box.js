@@ -55,18 +55,10 @@ class BoxService {
    * @param {string} message - user message
    *
    */
-  async addMessage(boxId, message, username) {
+  async addMessage(boxId, newRecord) {
     if (!this.currentUserId) throw new Error("User is not loggin");
     const boxRecord = await this.boxModel.findById(boxId);
     if (!boxRecord) throw new Error("Can't find box with id " + boxId);
-    const newRecord = {
-      body: message,
-      user: this.currentUserId,
-      username: username,
-      date: new Date(),
-    };
-    console.log(boxId);
-    console.log(boxRecord);
     boxRecord.log.push(newRecord);
     await boxRecord.save();
   }

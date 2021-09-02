@@ -31,23 +31,19 @@ module.exports = (io, socket) => {
   socket.on("room", async ({ room }) => {
     console.log("joining room");
     //creating box record for prototype
-    const {log, boxDetail} = await boxService.loadBox({ name: room });
-    const record = log.map((message) => {
-      return {
-        text: message.body,
-        username: message.username,
-      };
-    });
-    socket.emit("roomLoaded", record);
     socket.join(room);
   });
 
   socket.on("newMessage", async ({ room, message }) => {
     console.log("sending new message");
     const boxRecord = await BoxModel.findOne({ name: room });
-    await boxService.addMessage(boxRecord._id, message, socket.username);
-    socket
-      .to(room)
-      .emit("message", { text: message, username: socket.username });
+    const newRecord = {
+      body: message,
+      user: this.currentUserId,
+      username: socket.username,
+      date: new Date(),
+    };
+    await boxService.addMessage(boxRecord._id, newRecord);
+    io.in(room).emit("message", { newRecord });
   });
 };

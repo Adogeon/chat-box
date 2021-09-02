@@ -7,7 +7,6 @@ router.post("/signin", async (req, res) => {
     const authService = new AuthService(UserModel);
     const user = await authService.signIn(req.body);
     const token = await authService.generateToken(user);
-    console.log(user._id);
     res.json({ userId: user._id, username: user.username, user, token });
   } catch (error) {
     res.json({ message: "error happen", error });

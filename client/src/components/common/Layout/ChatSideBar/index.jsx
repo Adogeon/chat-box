@@ -1,30 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useUserState } from "../../../../contexts/userContext";
+import {
+  useBoxState,
+  useBoxDispatch,
+  loadAll,
+} from "../../../../contexts/boxContext";
 import ConversationList from "./ConversationList";
 
 import style from "./chatbar.module.css";
 
 const ChatSideBar = () => {
   const userState = useUserState();
+  const boxState = useBoxState();
+  const boxDispatch = useBoxDispatch();
   const [mode, setMode] = useState("all");
-  const [list, setList] = useState([]);
-
-  console.log(userState.box);
 
   useEffect(() => {
-    setList(
-      userState.box.filter((conversation) => {
-        switch (mode) {
-          case "archived":
-            return conversation.archived;
-          case "saved":
-            return conversation.saved;
-          case "all":
-          default:
-            return true;
-        }
-      })
-    );
+    loadAll(boxDispatch, userState.box);
+  }, []);
+
+  useEffect(() => {
+    boxDispatch({ type: "CHANGE_DISPLAY", payload: mode });
   }, [mode, userState]);
 
   return (
@@ -35,7 +31,7 @@ const ChatSideBar = () => {
         <button>Archived</button>
         <button>Saved</button>
       </div>
-      <ConversationList data={list} />
+      <ConversationList data={boxState.displayList} />
     </div>
   );
 };

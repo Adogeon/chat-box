@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
 
-const { Schema } = mongoose;
+const { Schema, ObjectId } = mongoose;
 
-const boxSchema = Schema({
-  member: [mongoose.ObjectId],
-  log: [
-    { body: String, date: Date, user: mongoose.ObjectId, username: String },
-  ],
+const boxSchema = new Schema({
+  member: [{ type: ObjectId, ref: "User" }],
+  log: [{ body: String, date: Date, user: ObjectId, username: String }],
   name: String,
   tag: String,
+  isDM: Boolean,
 });
 
 const Box = mongoose.model("Box", boxSchema);
