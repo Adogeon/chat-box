@@ -30,20 +30,21 @@ module.exports = (io, socket) => {
   //prototype function
   socket.on("room", async ({ room }) => {
     console.log("joining room");
+    console.log(room);
     //creating box record for prototype
     socket.join(room);
   });
 
   socket.on("newMessage", async ({ room, message }) => {
+    console.log(room);
     console.log("sending new message");
-    const boxRecord = await BoxModel.findOne({ name: room });
     const newRecord = {
       body: message,
       user: this.currentUserId,
       username: socket.username,
       date: new Date(),
     };
-    await boxService.addMessage(boxRecord._id, newRecord);
+    await boxService.addMessage(room, newRecord);
     io.in(room).emit("message", { newRecord });
   });
 };

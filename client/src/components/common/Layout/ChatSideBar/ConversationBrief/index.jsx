@@ -15,11 +15,13 @@ const ConversationBrief = ({ name, recentMS, update, member, isDm }) => {
           {isDm ? (
             member
               .filter((person) => person._id !== userState.userId)
-              .map((person) => <p>{person.username}</p>)
+              .map((person) => (
+                <div className={style.name}>{person.username}</div>
+              ))
           ) : (
-            <p>{name}</p>
+            <div className={style.name}>{name}</div>
           )}
-          <p>{dateParser(recentMS.date)}</p>
+          <div>{dateParser(recentMS.date)}</div>
         </div>
         <div className={style.bottom}>{recentMS.body}</div>
       </div>

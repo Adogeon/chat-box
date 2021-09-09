@@ -1,9 +1,10 @@
 .sidebar {
   min-width: 300px;
+  width: 17%;
   border-right: 1px solid #e8eaf6;
   display: flex;
   flex-flow: column;
-  padding: 2em 1em;
+  padding: 2em 0em;
 }
 
 .active {

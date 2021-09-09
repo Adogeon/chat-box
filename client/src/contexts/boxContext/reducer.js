@@ -22,7 +22,12 @@ export const BoxReducer = (state, action) => {
       };
     case "UPDATE_BOX":
       const newUserBoxes = new Map(state.userBoxes);
-      newUserBoxes.set(action.payload.boxId, action.payload.update);
+      let updateBox = newUserBoxes.get(action.payload.id);
+      updateBox = {
+        ...updateBox,
+        [action.payload.update.key]: action.payload.update.value,
+      };
+      newUserBoxes.set(action.payload.id, updateBox);
       return {
         ...state,
         userBoxes: newUserBoxes,
