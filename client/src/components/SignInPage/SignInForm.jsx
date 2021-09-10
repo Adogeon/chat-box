@@ -31,6 +31,7 @@ const SignInForm = () => {
         name="password"
         validate="required"
         label="Password"
+        type="password"
         classes={{
           contClass: style.textInputContainer,
           errorClass: style.errorClass,

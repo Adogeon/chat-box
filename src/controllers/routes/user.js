@@ -18,8 +18,11 @@ router.post("/user/conversation/new", (req, res) => {
   //create a new conversation
 });
 
-router.post("/user/contact/:id", (req, res) => {
+router.post("/user/addContact", async (req, res) => {
   //add new contact for the user
+  const userService = new UserService(UserModel, {}, req.token.userId);
+  const updateUserData = await userService.addContact(req.body.userId);
+  res.json(updateUserData);
 });
 
 module.exports = router;

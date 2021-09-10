@@ -1,4 +1,4 @@
 import { BoxProvider, useBoxState, useBoxDispatch } from "./context";
-import { loadAll, loadBox } from "./action";
+import { loadAllBox, loadBox } from "./action";
 
-export { BoxProvider, useBoxState, useBoxDispatch, loadAll, loadBox };
+export { BoxProvider, useBoxState, useBoxDispatch, loadAllBox, loadBox };

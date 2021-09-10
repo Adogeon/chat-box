@@ -3,6 +3,7 @@ export const initialState = {
   errorMessage: null,
   username: "",
   userId: "",
+  contact: [],
   box: [],
 };
 
@@ -19,7 +20,16 @@ export const UserReducer = (state, action) => {
         username: action.payload.username,
         userId: action.payload._id,
         box: action.payload.box,
+        contact: action.payload.contact,
         loading: false,
+      };
+    case "UPDATE_USER":
+      return {
+        ...state,
+        username: action.payload.username,
+        userId: action.payuload.id,
+        box: action.payload.box,
+        contact: action.payload.contact,
       };
     case "LOAD_USER_ERROR":
       return {

@@ -1,5 +1,5 @@
 import React from "react";
-import ChatSideBar from "./ChatSideBar";
+import ChatSideBar from "./ChatSideBar/ChatSideBar";
 
 import style from "./main.module.css";
 

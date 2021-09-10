@@ -3,7 +3,6 @@ export const initialState = {
   currentBox: {},
   currentLog: [],
   currentMember: [],
-  displayList: [],
 };
 
 export const BoxReducer = (state, action) => {
@@ -41,24 +40,6 @@ export const BoxReducer = (state, action) => {
       return {
         ...state,
         currentMember: [...state.currentMember, action.payload],
-      };
-    case "CHANGE_DISPLAY":
-      const newDisplay = [...state.userBoxes]
-        .filter((kev, value) => {
-          switch (action.payload) {
-            case "archived":
-              return value.archived;
-            case "saved":
-              return value.saved;
-            case "all":
-            default:
-              return true;
-          }
-        })
-        .map((data) => data[1]);
-      return {
-        ...state,
-        displayList: newDisplay,
       };
     default:
       throw new Error("Can't handle " + action);
