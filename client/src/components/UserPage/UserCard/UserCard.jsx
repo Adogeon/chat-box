@@ -1,13 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router";
-import {useBoxState} from "./"
 
 const UserCard = (props) => {
-  const history = useHistory();
+  console.log(props.user);
+
   const handleClick = () => {
-       
-    history.push(`/chat/${roomId}`)
+    console.log(props.user.username);
   };
+
   return (
     <a role="button" onClick={handleClick}>
       <div>

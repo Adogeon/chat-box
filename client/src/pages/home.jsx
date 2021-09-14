@@ -10,6 +10,7 @@ import {
 
 //import components
 import Layout from "../components/common/Layout";
+import { ContactList } from "../components/UserPage";
 
 const HomePage = () => {
   const userState = useUserState();
@@ -26,7 +27,13 @@ const HomePage = () => {
         <div> LoAdInG UsEr ...</div>
       ) : (
         <Layout>
-          <div>Welcome back, {userState.username}</div>
+          <div>
+            <h1>Welcome back, {userState.username}</h1>
+          </div>
+          <div>
+            <h2>Contact</h2>
+            <ContactList users={userState.contact} />
+          </div>
         </Layout>
       )}
     </>

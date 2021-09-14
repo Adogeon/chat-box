@@ -47,7 +47,6 @@ const ChatSideBar = () => {
         return boxList;
     }
     setDisplayList(boxList);
-    console.log("displayList", displayList);
   }, [filter, boxState]);
 
   return (
