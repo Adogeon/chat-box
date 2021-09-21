@@ -1,5 +1,4 @@
 export const loadAllBox = (dispatch, boxArr) => {
-  console.log(boxArr);
   const boxMap = new Map(boxArr.map((box) => [box._id, box]));
   dispatch({ type: "LOAD_ALL", payload: boxMap });
 };

@@ -49,6 +49,10 @@ class UserService {
           select: "username id",
         },
       });
+      await userRecord.populate({
+        path: "contact",
+        select: "username id"
+      })
       console.log(userRecord);
       let user = userRecord.toObject();
       user.box = user.box.map((box) => {
