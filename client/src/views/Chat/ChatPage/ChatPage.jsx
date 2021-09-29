@@ -18,6 +18,7 @@ const ChatPage = (props) => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
   const userState = useSelector((state) => state.user);
+  const roomState = useSelector((state) => state.room);
   const { boxId } = useParams();
 
   useEffect(() => {
@@ -62,10 +63,7 @@ const ChatPage = (props) => {
   return (
     <Layout>
       <main className={style.container}>
-        <LogArea
-          log={boxState.currentLog}
-          currentUsername={userState.username}
-        />
+        <LogArea log={roomState.roomLog} currentUsername={userState.username} />
         <InputArea socket={socket} roomId={boxId} />
       </main>
     </Layout>

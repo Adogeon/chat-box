@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 import button from "../../../styles/Button/button.module.css";
 import style from "./InputArea.module.css";
 

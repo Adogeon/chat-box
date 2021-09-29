@@ -1,4 +1,4 @@
-const BoxService = require("../../../services/box.js");
+const BoxService = require("../box.js");
 
 describe("Box Service", () => {
   describe("createConversation", () => {
@@ -26,7 +26,7 @@ describe("Box Service", () => {
 
       expect(mockCreate).toBeCalledTimes(1);
       expect(mockCreate).toBeCalledWith({
-       member: ["mock-current-user", "mock-other-user-1", "mock-other-user-2"],
+        member: ["mock-current-user", "mock-other-user-1", "mock-other-user-2"],
       });
     });
   });

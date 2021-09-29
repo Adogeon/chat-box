@@ -12,6 +12,7 @@ export const roomSlice = createSlice({
   initialState: {
     populated: false,
     allRooms: roomsAdapter.getInitialState(),
+    fetchingCurrent: false,
     currentRoom: {},
     roomLog: [],
     roomMember: [],
@@ -27,6 +28,18 @@ export const roomSlice = createSlice({
     updateLog: (state, action) => {
       state.roomLog = [...state.roomLog, action.payload];
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCurrentRoom.pending, (state, action) => {
+        state.fetchingCurrent = true;
+      })
+      .addCase(getCurrentRoom.fulfilled, (state, action) => {
+        state.fetchingCurrent = false;
+        state.roomLog = action.payload.log;
+        state.roomMember = action.payload.member;
+        state.currentRoom = action.payload.boxDetail;
+      });
   },
 });
 

@@ -71,9 +71,10 @@ class BoxService {
     if (!this.currentUserId) throw new Error("User is not login");
     const boxRecord = await this.boxModel.findOne(searchOption);
     if (!boxRecord) throw new Error("can't find the box");
-    const { log, ...rest } = boxRecord.toObject();
+    const { log, member, ...rest } = boxRecord.toObject();
     return {
       log,
+      member,
       boxDetail: rest,
     };
   }

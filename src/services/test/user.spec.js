@@ -1,4 +1,4 @@
-const UserService = require("../../../services/user.js");
+const UserService = require("../user.js");
 
 describe("User service unit test", () => {
   describe("IsLogin", () => {
@@ -151,5 +151,4 @@ describe("User service unit test", () => {
       });
     });
   });
-  
 });
