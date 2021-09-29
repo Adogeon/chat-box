@@ -1,5 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  isPending,
+  isRejected,
+  isFulfilled,
+} from "@reduxjs/toolkit";
 import { signInUser, signUpUser } from "./auth.actions.js";
+
+const isAPendingAction = isPending(signUpUser, signUpUser);
+const isAFulFilledAction = isFulfilled(signInUser, signUpUser);
+const isARejectedAction = isRejected(signInUser, signUpUser);
 
 export const authSlices = createSlice({
   name: "auth",
@@ -19,21 +28,22 @@ export const authSlices = createSlice({
   extraReducers: (builder) => {
     builder
       .addMatcher(
-        (action) => action.type.ednsWith("/pending"),
+        (action) => isAPendingAction(action),
         (state, action) => {
           state.loading = true;
         }
       )
       .addMatcher(
-        (action) => action.type.ednsWith("/fulfilled"),
+        (action) => isAFulFilledAction(action),
         (state, action) => {
+          console.log(action);
           state.loading = false;
           state.token = action.payload.token;
           state.isAuth = true;
         }
       )
       .addMatcher(
-        (action) => action.type.ednsWith("/rejected"),
+        (action) => isARejectedAction(action),
         (state, action) => {
           state.loading = false;
           state.isAuth = false;

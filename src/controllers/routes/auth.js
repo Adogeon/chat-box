@@ -7,7 +7,7 @@ router.post("/signin", async (req, res) => {
     const authService = new AuthService(UserModel);
     const user = await authService.signIn(req.body);
     const token = await authService.generateToken(user);
-    res.json({ userId: user._id, username: user.username, user, token });
+    res.json({ token });
   } catch (error) {
     res.json({ message: "error happen", error });
   }
@@ -18,7 +18,7 @@ router.post("/signup", async (req, res) => {
     const authService = new AuthService(UserModel);
     const user = await authService.signUp(req.body);
     const token = await authService.generateToken(user);
-    res.json({ userId: user._id, username: user.username, user, token });
+    res.json({ token });
   } catch (error) {
     console.log(error);
     res.send({ error });

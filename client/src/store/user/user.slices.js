@@ -13,13 +13,6 @@ export const userSLice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(
-        (action) => action.type.endsWith("/rejected"),
-        (state, action) => {
-          state.loading = false;
-          state.errorMessage = action.payload;
-        }
-      )
       .addCase(loadCurrent.pending, (state, action) => {
         state.loading = true;
       })
@@ -31,7 +24,15 @@ export const userSLice = createSlice({
       })
       .addCase(addContact.fulfilled, (state, action) => {
         state.contact.push(action.payload);
-      });
+      })
+      .addMatcher(
+        (action) => action.type.endsWith("/rejected"),
+        (state, action) => {
+          console.log(action);
+          state.loading = false;
+          state.errorMessage = action.payload;
+        }
+      );
   },
 });
 

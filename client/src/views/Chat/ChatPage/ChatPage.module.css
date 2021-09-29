@@ -1,0 +1,7 @@
+.container {
+  width: 65%;
+  min-width: 300px;
+  display: flex;
+  flex-flow: column;
+  padding: 1em;
+}

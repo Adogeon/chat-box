@@ -1,4 +1,5 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+import { getCurrentRoom } from "./room.actions";
 
 const roomsAdapter = createEntityAdapter({
   selectId: (room) => room._id,
@@ -9,6 +10,7 @@ const roomsAdapter = createEntityAdapter({
 export const roomSlice = createSlice({
   name: "room",
   initialState: {
+    populated: false,
     allRooms: roomsAdapter.getInitialState(),
     currentRoom: {},
     roomLog: [],
@@ -16,6 +18,7 @@ export const roomSlice = createSlice({
   },
   reducers: {
     loadAllRoom: (state, action) => {
+      state.populated = true;
       roomsAdapter.setAll(state.allRooms, action.payload);
     },
     updateRoom: (state, action) => {
@@ -27,10 +30,9 @@ export const roomSlice = createSlice({
   },
 });
 
-export const { loadAll, updateRoom, updateLog } = roomSlice.actions;
+export const { loadAllRoom, updateRoom, updateLog } = roomSlice.actions;
+export { getCurrentRoom };
 
-export const roomSelector = roomsAdapter.getSelectors(
-  (state) => state.allrooms
-);
+export const roomSelector = roomsAdapter.getSelectors();
 
 export default roomSlice.reducer;

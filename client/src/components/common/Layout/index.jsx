@@ -1,11 +1,11 @@
 import React from "react";
-import ChatSideBar from "./ChatSideBar/ChatSideBar";
+import Sidebar from "./Navigation/Sidebar/SideBar.jsx";
 
 import style from "./main.module.css";
 
 const Layout = (props) => (
   <div className={style.layout}>
-    <ChatSideBar />
+    <Sidebar />
     {props.children}
   </div>
 );

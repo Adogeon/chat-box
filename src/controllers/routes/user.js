@@ -10,15 +10,15 @@ router.get("/current", isAuth, async (req, res) => {
   res.json(currentUserData);
 });
 
-router.get("/user/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   //return user data
 });
 
-router.post("/user/conversation/new", (req, res) => {
+router.post("/conversation/new", (req, res) => {
   //create a new conversation
 });
 
-router.post("/user/addContact", async (req, res) => {
+router.post("/addContact", async (req, res) => {
   //add new contact for the user
   const userService = new UserService(UserModel, {}, req.token.userId);
   const updateUserData = await userService.addContact(req.body.userId);

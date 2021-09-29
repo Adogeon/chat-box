@@ -1,14 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { addNewContact, getCurrentUser } from "../../adapters/userAdapter";
+import * as APIAdapter from "../../adapters/APIAdapter";
 
 export const loadCurrent = createAsyncThunk(
-  "loadUser",
-  async (token, thunkAPI) => {
-    const userFetch = await getCurrentUser(token);
-    if (getFetch.error) {
-      thunkAPI.rejectWithValue(userFetch);
+  "user/loadUser",
+  async (_, thunkAPI) => {
+    console.log("Blimey");
+    const userFetch = await APIAdapter.fetchWithAuth("/api/user/current");
+    console.log(userFetch);
+    const userData = await userFetch.json();
+    console.log(userData);
+    if (userFetch.error) {
+      return thunkAPI.rejectWithValue(userData);
     } else {
-      thunkAPI.fulfillWithValue(userFetch);
+      return thunkAPI.fulfillWithValue(userData);
     }
   }
 );

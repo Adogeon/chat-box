@@ -1,0 +1,19 @@
+.textInputContainer {
+  display: flex;
+  flex-flow: column;
+  margin: 1em 0;
+}
+
+.errorClass {
+  color: red;
+  margin: 0;
+}
+
+.actionArea {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  justify-content: space-between;
+  margin: 0.67em 0;
+  text-align: end;
+}

@@ -1,11 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getBox } from "../../adapters/boxAdapter";
+import * as APIAdapter from "../../adapters/APIAdapter";
 
-export const getCurrentBox = createAsyncThunk(
-  "getCurrentBox",
+export const getCurrentRoom = createAsyncThunk(
+  "room/getCurrentRoom",
   async (boxId, thunkAPI) => {
-    const currentBoxData = await getBox(boxId, token);
-    return currentBoxData;
+    const currentBoxFetch = await APIAdapter.fetchWithToken(
+      `/api/box/${boxId}`
+    );
+    const boxData = await currentBoxFetch.json();
+    return boxData;
   }
 );
-

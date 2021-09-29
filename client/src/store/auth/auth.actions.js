@@ -1,14 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { signInUser, signUpUser } from "../../adapters/authAdapter";
+import * as authAdapter from "../../adapters/authAdapter";
 
 export const signInUser = createAsyncThunk(
   "auth/signInRequest",
   async (userData, thunkAPI) => {
-    const response = await signInUser(userData);
+    const response = await authAdapter.signInUser(userData);
+    console.log(response);
     if (response.error) {
-      thunkAPI.rejectWithValue(response);
+      return thunkAPI.rejectWithValue(response);
     } else {
-      thunkAPI.rejectWithValue(response);
+      return thunkAPI.fulfillWithValue(response);
     }
   }
 );
@@ -16,11 +17,11 @@ export const signInUser = createAsyncThunk(
 export const signUpUser = createAsyncThunk(
   "auth/signUpRequest",
   async (userData, thunkAPI) => {
-    const response = await signUpUser(userData);
+    const response = await authAdapter.signUpUser(userData);
     if (response.error) {
-      thunkAPI.rejectWithValue(response);
+      return thunkAPI.rejectWithValue(response);
     } else {
-      thunkAPI.rejectWithValue(response);
+      return thunkAPI.fulfillWithValue(response);
     }
   }
 );
