@@ -1,0 +1,16 @@
+.slidebar {
+  width: 17%;
+  padding: 1em 0em 1em 1em;
+  border-right: 1px solid #D6D9DC;
+}
+
+.userArea {
+  display: flex;
+  margin: 0.5em 0;
+  margin-bottom: 3em;
+}
+
+.userName {
+  font-size: 32px;
+  font-weight: 700;
+}

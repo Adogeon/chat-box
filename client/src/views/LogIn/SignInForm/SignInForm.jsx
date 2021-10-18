@@ -6,9 +6,9 @@ import style from "./SignInForm.module.css";
 import button from "../../../styles/Button/button.module.css";
 
 //component import
-import Form from "../../../components/common/Form";
-import TextInput from "../../../components/common/Form/TextInput";
-import FormSubmitButton from "../../../components/common/Form/FormSubmitButton";
+import Form from "../../../components/form/Form";
+import TextInput from "../../../components/form/TextInput";
+import FormSubmitButton from "../../../components/form/FormSubmitButton";
 
 //action import
 import { signInUser } from "../../../store/auth/auth.slices.js";

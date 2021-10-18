@@ -15,7 +15,7 @@ const SignInPage = () => {
 
   useEffect(() => {
     if (authState.isAuth) {
-      history.push("/home");
+      history.push("/");
     }
   }, [authState]);
 

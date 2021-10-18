@@ -1,0 +1,4 @@
+- Make frontend look like design
+- Saving token to local storage
+- Implement checking for token, send out a refresh 
+- Implement refesh token endpoint

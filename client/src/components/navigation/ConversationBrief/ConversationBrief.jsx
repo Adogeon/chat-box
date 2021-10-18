@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 
-import dateParser from "../../../../../adapters/dateParser";
+import dateParser from "../../../adapters/dateParser";
 
 import style from "./ConversationBrief.module.css";
 
 const ConversationBrief = ({ id, name, recentMS, update, member, isDm }) => {
   const userState = useSelector((state) => state.user);
-
+  const { url } = useRouteMatch();
   return (
     <NavLink
       className={style["link-normal"]}
