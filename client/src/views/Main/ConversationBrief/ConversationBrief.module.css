@@ -1,0 +1,47 @@
+.tab {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin: 0.5em 0;
+}
+
+.photo {
+  background-color: grey;
+  border-radius: 100%;
+  width: 20%;
+  padding-bottom: 20%;
+}
+
+.detail {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+}
+
+.name {
+  font-weight: 700;
+}
+
+.bottom {
+}
+
+.link-normal {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-normal:hover {
+  color: inherit;
+}
+
+.link-active {
+  border-right: 3px solid #5a6abf;
+}

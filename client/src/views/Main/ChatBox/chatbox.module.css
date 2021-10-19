@@ -1,0 +1,9 @@
+.chatBox {
+  grid-column: 1 / span 12;
+  max-height: 90vh;
+  display: flex;
+  flex-flow: column;
+  padding: 1em;
+  box-shadow: 0px 6px 12px #a9a3b7;
+  background-color: #ffffff;
+}

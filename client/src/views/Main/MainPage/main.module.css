@@ -1,0 +1,20 @@
+.layout {
+  display: grid;
+  grid-template-columns: 256px auto;
+  grid-template-areas: "nav body";
+  flex-flow: row;
+  height: 100vh;
+  background-color: #eeeeee;
+}
+
+.nav {
+  grid-area: nav;
+}
+
+.body {
+  grid-area: body;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  margin: 1em;
+  gap: 1em;
+}
