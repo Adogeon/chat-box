@@ -10,30 +10,24 @@ const ConversationBrief = ({ id, name, recentMS, update, member, isDm }) => {
   const userState = useSelector((state) => state.user);
   const { url } = useRouteMatch();
   return (
-    <NavLink
-      className={style["link-normal"]}
-      activeClassName={style["link-active"]}
-      to={`/chat/${id}`}
-    >
-      <div className={style.tab}>
-        <div className={style.photo}></div>
-        <div className={style.detail}>
-          <div className={style.top}>
-            {isDm ? (
-              member
-                .filter((person) => person._id !== userState.userId)
-                .map((person) => (
-                  <div className={style.name}>{person.username}</div>
-                ))
-            ) : (
-              <div className={style.name}>{name}</div>
-            )}
-            <div>{dateParser(recentMS.date)}</div>
-          </div>
-          <div className={style.bottom}>{recentMS.body}</div>
+    <button className={style.tab}>
+      <div className={style.photo}></div>
+      <div className={style.detail}>
+        <div className={style.top}>
+          {isDm ? (
+            member
+              .filter((person) => person._id !== userState.userId)
+              .map((person) => (
+                <div className={style.name}>{person.username}</div>
+              ))
+          ) : (
+            <div className={style.name}>{name}</div>
+          )}
         </div>
+        <div className={style.bottom}>{recentMS.body}</div>
       </div>
-    </NavLink>
+      <div className={style.extra}>{dateParser(recentMS.date)}</div>
+    </button>
   );
 };
 

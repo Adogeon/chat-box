@@ -1,4 +1,6 @@
 .list {
   list-style: none;
   grid-area: nav;
+  padding: 0;
+  margin: 8px 0px
 }
