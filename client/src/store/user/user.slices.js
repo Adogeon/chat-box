@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loadCurrent, addContact } from "./user.actions.js";
 
-export const userSLice = createSlice({
+export const userSlice = createSlice({
   name: "user",
   initialState: {
     loading: false,
@@ -36,6 +36,6 @@ export const userSLice = createSlice({
   },
 });
 
-export default userSLice.reducer;
-
 export { loadCurrent, addContact };
+
+export default userSlice.reducer;

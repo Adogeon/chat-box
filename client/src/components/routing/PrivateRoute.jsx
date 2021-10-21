@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
 const PrivateRoute = ({ children, ...rest }) => {
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  console.log(localStorage.getItem("authToken"));
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isAuth ? (
+        localStorage.getItem("authToken") ? (
           children
         ) : (
           <Redirect

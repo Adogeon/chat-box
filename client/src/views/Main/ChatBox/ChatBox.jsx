@@ -8,6 +8,7 @@ import {
   getCurrentRoom,
   updateRoom,
   updateLog,
+  roomSelector,
 } from "../../../store/room/room.slices.js";
 import LogArea from "../../Chat/LogArea/LogArea";
 import InputArea from "../../Chat/InputArea/InputArea";
@@ -20,47 +21,46 @@ const ChatPage = (props) => {
   //const { roomId } = useParams();
 
   useEffect(() => {
-    dispatch(getCurrentRoom("611ef581514d69062cfb0bb1"));
+    const firstRoomId = roomState.allRooms.ids[0];
+    dispatch(getCurrentRoom(firstRoomId));
   }, []);
 
   useEffect(() => {
-    if (authState.isAuth) {
-      socket.auth = { token: authState.token };
-      socket.connect();
-      //joining a test room
-      socket.on("connect", () => {
-        socket.emit("room", { room: "611ef581514d69062cfb0bb1" });
-      });
-      socket.on("roomLoaded", (payload) => {
-        console.log("Room Loaded by socket");
-        //boxDispatch({ type: "LOAD_BOX" });
-      });
-      //sending message
-      socket.on("message", ({ newRecord }) => {
-        dispatch(updateLog(newRecord));
-        dispatch(
-          updateRoom({
-            id: boxId,
-            update: {
-              key: "latestMessage",
-              value: newRecord,
-            },
-          })
-        );
-      });
-    }
+    socket.auth = { token: localStorage.getItem("authToken") };
+    socket.connect();
+    //joining a test room
+    socket.on("connect", () => {
+      socket.emit("room", { room: roomState.currentRoom._id });
+    });
+    socket.on("roomLoaded", (payload) => {
+      console.log("Room Loaded by socket");
+      //boxDispatch({ type: "LOAD_BOX" });
+    });
+    //sending message
+    socket.on("message", ({ newRecord }) => {
+      dispatch(updateLog(newRecord));
+      dispatch(
+        updateRoom({
+          id: boxId,
+          update: {
+            key: "latestMessage",
+            value: newRecord,
+          },
+        })
+      );
+    });
 
     return function cleaningUp() {
       socket.emit("leave");
       socket.disconnect();
       console.log("should remove socket");
     };
-  }, []);
+  }, [roomState.curentRoom]);
 
   return (
     <div className={style.chatBox}>
       <LogArea log={roomState.roomLog} currentUsername={userState.username} />
-      <InputArea socket={socket} roomId={"611ef581514d69062cfb0bb1"} />
+      <InputArea socket={socket} roomId={roomState.currentRoom._id} />
     </div>
   );
 };
