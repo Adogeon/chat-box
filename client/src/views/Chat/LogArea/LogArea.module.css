@@ -38,11 +38,15 @@
 .self {
   composes: message;
   justify-content: flex-end;
+  background-color: #5a6bbe;
+  color: #ffffff;
 }
 
 .other {
   composes: message;
   justify-content: flex-start;
+  background-color: #a99755;
+  color: #ffffff;
 }
 
 .user {

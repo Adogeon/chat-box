@@ -59,6 +59,12 @@ const ChatPage = (props) => {
 
   return (
     <div className={style.chatBox}>
+      <div className={style.header}>
+        <div className={style.label} role="header">
+          {roomState.currentRoom.name}
+        </div>
+        <button>Add people</button>
+      </div>
       <LogArea log={roomState.roomLog} currentUsername={userState.username} />
       <InputArea socket={socket} roomId={roomState.currentRoom._id} />
     </div>
