@@ -1,7 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import { ExitToAppOutlined } from "@material-ui/icons";
+
 import style from "./Appbar.module.css";
+import button from "../../../styles/Button/button.module.css";
+import 
 
 const AppBar = () => {
   const userState = useSelector((state) => state.user);
@@ -17,7 +21,12 @@ const AppBar = () => {
       </div>
       <div className={style.right}>
         <div>{userState.username}</div>
-        <button onClick={handleLogOut}>Log Out</button>
+        <button
+          className={`${button.text} ${style["log-out-button"]}`}
+          onClick={handleLogOut}
+        >
+          <ExitToAppOutlined />
+        </button>
       </div>
     </div>
   );

@@ -2,8 +2,17 @@
   grid-area: bar;
   display: flex;
   justify-content: space-between;
+  background-color: #5a6bbe;
+  color: #ffffff;
+  padding: 0 1.5em;
 }
 
 .left + .right {
   display: flex;
+  align-items: center;
+}
+
+.log-out-button {
+  color: inherit;
+  border-radius: 100%;
 }
