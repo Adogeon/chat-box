@@ -33,7 +33,7 @@ export const authSlices = createSlice({
     },
     logOut: (state) => {
       state.isAuth = false;
-      state.token = "";
+      localStorage.removeItem("authToken");
     },
   },
   extraReducers: (builder) => {

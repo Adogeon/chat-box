@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useContext } from "react";
 
 import validations from "./validations";
 
@@ -6,6 +6,11 @@ export const FormCtx = createContext({
   fields: {},
   error: {},
 });
+
+export const useFormValue = (fieldname) => {
+  let formValue = useContext(FormCtx);
+  return formValue.fields[fieldname].value;
+};
 
 const Form = (props) => {
   const [fields, setFields] = useState({});
@@ -27,6 +32,7 @@ const Form = (props) => {
     } else {
       throw new Error(`Please add "name" field to the input: ${field}`);
     }
+    console.log(JSON.stringify(fields));
   };
 
   const validateAll = () => {
@@ -47,19 +53,18 @@ const Form = (props) => {
       value: fieldValue,
       validate,
       displayName,
-      customRules = {},
+      customrules = {},
     } = fields[name];
 
     const rules = validate ? validate.split("|") : "";
-
     if (rules.length) {
       for (const rule in rules) {
         const ruleName = rules[rule];
-        const validation = validations[ruleName] || customRules[ruleName];
+        const validation = validations[ruleName] || customrules[ruleName];
         const isRuleSatisfied =
           ruleName !== "required" && !fieldValue
             ? true
-            : validation.rule().test(fieldValue.toString());
+            : validation.rule(fields).test(fieldValue.toString());
 
         if (!isRuleSatisfied) {
           error = validation.formatter.apply(null, [displayName || name]);

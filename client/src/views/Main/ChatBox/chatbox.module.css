@@ -1,6 +1,6 @@
 .chatBox {
   grid-column: 1 / span 12;
-  max-height: 90vh;
+  max-height: calc(90vh - 72px);
   display: flex;
   flex-flow: column;
   padding: 1em;

@@ -11,5 +11,10 @@ export default {
       return `${fieldName} should contain only numbers.`;
     },
   },
-  
+  email: {
+    rule: () => /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/,
+    formatter: (fieldname) => {
+      return `${fieldname} should have valid email address.`;
+    },
+  },
 };

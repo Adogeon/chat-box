@@ -1,7 +1,9 @@
 .layout {
   display: grid;
   grid-template-columns: 19.825em auto;
-  grid-template-areas: "nav body";
+  grid-template-rows: 72px auto;
+  grid-template-areas: "bar bar"
+                       "nav body";
   flex-flow: row;
   height: 100vh;
   background-color: #eeeeee;
@@ -17,4 +19,8 @@
   grid-template-columns: repeat(12, 1fr);
   margin: 1em;
   gap: 1em;
+}
+
+.bar {
+  grid-area: bar;
 }

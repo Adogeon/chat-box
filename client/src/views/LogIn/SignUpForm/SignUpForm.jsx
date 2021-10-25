@@ -6,7 +6,7 @@ import style from "./SignUpForm.module.css";
 import button from "../../../styles/Button/button.module.css";
 
 //component import
-import Form from "../../../components/form/Form";
+import Form, { useFormValue } from "../../../components/form/Form";
 import TextInput from "../../../components/form/TextInput";
 import FormSubmitButton from "../../../components/form/FormSubmitButton";
 
@@ -26,10 +26,11 @@ const SignUpForm = () => {
           contClass: style.textInputContainer,
           errorClass: style.errorClass,
         }}
+        onChange={(data) => console.log(data)}
       />
       <TextInput
         name="email"
-        validate="required"
+        validate="required|email"
         label="Email"
         classes={{
           contClass: style.textInputContainer,
@@ -48,7 +49,17 @@ const SignUpForm = () => {
       />
       <TextInput
         name="repassword"
-        validate="required"
+        validate="required|match:password"
+        customrules={{
+          "match:password": {
+            rule: (fields) => {
+              return new RegExp(`^${fields["password"].value}$`);
+            },
+            formatter: (fieldname) => {
+              return `${fieldname} should match password field.`;
+            },
+          },
+        }}
         label="Confirm password"
         type="password"
         classes={{

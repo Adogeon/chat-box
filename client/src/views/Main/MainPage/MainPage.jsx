@@ -6,6 +6,7 @@ import { loadAllRoom, roomSelector } from "../../../store/room/room.slices.js";
 
 import ChatBox from "../ChatBox/ChatBox.jsx";
 import ConversationList from "../ConversationList/ConversationList.jsx";
+import AppBar from "../../../components/navigation/Appbar/Appbar";
 
 import style from "./main.module.css";
 
@@ -33,6 +34,7 @@ const MainPage2 = () => {
         <div> LoAding User...</div>
       ) : (
         <div className={style.layout}>
+          <AppBar className={style.bar} />
           <div className={style.nav}>
             <ConversationList />
           </div>
