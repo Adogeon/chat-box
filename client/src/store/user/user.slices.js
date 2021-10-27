@@ -1,5 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 import { loadCurrent, addContact } from "./user.actions.js";
+
+const roomsAdapter = createEntityAdapter({
+  selectId: (room) => room._id,
+  sortComparer: (a, b) =>
+    a.latestMessage.date.localCompare(b.latestMessage.date),
+});
 
 export const userSlice = createSlice({
   name: "user",
@@ -9,8 +15,13 @@ export const userSlice = createSlice({
     username: "",
     userId: "",
     contact: [],
+    rooms: roomsAdapter.getInitialState(),
   },
-  reducers: {},
+  reducers: {
+    updateRoom: (state, action) => {
+      roomsAdapter.updateOne(state.allRooms, action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loadCurrent.pending, (state, action) => {
@@ -20,6 +31,7 @@ export const userSlice = createSlice({
         state.username = action.payload.username;
         state.userId = action.payload._id;
         state.contact = action.payload.contact;
+        roomsAdapter.setAll(state.rooms, action.payload.box);
         state.loading = false;
       })
       .addCase(addContact.fulfilled, (state, action) => {
@@ -36,6 +48,8 @@ export const userSlice = createSlice({
   },
 });
 
+export const { updateroom } = roomSlice.actions;
+export const roomSelector = roomsAdapter.getSelectors();
 export { loadCurrent, addContact };
 
 export default userSlice.reducer;

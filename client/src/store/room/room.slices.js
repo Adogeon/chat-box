@@ -1,5 +1,6 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 import { getCurrentRoom } from "./room.actions";
+import { logOut } from "../auth/auth.slices";
 
 const roomsAdapter = createEntityAdapter({
   selectId: (room) => room._id,
@@ -39,6 +40,13 @@ export const roomSlice = createSlice({
         state.roomLog = action.payload.log;
         state.roomMember = action.payload.member;
         state.currentRoom = action.payload.boxDetail;
+      })
+      .addCase(logOut, (state, action) => {
+        state.roomLog = [];
+        state.roomMember = [];
+        state.roomLog = [];
+        state.allRooms = roomsAdapter.getInitialState();
+        state.populated = false;
       });
   },
 });

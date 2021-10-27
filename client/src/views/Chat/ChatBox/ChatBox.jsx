@@ -1,17 +1,15 @@
 import React, { useEffect } from "react";
 
 import style from "./chatbox.module.css";
-import { useParams } from "react-router";
 import socket from "../../../adapters/socket";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getCurrentRoom,
   updateRoom,
   updateLog,
-  roomSelector,
 } from "../../../store/room/room.slices.js";
-import LogArea from "../../Chat/LogArea/LogArea";
-import InputArea from "../../Chat/InputArea/InputArea";
+import LogArea from "../LogArea/LogArea";
+import InputArea from "../InputArea/InputArea";
 
 const ChatPage = (props) => {
   const dispatch = useDispatch();

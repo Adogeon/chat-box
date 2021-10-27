@@ -1,0 +1,53 @@
+.tab {
+  display: grid;
+  font-family: "Noto Sans", sans-serif;
+  width: 100%;
+  border: none;
+  padding: 0 1em;
+}
+
+.two-line {
+  grid-template-columns: 2.5em 1fr auto;
+  grid-template-areas: "phot body extra";
+  gap: 1em;
+  height: 4.5em;
+}
+
+.photo {
+  grid-area: photo;
+  background-color: grey;
+  border-radius: 100%;
+  width: 2.5em;
+  height: 2.5em;
+  margin-top: 1em;
+}
+
+.detail {
+  grid-area: body;
+  display: grid;
+}
+
+.detail.two-line {
+  grid-template-rows: 2em 1.25em;
+  width: 100%;
+}
+
+.top {
+  align-self: end;
+  justify-self: start;
+  font-size: 1.125em;
+  font-weight: 700;
+}
+
+.bottom {
+  align-self: end;
+  justify-content: start;
+  font-size: 0.75em;
+  font-weight: 400;
+}
+
+.extra {
+  grid-area: extra;
+  margin-top: 1.188rem;
+  font-size: 0.75em;
+}

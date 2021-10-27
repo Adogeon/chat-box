@@ -66,4 +66,12 @@ const ChatPage = (props) => {
   );
 };
 
+import Layout from "../../../components/layout/Layout";
+import ChatBox from "../ChatBox/ChatBox";
+
+const ChatView = () => {
+  
+  return <Layout body={<ChatBox currentRoomId />} />;
+};
+
 export default ChatPage;

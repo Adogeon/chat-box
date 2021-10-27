@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+
 
 //style import;
 import style from "./LogInPage.module.css";
@@ -12,12 +12,6 @@ const SignInPage = () => {
   const authState = useSelector((state) => state.auth);
   const history = useHistory();
   const [mode, setMode] = useState("signIn");
-
-  useEffect(() => {
-    if (authState.isAuth) {
-      history.push("/test");
-    }
-  }, [authState]);
 
   return (
     <main className={style.mainContainer}>

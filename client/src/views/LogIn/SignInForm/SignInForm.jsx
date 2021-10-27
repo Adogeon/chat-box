@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-
+import { useHistory } from "react-router-dom";
 //style import
 import style from "./SignInForm.module.css";
 import button from "../../../styles/Button/button.module.css";
@@ -12,10 +12,16 @@ import FormSubmitButton from "../../../components/form/FormSubmitButton";
 
 //action import
 import { signInUser } from "../../../store/auth/auth.slices.js";
+import { loadCurrent } from "../../../store/user/user.slices.js";
 
 const SignInForm = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
+  const handleSubmit = (data) => {
+    dispatch(signUpUser)
+      .then(() => dispatch(loadCurrent()))
+      .then(() => history.push("/"));
+  };
   return (
     <Form>
       <TextInput
@@ -41,7 +47,7 @@ const SignInForm = () => {
         <FormSubmitButton
           styleClass={button.full}
           events={{
-            onSubmit: (data) => dispatch(signInUser(data)),
+            onSubmit: (data) => handleSubmit(data),
           }}
         >
           SIGN IN

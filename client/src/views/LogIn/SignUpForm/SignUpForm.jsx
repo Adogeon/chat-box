@@ -12,9 +12,16 @@ import FormSubmitButton from "../../../components/form/FormSubmitButton";
 
 //action import
 import { signUpUser } from "../../../store/auth/auth.slices.js";
+import { loadCurrent } from "../../../store/user/user.slices.js";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
+
+  const handleSubmit = (data) => {
+    dispatch(signUpUser).then(() => {
+      dispatch(loadCurrent());
+    });
+  };
 
   return (
     <Form>
@@ -71,7 +78,7 @@ const SignUpForm = () => {
         <FormSubmitButton
           styleClass={button.full}
           events={{
-            onSubmit: (data) => dispatch(signUpUser(data)),
+            onSubmit: (data) => handleSubmit(data),
           }}
         >
           Submit

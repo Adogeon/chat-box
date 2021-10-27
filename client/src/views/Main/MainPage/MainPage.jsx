@@ -19,14 +19,7 @@ const MainPage2 = () => {
       dispatch(loadAllRoom(result.payload.box));
     });
   }, []);
-
-  if (roomState.populated === true) {
-    const allRoom = roomSelector.selectAll(roomState.allRooms);
-    console.log("all", allRoom);
-
-    const roomEntities = roomSelector.selectEntities(roomState.allRooms);
-    console.log("entities", roomEntities);
-  }
+  const allRoom = roomSelector.selectAll(roomState.allRooms);
 
   return (
     <>
@@ -35,12 +28,20 @@ const MainPage2 = () => {
       ) : (
         <div className={style.layout}>
           <AppBar className={style.bar} />
-          <div className={style.nav}>
-            <ConversationList />
-          </div>
-          <div className={style.body}>
-            <ChatBox />
-          </div>
+          {allRoom.length > 0 ? (
+            <>
+              <div className={style.nav}>
+                <ConversationList />
+              </div>
+              <div className={style.body}>
+                <ChatBox />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={style.body}>Nothing here mate</div>
+            </>
+          )}
         </div>
       )}
     </>

@@ -1,0 +1,66 @@
+.main {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: grey;
+}
+
+.container {
+  height: 100%;
+  padding: 1em;
+  overflow: auto;
+  margin: 0.5em 0;
+}
+
+.message {
+  display: flex;
+  margin: 0.5em 0;
+  width: 100%;
+}
+
+.self {
+  composes: message;
+  justify-content: flex-end;
+}
+
+.other {
+  composes: message;
+  justify-content: flex-start;
+}
+
+.user {
+  margin-right: 1em;
+}
+
+.text {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.25em 0.5em;
+}
+
+.self .text {
+  background-color: #5a6bbe;
+  color: #ffffff;
+}
+
+.other .text {
+  background-color: #a99755;
+  color: #ffffff;
+}
