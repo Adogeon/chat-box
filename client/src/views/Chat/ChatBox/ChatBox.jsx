@@ -3,60 +3,42 @@ import React, { useEffect } from "react";
 import style from "./chatbox.module.css";
 import socket from "../../../adapters/socket";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getCurrentRoom,
-  updateRoom,
-  updateLog,
-} from "../../../store/room/room.slices.js";
+import { getRoom, updateLog } from "../../../store/room/room.slices.js";
 import LogArea from "../LogArea/LogArea";
 import InputArea from "../InputArea/InputArea";
+import { updateRoom } from "../../../store/user/user.slices";
 
 const ChatPage = (props) => {
   const dispatch = useDispatch();
-  const authState = useSelector((state) => state.auth);
   const userState = useSelector((state) => state.user);
   const roomState = useSelector((state) => state.room);
-  //const { roomId } = useParams();
+  const authState = useSelector((state) => state.auth);
+
+  const currentRoomId = useSelector((state) => state.room.currentRoom._id);
+  useEffect(() => {
+    socket.emit("room", { room: currentRoomId });
+  }, [currentRoomId]);
 
   useEffect(() => {
-    if (authState.isAuth === true) {
-      const firstRoomId = roomState.allRooms.ids[0] || "";
+    if (authState.isAuth === true && !currentRoomId) {
+      const firstRoomId = userState.rooms.ids[0] || "";
       console.log("firstRoom: ", firstRoomId);
-      dispatch(getCurrentRoom(firstRoomId));
+      dispatch(getRoom(firstRoomId));
     }
   }, [authState]);
 
-  useEffect(() => {
-    socket.auth = { token: localStorage.getItem("authToken") };
-    socket.connect();
-    //joining a test room
-    socket.on("connect", () => {
-      socket.emit("room", { room: roomState.currentRoom._id });
-    });
-    socket.on("roomLoaded", (payload) => {
-      console.log("Room Loaded by socket");
-      //boxDispatch({ type: "LOAD_BOX" });
-    });
-    //sending message
-    socket.on("message", ({ newRecord }) => {
-      dispatch(updateLog(newRecord));
-      dispatch(
-        updateRoom({
-          id: boxId,
-          update: {
-            key: "latestMessage",
-            value: newRecord,
-          },
-        })
-      );
-    });
-
-    return function cleaningUp() {
-      socket.emit("leave");
-      socket.disconnect();
-      console.log("should remove socket");
-    };
-  }, [roomState.curentRoom]);
+  socket.on("message", ({ newRecord }) => {
+    dispatch(updateLog(newRecord));
+    dispatch(
+      updateRoom({
+        id: roomState.currentRoom._id,
+        update: {
+          key: "latestMessage",
+          value: newRecord,
+        },
+      })
+    );
+  });
 
   return (
     <div className={style.chatBox}>

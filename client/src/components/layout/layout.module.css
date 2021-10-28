@@ -6,6 +6,7 @@
     "bar bar"
     "nav body";
   height: 100vh;
+  row-gap: 2em;
   background-color: #eeeeee;
 }
 
@@ -21,6 +22,6 @@
   grid-area: body;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  margin: 1em;
+  margin: 0 1em;
   gap: 1em;
 }

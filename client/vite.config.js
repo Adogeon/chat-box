@@ -30,4 +30,9 @@ export default defineConfig({
       },
     },
   },
+  css: {
+    modules: {
+      localsConvention: "dashes",
+    },
+  },
 });

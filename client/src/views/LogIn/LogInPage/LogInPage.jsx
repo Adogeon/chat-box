@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-
 //style import;
 import style from "./LogInPage.module.css";
 //component import
@@ -10,7 +9,6 @@ import SignUpForm from "../SignUpForm/SignUpForm.jsx";
 
 const SignInPage = () => {
   const authState = useSelector((state) => state.auth);
-  const history = useHistory();
   const [mode, setMode] = useState("signIn");
 
   return (

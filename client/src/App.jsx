@@ -5,9 +5,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import store from "./store";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
-import MainPage from "./views/Main/MainPage";
-import MainPage2 from "./views/Main/MainPage/MainPage";
+//import MainPage from "./views/Main/MainPage";
+//import MainPage2 from "./views/Main/MainPage/MainPage";
 import LogInPage from "./views/LogIn/LogInPage/LogInPage";
+
+import { ChatView } from "./views/Chat/ChatPage/ChatPage";
 
 const App = () => (
   <Provider store={store}>
@@ -16,11 +18,8 @@ const App = () => (
         <Route path="/login">
           <LogInPage />
         </Route>
-        <PrivateRoute path="/test">
-          <MainPage2 />
-        </PrivateRoute>
         <PrivateRoute path="/">
-          <MainPage />
+          <ChatView />
         </PrivateRoute>
       </Switch>
     </Router>

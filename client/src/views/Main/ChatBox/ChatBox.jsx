@@ -4,12 +4,8 @@ import style from "./chatbox.module.css";
 import { useParams } from "react-router";
 import socket from "../../../adapters/socket";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getCurrentRoom,
-  updateRoom,
-  updateLog,
-  roomSelector,
-} from "../../../store/room/room.slices.js";
+import { getRoom, updateLog } from "../../../store/room/room.slices.js";
+import { updateRoom, roomSelector } from "../../../store/user/user.slices";
 import LogArea from "../../Chat/LogArea/LogArea";
 import InputArea from "../../Chat/InputArea/InputArea";
 
@@ -24,7 +20,7 @@ const ChatPage = (props) => {
     if (authState.isAuth === true) {
       const firstRoomId = roomState.allRooms.ids[0] || "";
       console.log("firstRoom: ", firstRoomId);
-      dispatch(getCurrentRoom(firstRoomId));
+      dispatch(getRoom(firstRoomId));
     }
   }, [authState]);
 

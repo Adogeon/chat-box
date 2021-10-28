@@ -1,13 +1,9 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router";
-
+import { useParams } from "react-router-dom";
 import socket from "../../../adapters/socket";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getCurrentRoom,
-  updateRoom,
-  updateLog,
-} from "../../../store/room/room.slices.js";
+import { getRoom, updateLog } from "../../../store/room/room.slices.js";
+import { updateRoom } from "../../../store/user/user.slices";
 import style from "./ChatPage.module.css";
 
 import LogArea from "../LogArea/LogArea.jsx";
@@ -21,7 +17,7 @@ const ChatPage = (props) => {
   const { roomId } = useParams();
 
   useEffect(() => {
-    dispatch(getCurrentRoom(roomId));
+    dispatch(getRoom(roomId));
   }, []);
 
   useEffect(() => {
@@ -66,12 +62,13 @@ const ChatPage = (props) => {
   );
 };
 
+//import components
 import Layout from "../../../components/layout/Layout";
 import ChatBox from "../ChatBox/ChatBox";
+import ChatMenu from "../ChatMenu/ChatMenu";
 
-const ChatView = () => {
-  
-  return <Layout body={<ChatBox currentRoomId />} />;
+export const ChatView = () => {
+  return <Layout side={<ChatMenu />} main={<ChatBox />} />;
 };
 
 export default ChatPage;

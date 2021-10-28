@@ -1,16 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-
 //style import
-import style from "./SignUpForm.module.css";
+import style from "../../../styles/Form/form.module.css";
 import button from "../../../styles/Button/button.module.css";
-
-//component import
-import Form, { useFormValue } from "../../../components/form/Form";
+//import component
+import Form from "../../../components/form/Form";
 import TextInput from "../../../components/form/TextInput";
 import FormSubmitButton from "../../../components/form/FormSubmitButton";
-
-//action import
+//import action
 import { signUpUser } from "../../../store/auth/auth.slices.js";
 import { loadCurrent } from "../../../store/user/user.slices.js";
 
@@ -18,9 +15,9 @@ const SignUpForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (data) => {
-    dispatch(signUpUser).then(() => {
-      dispatch(loadCurrent());
-    });
+    dispatch(signUpUser(data))
+      .then(() => dispatch(loadCurrent()))
+      .then(() => history.push("/"));
   };
 
   return (

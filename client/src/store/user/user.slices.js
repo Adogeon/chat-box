@@ -48,7 +48,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { updateroom } = roomSlice.actions;
+export const { updateRoom } = userSlice.actions;
 export const roomSelector = roomsAdapter.getSelectors();
 export { loadCurrent, addContact };
 

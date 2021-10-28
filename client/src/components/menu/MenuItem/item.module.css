@@ -8,7 +8,7 @@
 
 .two-line {
   grid-template-columns: 2.5em 1fr auto;
-  grid-template-areas: "phot body extra";
+  grid-template-areas: "photo body extra";
   gap: 1em;
   height: 4.5em;
 }
@@ -27,7 +27,7 @@
   display: grid;
 }
 
-.detail.two-line {
+.two-line .detail {
   grid-template-rows: 2em 1.25em;
   width: 100%;
 }
@@ -41,7 +41,7 @@
 
 .bottom {
   align-self: end;
-  justify-content: start;
+  justify-self: start;
   font-size: 0.75em;
   font-weight: 400;
 }

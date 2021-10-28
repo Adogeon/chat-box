@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { addNewContact, getCurrentUser } from "../../adapters/userAdapter";
 import * as APIAdapter from "../../adapters/APIAdapter";
+import socket from "../../adapters/socket";
 
 export const loadCurrent = createAsyncThunk(
   "user/loadUser",
@@ -10,6 +11,8 @@ export const loadCurrent = createAsyncThunk(
     if (userFetch.error) {
       return thunkAPI.rejectWithValue(userData);
     } else {
+      socket.auth = { token: localStorage.getItem("authToken") };
+      socket.connect();
       return thunkAPI.fulfillWithValue(userData);
     }
   }

@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 //style import
-import style from "./SignInForm.module.css";
+import style from "../../../styles/Form/form.module.css";
 import button from "../../../styles/Button/button.module.css";
 
 //component import
@@ -18,7 +18,7 @@ const SignInForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const handleSubmit = (data) => {
-    dispatch(signUpUser)
+    dispatch(signInUser(data))
       .then(() => dispatch(loadCurrent()))
       .then(() => history.push("/"));
   };
