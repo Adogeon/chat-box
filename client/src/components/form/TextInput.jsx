@@ -70,11 +70,11 @@ const TextInput = (props) => {
 
   return field && field.value !== undefined ? (
     <div className={contClass}>
-      {label}
+      <label for={name}>{label}</label>
       {type === "textarea" ? (
         <textarea {...fieldProps} />
       ) : (
-        <input {...fieldProps} />
+        <input id={name} {...fieldProps} />
       )}
       {showValidate ? <p className={errorClass}>{fieldError}</p> : null}
     </div>

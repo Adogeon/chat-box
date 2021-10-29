@@ -4,13 +4,32 @@
   margin: 1em 0;
 }
 
-.textInputContainer input {
-  border: 1px solid black;
+.textInputContainer label {
+  font-size: 0.75em;
+  color: #666666;
+  margin-left: 1em;
+}
+
+.textInputContainer:focus-within label {
+  color: #5a6bbe;
+}
+
+.textInputContainer input:not(input[type="submit"]) {
+  border: 1px solid #666666;
+  height: 2.25em;
+  font-size: 1em;
+  padding-left: 1em;
+}
+
+.textInputContainer input:not(input[type="submit"]):focus {
+  outline: none;
+  border: 2px solid #5a6bbe;
 }
 
 .errorClass {
   color: red;
   margin: 0;
+  font-size: 0.75em;
 }
 
 .actionArea {
