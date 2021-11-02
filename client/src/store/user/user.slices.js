@@ -7,6 +7,10 @@ const roomsAdapter = createEntityAdapter({
     a.latestMessage.date.localCompare(b.latestMessage.date),
 });
 
+const contactsAdapter = createEntityAdapter({
+  selectId: (contact) => contact._id,
+});
+
 export const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -14,12 +18,15 @@ export const userSlice = createSlice({
     errorMessage: null,
     username: "",
     userId: "",
-    contact: [],
+    contacts: contactsAdapter.getInitialState(),
     rooms: roomsAdapter.getInitialState(),
   },
   reducers: {
     updateRoom: (state, action) => {
-      roomsAdapter.updateOne(state.allRooms, action.payload);
+      roomsAdapter.updateOne(state.rooms, action.payload);
+    },
+    updateContact: (state, action) => {
+      contactsAdapter.updateOne(state.contacts, action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -30,17 +37,21 @@ export const userSlice = createSlice({
       .addCase(loadCurrent.fulfilled, (state, action) => {
         state.username = action.payload.username;
         state.userId = action.payload._id;
-        state.contact = action.payload.contact;
         roomsAdapter.setAll(state.rooms, action.payload.box);
+        action.payload.contact.map((contact) => {
+          contactsAdapter.addOne(state.contacts, {
+            status: "offline",
+            ...contact,
+          });
+        });
         state.loading = false;
       })
       .addCase(addContact.fulfilled, (state, action) => {
-        state.contact.push(action.payload);
+        contactsAdapter.addOne(state.contacts, action.payload);
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),
         (state, action) => {
-          console.log(action);
           state.loading = false;
           state.errorMessage = action.payload;
         }
@@ -48,8 +59,9 @@ export const userSlice = createSlice({
   },
 });
 
-export const { updateRoom } = userSlice.actions;
+export const { updateRoom, updateContact } = userSlice.actions;
 export const roomSelector = roomsAdapter.getSelectors();
+export const contactSelector = contactsAdapter.getSelectors();
 export { loadCurrent, addContact };
 
 export default userSlice.reducer;

@@ -1,5 +1,5 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
-import { getRoom } from "./room.actions";
+import { getRoom, addNewRoom } from "./room.actions";
 import { logOut } from "../auth/auth.slices";
 
 export const roomSlice = createSlice({
@@ -32,6 +32,11 @@ export const roomSlice = createSlice({
         state.roomMember = [];
         state.roomLog = [];
         state.populated = false;
+      })
+      .addCase(addNewRoom.fulfilled, (state, action) => {
+        state.roomLog = action.payload.log;
+        state.roomMember = action.payload.member;
+        state.currentRoom = action.payload.boxDetail;
       });
   },
 });

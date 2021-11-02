@@ -16,7 +16,7 @@
 
 .textInputContainer input:not(input[type="submit"]) {
   border: 1px solid #666666;
-  height: 2.25em;
+  height: 1.5em;
   font-size: 1em;
   padding-left: 1em;
 }
@@ -30,6 +30,7 @@
   color: red;
   margin: 0;
   font-size: 0.75em;
+  padding-left: 1em;
 }
 
 .actionArea {

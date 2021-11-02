@@ -9,3 +9,12 @@ export const getRoom = createAsyncThunk(
     return boxData;
   }
 );
+
+export const addNewRoom = createAsyncThunk(
+  "addNewRoom",
+  async (room, thunkAPI) => {
+    const newRoomFetch = await APIAdapter.fetchWithAuth("/api/user/");
+    const newRoomData = await newRoomFetch.json();
+    return boxData;
+  }
+);

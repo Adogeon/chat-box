@@ -2,7 +2,24 @@ import React from "react";
 
 import style from "./item.module.css";
 
-const TwoLineItems = (props) => {
+// implementation of Material UI Menu Item, consult link: https://material.io/components/lists#specs
+
+const OneLineItem = (props) => {
+  return (
+    <li className={style.row}>
+      <button
+        className={`${style.tab} ${style.oneLine}`}
+        onClick={props.onClick}
+      >
+        <div className={style.photo}>{props.icon}</div>
+        <div className={style.text}>{props.text}</div>
+        <div className={style.extra}>{props.extra}</div>
+      </button>
+    </li>
+  );
+};
+
+const TwoLineItem = (props) => {
   return (
     <li className={style.row}>
       <button
@@ -22,9 +39,9 @@ const TwoLineItems = (props) => {
 
 const MenuItem = ({ type, ...restProps }) => {
   if (type === "two-line") {
-    return <TwoLineItems {...restProps} />;
+    return <TwoLineItem {...restProps} />;
   } else {
-    return <div>OneLineItem</div>;
+    return <OneLineItem {...restProps} />;
   }
 };
 
