@@ -7,6 +7,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 
 import LogInPage from "./views/LogIn/LogInPage/LogInPage";
 import ChatPage from "./views/Chat/ChatPage/ChatPage";
+import ContactPage from "./views/Contact/ContactPage/ContactPage";
 
 const App = () => (
   <Provider store={store}>
@@ -15,6 +16,9 @@ const App = () => (
         <Route path="/login">
           <LogInPage />
         </Route>
+        <PrivateRoute path="/contact">
+          <ContactPage />
+        </PrivateRoute>
         <PrivateRoute path="/">
           <ChatPage />
         </PrivateRoute>

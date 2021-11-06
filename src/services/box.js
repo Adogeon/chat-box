@@ -15,9 +15,21 @@ class BoxService {
    * @param {Object} detail - Optional detail of the new conversation
    * @return Box
    */
-  async createConversation(detail) {
-    const newBoxDetail = detail ? { ...detail } : {};
+  async createConversation(detail, users) {
+    const userIdList = [...users, this.currentUserId];
+    const newBoxDetail = detail
+      ? { ...detail, member: userIdList }
+      : { member: userIdList };
     const newBoxRecord = await this.boxModel.create(newBoxDetail);
+    await this.userModel.updateMany(
+      { _id: { $in: userIdList } },
+      {
+        $push: { box: newBoxRecord._id },
+      },
+      {
+        multi: true,
+      }
+    );
 
     return newBoxRecord;
   }
@@ -34,11 +46,19 @@ class BoxService {
     if (typeof userId === "string") {
       members.push(userId);
     } else {
-      members = [...member, ...userId];
+      members = [...members, ...userId];
     }
     const newBoxRecord = await this.boxModel.create({
       members,
     });
+
+    await this.userModal.updateMany(
+      { _id: { $in: members } },
+      { $push: { box: newBoxRecord._id } },
+      {
+        multi: true,
+      }
+    );
 
     members.map((member) => {
       this.userModel.findByIdAndUpdate(member, {

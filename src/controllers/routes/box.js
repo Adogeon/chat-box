@@ -12,4 +12,15 @@ router.get("/:boxId", isAuth, async (req, res) => {
   res.json(boxData);
 });
 
+router.post("/new", isAuth, async (req, res) => {
+  console.log(req.body);
+  console.log(req.token);
+  const boxService = new BoxService(BoxModel, UserModel, req.token.userId);
+  const newBoxRecord = await boxService.createConversation(
+    req.body.detail,
+    req.body.users
+  );
+  res.json(newBoxRecord);
+});
+
 module.exports = router;

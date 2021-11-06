@@ -13,6 +13,11 @@
   align-items: center;
 }
 
+.label {
+  color: inherit;
+  text-decoration: none;
+}
+
 .menu-button {
   color: inherit;
   border-radius: 100%;

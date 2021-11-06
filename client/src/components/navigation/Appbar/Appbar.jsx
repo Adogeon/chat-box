@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import {
   AddCommentOutlined,
   ExitToAppOutlined,
@@ -23,13 +23,15 @@ const AppBar = () => {
     dispatch(addNewMessageStart());
   };
   const handleUser = () => {
-    history.push("/contacts");
+    history.push("/contact");
   };
 
   return (
     <div className={style.appbar}>
       <div className={style.left}>
-        <h1>Chat-Box</h1>
+        <Link to="/" className={style.label}>
+          <h1>Chat-Box</h1>
+        </Link>
       </div>
       <div className={style.right}>
         <button
