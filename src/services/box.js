@@ -20,6 +20,9 @@ class BoxService {
     const newBoxDetail = detail
       ? { ...detail, member: userIdList }
       : { member: userIdList };
+    console.log(this.boxModel);
+    console.log(this.userModel);
+    console.log(this.currentUserId);
     const newBoxRecord = await this.boxModel.create(newBoxDetail);
     await this.userModel.updateMany(
       { _id: { $in: userIdList } },

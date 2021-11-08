@@ -1,4 +1,4 @@
-const container = require("../services/container");
+const Container = require("../services/container");
 
 const UserModel = require("../models/User");
 const BoxModel = require("../models/Box");
@@ -8,9 +8,24 @@ const BoxService = require("../services/box");
 const AuthService = require("../services/auth");
 
 module.exports = () => {
-  container.register("userModel", UserModel);
-  container.register("boxModel", BoxModel);
-  container.register("userService", UserService, ["userModel", "boxModel"]);
-  container.register("boxSerive", BoxService, ["boxModel", "userModel"]);
+  const container = new Container();
+
+  container.register("currentUser", "");
+  container.singleton("userModel", UserModel);
+  container.singleton("boxModel", BoxModel);
+  container.register("userService", UserService, [
+    "userModel",
+    "boxModel",
+    "currentUser",
+  ]);
+  container.register("boxService", BoxService, [
+    "boxModel",
+    "userModel",
+    "currentUser",
+  ]);
   container.register("authService", AuthService, ["userModel"]);
+
+  console.log(container);
+
+  return container;
 };

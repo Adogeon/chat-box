@@ -1,10 +1,9 @@
 const router = require("express").Router();
-const AuthService = require("../../services/auth.js");
-const UserModel = require("../../models/User.js");
 
 router.post("/signin", async (req, res) => {
   try {
-    const authService = new AuthService(UserModel);
+    const container = req.app.get("context");
+    const authService = container.get("authService");
     const user = await authService.signIn(req.body);
     const token = await authService.generateToken(user);
     res.json({ token });
@@ -15,8 +14,8 @@ router.post("/signin", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   try {
-    const authService = new AuthService(UserModel);
-    const user = await authService.signUp(req.body);
+    const container = req.app.get("context");
+    const authService = container.get("authService");
     const token = await authService.generateToken(user);
     res.json({ token });
   } catch (error) {

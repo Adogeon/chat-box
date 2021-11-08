@@ -1,14 +1,13 @@
 const expressLoader = require("./expressLoader.js");
 const mongodLoader = require("./mongodLoader");
 const socketLoader = require("./socketLoader");
-const container = require("../services/container");
 const containerLoader = require("./containerLoader");
 
 module.exports = async ({ httpServer, expressApp }) => {
   const db = await mongodLoader();
   console.log("Initilize Mongodb");
 
-  containerLoader();
+  const container = containerLoader();
 
   const app = await expressLoader(expressApp);
   console.log("Initilize express app");

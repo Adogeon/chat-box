@@ -7,6 +7,7 @@ const userSchema = new Schema({
   email: String,
   hash: String,
   contact: [{ type: ObjectId, ref: "User" }],
+  pending: [{ user: { type: ObjectId, ref: "User" }, date: Date }],
   box: [{ type: ObjectId, ref: "Box" }],
 });
 

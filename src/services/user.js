@@ -51,8 +51,8 @@ class UserService {
       });
       await userRecord.populate({
         path: "contact",
-        select: "username id"
-      })
+        select: "username id",
+      });
       console.log(userRecord);
       let user = userRecord.toObject();
       user.box = user.box.map((box) => {
@@ -90,6 +90,37 @@ class UserService {
       }
     );
     return updateCurrentUserRecord;
+  }
+
+  /**
+   * Private, sending a new friend request
+   * @param {string} newContactId
+   * @returns
+   */
+  async sendFriendRequest(contactId) {
+    if (!this.isLogin()) throw new Error("User is not logged in");
+    const contactRecord = await this.UserModel.findById(contactId);
+    if (!contactRecord) throw new Error("Invalid userId for new contact");
+    await contactRecord.update({
+      $push: { pending: { user: this.currentUserId, date: new Date() } },
+    });
+  }
+
+  /**
+   * Private, accept pending request
+   * @param {string} requestId
+   * @returns
+   */
+  async acceptFriendRequest(requestId) {
+    if (!this.isLogin()) throw new Error("User is not logged in");
+    const currentUserRecord = await this.UserModel.findById(this.currentUserId);
+    const request = currentUserRecord.pending.id(requestId);
+    currentUserRecord.contact.push(request.user);
+    await this.UserModel.findByIdAndUpdate(request.user, {
+      $push: { contact: this.currentUserId },
+    });
+    request.remove();
+    await currentUserRecord.save();
   }
 
   /**

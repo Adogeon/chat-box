@@ -1,3 +1,5 @@
+const e = require("cors");
+
 class Container {
   constructor() {
     this._services = new Map();
@@ -11,10 +13,28 @@ class Container {
     });
   }
 
+  singleton(name, definition, dependencies) {
+    this._services.set(name, {
+      definition: definition,
+      dependencies: dependencies,
+      singleton: true,
+    });
+  }
+
   get(name) {
     const c = this._services.get(name);
 
     if (this._isClass(c.definition)) {
+      if (c.singleton) {
+        const singletonInstance = this._singletons.get(name);
+        if (singletonInstance) {
+          return singletonInstance;
+        } else {
+          const newSingletonInstance = this._createInstance(c);
+          this._singletons.set(name, newSingletonInstance);
+          return newSingletonInstance;
+        }
+      }
       return this._createInstance(c);
     } else {
       return c.definition;
@@ -32,14 +52,16 @@ class Container {
   }
 
   _createInstance(service) {
+    console.log(service);
     return new service.definition(...this._getResolvedDependencies(service));
   }
 
   _isClass(definition) {
-    return typeof definition === "function";
+    return (
+      typeof definition === "function" &&
+      /^\s*class\s+/.test(definition.toString())
+    );
   }
 }
 
-const container = new Container();
-
-module.exports = container;
+module.exports = Container;
