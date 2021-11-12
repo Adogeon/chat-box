@@ -8,6 +8,8 @@ import LogArea from "../LogArea/LogArea";
 import InputArea from "../InputArea/InputArea";
 import { updateCurrentRoom } from "@store/user/user.slices";
 
+import { Paper, Box } from "@mui/material";
+
 const ChatPage = (props) => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
@@ -53,16 +55,18 @@ const ChatPage = (props) => {
   }, []);
 
   return (
-    <div className={style.chatBox}>
-      <div className={style.header}>
-        <div className={style.label} role="header">
-          {roomState.currentRoom.name}
+    <Box sx={{ height: "85vh" }}>
+      <Paper elevation="4">
+        <div className={style.header}>
+          <div className={style.label} role="header">
+            {roomState.currentRoom.name}
+          </div>
+          <button>Add people</button>
         </div>
-        <button>Add people</button>
-      </div>
-      <LogArea log={roomState.roomLog} currentUsername={userState.username} />
-      <InputArea socket={socket} roomId={roomState.currentRoom._id} />
-    </div>
+        <LogArea log={roomState.roomLog} currentUsername={userState.username} />
+        <InputArea socket={socket} roomId={roomState.currentRoom._id} />
+      </Paper>
+    </Box>
   );
 };
 

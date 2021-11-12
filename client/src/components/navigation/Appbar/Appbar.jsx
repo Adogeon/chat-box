@@ -1,17 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
-import {
-  AddCommentOutlined,
-  ExitToAppOutlined,
-  People,
-} from "@mui/icons-material";
+import InboxIcon from "@mui/icons-material/Inbox";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
 
-import style from "./Appbar.module.css";
-import button from "../../../styles/Button/button.module.css";
 import { logOut } from "../../../store/auth/auth.slices";
 
-const AppBar = () => {
+const MainAppBar = () => {
   const userState = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -27,35 +23,22 @@ const AppBar = () => {
   };
 
   return (
-    <div className={style.appbar}>
-      <div className={style.left}>
-        <Link to="/" className={style.label}>
-          <h1>Chat-Box</h1>
-        </Link>
-      </div>
-      <div className={style.right}>
-        <button
-          className={`${button.text} ${style["menu-button"]}`}
-          onClick={handleAddMessage}
-        >
-          <AddCommentOutlined />
-        </button>
-        <button
-          className={`${button.text} ${style["menu-button"]}`}
-          onClick={handleUser}
-        >
-          <People />
-        </button>
-        <div>{userState.username}</div>
-        <button
-          className={`${button.text} ${style["menu-button"]}`}
-          onClick={handleLogOut}
-        >
-          <ExitToAppOutlined />
-        </button>
-      </div>
-    </div>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" to="/" sx={{ flexGrow: 1 }}>
+            Chat-Box
+          </Typography>
+          <IconButton size="large" color="inherit">
+            <InboxIcon />
+          </IconButton>
+          <IconButton size="large" color="inherit">
+            <ExitToAppIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 
-export default AppBar;
+export default MainAppBar;

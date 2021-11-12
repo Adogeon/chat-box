@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 //style import
 import style from "../../../styles/Form/form.module.css";
-import button from "../../../styles/Button/button.module.css";
 //component import
-import Form from "../../../components/form/Form";
-import TextInput from "../../../components/form/TextInput";
-import FormSubmitButton from "../../../components/form/FormSubmitButton";
+import Form from "@components/form/Form";
+import TextInput from "@components/form/TextInput";
+import FormSubmitButton from "@components/form/FormSubmitButton";
+import SendIcon from "@mui/icons-material/Send";
 //action import
-import { signInUser } from "../../../store/auth/auth.slices.js";
-import { loadCurrent } from "../../../store/user/user.slices.js";
+import { signInUser } from "@store/auth/auth.slices.js";
+import { loadCurrent } from "@store/user/user.slices.js";
 
 const SignInForm = () => {
   const dispatch = useDispatch();
@@ -26,27 +26,22 @@ const SignInForm = () => {
         name="username"
         validate="required"
         label="Username"
-        classes={{
-          contClass: style.textInputContainer,
-          errorClass: style.errorClass,
-        }}
+        fullWidth
       />
       <TextInput
         name="password"
         validate="required"
         label="Password"
         type="password"
-        classes={{
-          contClass: style.textInputContainer,
-          errorClass: style.errorClass,
-        }}
+        fullWidth
       />
       <div className={style.actionArea}>
         <FormSubmitButton
-          styleClass={button.full}
           events={{
             onSubmit: (data) => handleSubmit(data),
           }}
+          variant="contained"
+          endIcon={<SendIcon />}
         >
           SIGN IN
         </FormSubmitButton>

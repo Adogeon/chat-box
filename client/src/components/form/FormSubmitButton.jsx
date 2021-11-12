@@ -3,7 +3,8 @@ import { FormCtx } from "./Form";
 import { Button } from "@mui/material";
 
 const FormSubmitButton = (props) => {
-  const { onSubmit } = props.events;
+  const { events, ...restProps } = props;
+  const { onSubmit } = events;
   const { fields, errors, validateAll } = useContext(FormCtx);
 
   const handleSubmit = () => {
@@ -22,6 +23,7 @@ const FormSubmitButton = (props) => {
         event.preventDefault();
         handleSubmit();
       }}
+      {...restProps}
     >
       {props.children}
     </Button>

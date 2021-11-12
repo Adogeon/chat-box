@@ -3,7 +3,7 @@ import { FormCtx } from "./Form.jsx";
 import { TextField } from "@material-ui/core";
 
 const TextInput = (props) => {
-  const { name } = props;
+  const { name, ...rest } = props;
   const { updateFields, addField, validateField, fields, errors } =
     useContext(FormCtx);
 
@@ -15,12 +15,10 @@ const TextInput = (props) => {
     placeholder,
     label = "",
     type = "text",
-    classes = {},
     showValidate,
   } = field;
   const fieldError = errors[name];
 
-  const { contClass, fieldClass, errorClass } = classes;
   const handleChange = (event) => {
     try {
       updateFields(event, field);
@@ -56,8 +54,9 @@ const TextInput = (props) => {
     validate,
     customrules,
     placeholder,
-    className: fieldClass,
+    label,
     onChange: handleChange,
+    ...rest,
   };
 
   return field && field.value !== undefined ? (

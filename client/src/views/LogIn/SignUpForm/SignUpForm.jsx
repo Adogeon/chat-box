@@ -2,11 +2,11 @@ import React from "react";
 import { useDispatch } from "react-redux";
 //style import
 import style from "../../../styles/Form/form.module.css";
-import button from "../../../styles/Button/button.module.css";
 //import component
 import Form from "../../../components/form/Form";
 import TextInput from "../../../components/form/TextInput";
 import FormSubmitButton from "../../../components/form/FormSubmitButton";
+import SendIcon from "@mui/icons-material/Send";
 //import action
 import { signUpUser } from "../../../store/auth/auth.slices.js";
 import { loadCurrent } from "../../../store/user/user.slices.js";
@@ -26,30 +26,21 @@ const SignUpForm = () => {
         name="username"
         validate="required"
         label="Username"
-        classes={{
-          contClass: style.textInputContainer,
-          errorClass: style.errorClass,
-        }}
+        fullWidth
         onChange={(data) => console.log(data)}
       />
       <TextInput
         name="email"
         validate="required|email"
         label="Email"
-        classes={{
-          contClass: style.textInputContainer,
-          errorClass: style.errorClass,
-        }}
+        fullWidth
       />
       <TextInput
         name="password"
         validate="required"
         label="Password"
         type="password"
-        classes={{
-          contClass: style.textInputContainer,
-          errorClass: style.errorClass,
-        }}
+        fullWidth
       />
       <TextInput
         name="repassword"
@@ -66,17 +57,15 @@ const SignUpForm = () => {
         }}
         label="Confirm password"
         type="password"
-        classes={{
-          contClass: style.textInputContainer,
-          errorClass: style.errorClass,
-        }}
+        fullWidth
       />
       <div className={style.actionArea}>
         <FormSubmitButton
-          styleClass={button.full}
           events={{
             onSubmit: (data) => handleSubmit(data),
           }}
+          variant="contained"
+          endIcon={<SendIcon />}
         >
           Submit
         </FormSubmitButton>
