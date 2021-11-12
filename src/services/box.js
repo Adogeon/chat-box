@@ -114,7 +114,6 @@ class BoxService {
     const updateBoxRecord = await boxRecord.update(update, {
       new: true,
     });
-
     return updateBoxRecord;
   }
 
@@ -138,7 +137,6 @@ class BoxService {
       { $push: { member: newMember } },
       { new: true }
     );
-
     return updateBoxRecord;
   }
 }

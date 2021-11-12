@@ -5,7 +5,7 @@ import {
   AddCommentOutlined,
   ExitToAppOutlined,
   People,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 import style from "./Appbar.module.css";
 import button from "../../../styles/Button/button.module.css";

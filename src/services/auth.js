@@ -19,7 +19,6 @@ class AuthService {
         email: email,
         hash: hash,
       });
-
       const user = userRecord.toObject();
       delete user.hash;
       return user;
@@ -39,9 +38,7 @@ class AuthService {
       throw new Error("User not registered");
     }
     const validPassword = await bcrypt.compare(password, userRecord.hash);
-
     if (validPassword) {
-      
       const user = userRecord.toObject();
       delete user.hash;
       return user;
@@ -54,9 +51,7 @@ class AuthService {
     const today = new Date();
     const exp = new Date(today);
     exp.setDate(today.getDate() + 30);
-
     const secret = "swordfishforhistoricalsake";
-
     return jsonwebtoken.sign({ userId: user._id }, secret);
   }
 

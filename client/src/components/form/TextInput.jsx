@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { FormCtx } from "./Form.jsx";
+import { TextField } from "@material-ui/core";
 
 const TextInput = (props) => {
   const { name } = props;
@@ -9,7 +10,6 @@ const TextInput = (props) => {
   const field = fields[name] || { name };
   const {
     value,
-    rows,
     validate,
     customrules,
     placeholder,
@@ -60,24 +60,12 @@ const TextInput = (props) => {
     onChange: handleChange,
   };
 
-  if (type === "textarea") {
-    delete fieldProps.type;
-    delete fieldProps.value;
-
-    fieldProps.defaultValue = value;
-    fieldProps.rows = rows || 2;
-  }
-
   return field && field.value !== undefined ? (
-    <div className={contClass}>
-      <label for={name}>{label}</label>
-      {type === "textarea" ? (
-        <textarea {...fieldProps} />
-      ) : (
-        <input id={name} {...fieldProps} />
-      )}
-      {showValidate ? <p className={errorClass}>{fieldError}</p> : null}
-    </div>
+    showValidate ? (
+      <TextField id={name} error helperText={fieldError} {...fieldProps} />
+    ) : (
+      <TextField id={name} {...fieldProps} />
+    )
   ) : (
     ""
   );

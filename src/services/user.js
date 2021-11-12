@@ -53,10 +53,8 @@ class UserService {
         path: "contact",
         select: "username id",
       });
-      console.log(userRecord);
       let user = userRecord.toObject();
       user.box = user.box.map((box) => {
-        console.log(box.member);
         const latestMessage = box.log
           .slice()
           .sort((a, b) => b.date - a.date)[0];
@@ -77,9 +75,11 @@ class UserService {
    * @param {string} newContactId
    * @returns
    */
-  async addContact(newContactId) {
+  async addContact(newContactUsername) {
     if (!this.isLogin()) throw new Error("User is not logged in");
-    const contactRecord = await this.UserModel.findById(newContactId);
+    const contactRecord = await this.UserModel.findOne({
+      username: newContactUsername,
+    });
     if (!contactRecord) throw new Error("Invalid userId for new contact");
     await contactRecord.update({ $push: { contact: [this.currentUserId] } });
     const updateCurrentUserRecord = await this.UserModel.findByIdAndUpdate(

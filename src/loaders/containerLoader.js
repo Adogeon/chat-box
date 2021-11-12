@@ -25,7 +25,5 @@ module.exports = () => {
   ]);
   container.register("authService", AuthService, ["userModel"]);
 
-  console.log(container);
-
   return container;
 };

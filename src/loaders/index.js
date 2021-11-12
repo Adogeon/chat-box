@@ -12,7 +12,7 @@ module.exports = async ({ httpServer, expressApp }) => {
   const app = await expressLoader(expressApp);
   console.log("Initilize express app");
 
-  const io = await socketLoader(httpServer);
+  const io = await socketLoader(httpServer, container);
   console.log("Initilize socket io");
 
   app.set("db", db);

@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { FormCtx } from "./Form";
+import { Button } from "@mui/material";
 
 const FormSubmitButton = (props) => {
-  const { events, styleClass } = props;
-  const { onSubmit } = events;
+  const { onSubmit } = props.events;
   const { fields, errors, validateAll } = useContext(FormCtx);
 
   const handleSubmit = () => {
@@ -16,16 +16,15 @@ const FormSubmitButton = (props) => {
   };
 
   return (
-    <button
+    <Button
       type="submit"
-      className={styleClass}
       onClick={(event) => {
         event.preventDefault();
         handleSubmit();
       }}
     >
       {props.children}
-    </button>
+    </Button>
   );
 };
 

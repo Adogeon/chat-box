@@ -1,10 +1,9 @@
-const UserModel = require("../../models/User");
-const AuthService = require("../../services/auth");
-
 const verifyToken = async (socket, next) => {
   const token = socket.handshake.auth.token;
+  const container = socket.request.container;
+
   if (token) {
-    const authService = new AuthService(UserModel);
+    const authService = container.get("authService");
     try {
       const user = await authService.validateToken(token);
       socket.user = user;

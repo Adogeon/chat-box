@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { getRoom, addNewRoom } from "./room.actions";
 import { logOut } from "../auth/auth.slices";
 
@@ -23,7 +23,7 @@ export const roomSlice = createSlice({
       })
       .addCase(getRoom.fulfilled, (state, action) => {
         state.fetchingCurrent = false;
-        state.roomLog = action.payload.log;
+        state.roomLog = action.payload.log ?? [];
         state.roomMember = action.payload.member;
         state.currentRoom = action.payload.boxDetail;
       })
@@ -34,7 +34,7 @@ export const roomSlice = createSlice({
         state.populated = false;
       })
       .addCase(addNewRoom.fulfilled, (state, action) => {
-        state.roomLog = action.payload.log;
+        state.roomLog = [];
         state.roomMember = action.payload.member;
         state.currentRoom = action.payload.boxDetail;
       });

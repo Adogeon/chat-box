@@ -15,7 +15,7 @@ const generateRoomLabel = (room, currentUserId) => {
     : room.name;
 };
 
-const ChatMenu = () => {
+const Sidebar = () => {
   const userState = useSelector((state) => state.user);
   const rooms = selectAllRooms(userState);
   const currentUserId = userState.userId;
@@ -26,23 +26,29 @@ const ChatMenu = () => {
   };
 
   return (
-    <MenuList>
-      {rooms.map((room) => (
-        <MenuItem
-          type={"two-line"}
-          key={room._id}
-          primarytext={generateRoomLabel(room, currentUserId)}
-          subtext={room.latestMessage ? room.latestMessage.body : ""}
-          extra={
-            room.latestMessage ? dateParser(room.latestMessage.date) : "new"
-          }
-          onClick={() => {
-            handleItemClick(room._id);
-          }}
-        />
-      ))}
-    </MenuList>
+    <div>
+      <div>
+        {userState.username}
+        <button>Menu</button>
+      </div>
+      <MenuList>
+        {rooms.map((room) => (
+          <MenuItem
+            type={"two-line"}
+            key={room._id}
+            primarytext={generateRoomLabel(room, currentUserId)}
+            subtext={room.latestMessage ? room.latestMessage.body : ""}
+            extra={
+              room.latestMessage ? dateParser(room.latestMessage.date) : "new"
+            }
+            onClick={() => {
+              handleItemClick(room._id);
+            }}
+          />
+        ))}
+      </MenuList>
+    </div>
   );
 };
 
-export default ChatMenu;
+export default Sidebar;

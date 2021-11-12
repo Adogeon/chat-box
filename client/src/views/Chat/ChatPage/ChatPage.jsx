@@ -1,18 +1,25 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 //import components
-import Layout from "../../../components/layout/Layout";
+import Layout from "@components/layout/Layout";
 import ChatBox from "../ChatBox/ChatBox";
 import ChatMenu from "../ChatMenu/ChatMenu";
 //import selector
-import { roomSelector } from "../../../store/user/user.slices";
+import { roomSelector, loadCurrent } from "@store/user/user.slices";
 const ChatPage = () => {
   const userState = useSelector((state) => state.user);
   const rooms = roomSelector.selectAll(userState.rooms);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (userState.user !== localStorage.getItem("authToken")) {
+      dispatch(loadCurrent());
+    }
+  }, []);
+
   return (
     <>
       {userState.loading ? (
-        <div>Laoding User...</div>
+        <div>Loading User...</div>
       ) : rooms.length > 0 ? (
         <Layout side={<ChatMenu />} main={<ChatBox />} />
       ) : (

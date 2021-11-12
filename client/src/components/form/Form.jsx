@@ -103,11 +103,9 @@ const Form = (props) => {
   };
 
   return (
-    <form action="">
-      <FormCtx.Provider value={formContextValue}>
-        {props.children}
-      </FormCtx.Provider>
-    </form>
+    <FormCtx.Provider value={formContextValue}>
+      {props.children}
+    </FormCtx.Provider>
   );
 };
 

@@ -9,6 +9,8 @@ import LogInPage from "./views/LogIn/LogInPage/LogInPage";
 import ChatPage from "./views/Chat/ChatPage/ChatPage";
 import ContactPage from "./views/Contact/ContactPage/ContactPage";
 
+import TestPage from "./views/TestPlayground/test";
+
 const App = () => (
   <Provider store={store}>
     <Router>
@@ -18,6 +20,9 @@ const App = () => (
         </Route>
         <PrivateRoute path="/contact">
           <ContactPage />
+        </PrivateRoute>
+        <PrivateRoute path="/test">
+          <TestPage />
         </PrivateRoute>
         <PrivateRoute path="/">
           <ChatPage />

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { addNewContact, getCurrentUser } from "../../adapters/userAdapter";
-import * as APIAdapter from "../../adapters/APIAdapter";
-import socket from "../../adapters/socket";
+
+import * as APIAdapter from "@services/APIAdapter";
+import socket from "@services/socket";
 
 export const loadCurrent = createAsyncThunk(
   "user/loadUser",
@@ -18,11 +18,15 @@ export const loadCurrent = createAsyncThunk(
   }
 );
 
-export const addContact = createAsyncThunk(
-  "addContact",
-  async (token, thunkAPI) => {
-    const addContactData = await addNewContact(userId, token);
-    return addContactData;
+export const updateCurrentRoom = createAsyncThunk(
+  "user/updateCurrentRoom",
+  async (update, thunkAPI) => {
+    const roomId = thunkAPI.getState().room.currentRoom._id;
+    const updatePayload = {
+      id: roomId,
+      changes: { [update.key]: update.value },
+    };
+    console.log(updatePayload);
+    return thunkAPI.fulfillWithValue(updatePayload);
   }
 );
-

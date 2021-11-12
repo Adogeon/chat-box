@@ -1,5 +1,5 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
-import { loadCurrent, addContact } from "./user.actions.js";
+import { loadCurrent, updateCurrentRoom } from "./user.actions.js";
 
 const roomsAdapter = createEntityAdapter({
   selectId: (room) => room._id,
@@ -22,15 +22,15 @@ export const userSlice = createSlice({
     rooms: roomsAdapter.getInitialState(),
   },
   reducers: {
-    updateRoom: (state, action) => {
-      roomsAdapter.updateOne(state.rooms, action.payload);
-    },
     updateContact: (state, action) => {
       contactsAdapter.updateOne(state.contacts, action.payload);
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(updateCurrentRoom.fulfilled, (state, action) => {
+        roomsAdapter.updateOne(state.rooms, action.payload);
+      })
       .addCase(loadCurrent.pending, (state, action) => {
         state.loading = true;
       })
@@ -46,9 +46,6 @@ export const userSlice = createSlice({
         });
         state.loading = false;
       })
-      .addCase(addContact.fulfilled, (state, action) => {
-        contactsAdapter.addOne(state.contacts, action.payload);
-      })
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),
         (state, action) => {
@@ -62,6 +59,6 @@ export const userSlice = createSlice({
 export const { updateRoom, updateContact } = userSlice.actions;
 export const roomSelector = roomsAdapter.getSelectors();
 export const contactSelector = contactsAdapter.getSelectors();
-export { loadCurrent, addContact };
+export { loadCurrent, updateCurrentRoom };
 
 export default userSlice.reducer;

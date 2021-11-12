@@ -1,44 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import style from "./chatbox.module.css";
-import socket from "../../../adapters/socket";
+import socket from "@services/socket";
 import { useSelector, useDispatch } from "react-redux";
-import { getRoom, updateLog } from "../../../store/room/room.slices.js";
+import { getRoom, updateLog } from "@store/room/room.slices.js";
 import LogArea from "../LogArea/LogArea";
 import InputArea from "../InputArea/InputArea";
-import { updateRoom } from "../../../store/user/user.slices";
+import { updateCurrentRoom } from "@store/user/user.slices";
 
 const ChatPage = (props) => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
   const roomState = useSelector((state) => state.room);
   const authState = useSelector((state) => state.auth);
+  const [count, setCount] = useState(0);
 
   const currentRoomId = useSelector((state) => state.room.currentRoom._id);
-  useEffect(() => {
-    socket.emit("room", { room: currentRoomId });
-  }, [currentRoomId]);
 
   useEffect(() => {
-    if (authState.isAuth === true && !currentRoomId) {
+    console.log(currentRoomId);
+    if (!currentRoomId) {
       const firstRoomId = userState.rooms.ids[0] || "";
       console.log("firstRoom: ", firstRoomId);
-      dispatch(getRoom(firstRoomId));
+      if (firstRoomId !== "") {
+        dispatch(getRoom(firstRoomId));
+      }
     }
   }, [authState]);
 
-  socket.on("message", ({ newRecord }) => {
-    dispatch(updateLog(newRecord));
-    dispatch(
-      updateRoom({
-        id: roomState.currentRoom._id,
-        update: {
+  useEffect(() => {
+    console.log(count);
+    console.log(currentRoomId);
+    if (currentRoomId !== "") {
+      socket.emit("room", { room: currentRoomId });
+      setCount(count + 1);
+    }
+  }, [currentRoomId]);
+
+  useEffect(() => {
+    socket.onAny((event, ...args) => {
+      console.log(event, args);
+    });
+    socket.on("message", ({ newRecord }) => {
+      dispatch(updateLog(newRecord));
+      dispatch(
+        updateCurrentRoom({
           key: "latestMessage",
           value: newRecord,
-        },
-      })
-    );
-  });
+        })
+      );
+    });
+  }, []);
 
   return (
     <div className={style.chatBox}>

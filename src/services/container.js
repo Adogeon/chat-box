@@ -52,7 +52,6 @@ class Container {
   }
 
   _createInstance(service) {
-    console.log(service);
     return new service.definition(...this._getResolvedDependencies(service));
   }
 

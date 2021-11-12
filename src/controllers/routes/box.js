@@ -6,7 +6,7 @@ router.get("/:boxId", isAuth, async (req, res) => {
   const container = req.app.get("context");
   container.register("currentUser", req.token.userId);
   const boxService = container.get("boxService");
-  const boxData = await boxService.loadBox({ id: req.params.boxId });
+  const boxData = await boxService.loadBox({ _id: req.params.boxId });
   res.json(boxData);
 });
 
