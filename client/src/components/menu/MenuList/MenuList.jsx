@@ -1,11 +1,11 @@
 import React from "react";
 
-import style from "./list.module.css";
+import { List } from "@mui/material";
 
 const MenuList = (props) => (
-  <ul className = {style.basic}>
+  <List sx={{ width: "100%", bgcolor: "background.paper" }}>
     {props.children}
-  </ul>
-)
+  </List>
+);
 
 export default MenuList;

@@ -1,11 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
+
+import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
-import { logOut } from "../../../store/auth/auth.slices";
+import { logOut } from "@store/auth/auth.slices";
+import { toggleMobileSideBar } from "@store/app/app.slices";
 
 const MainAppBar = () => {
   const userState = useSelector((state) => state.user);
@@ -21,11 +24,24 @@ const MainAppBar = () => {
   const handleUser = () => {
     history.push("/contact");
   };
+  const handleToggleSidebar = () => {
+    dispatch(toggleMobileSideBar());
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          <IconButton
+            size="large"
+            color="inherit"
+            onClick={handleToggleSidebar}
+            sx={{
+              display: { xs: "block", lg: "none" },
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
           <Typography variant="h6" component="div" to="/" sx={{ flexGrow: 1 }}>
             Chat-Box
           </Typography>

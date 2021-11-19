@@ -11,7 +11,7 @@ const ChatPage = () => {
   const rooms = roomSelector.selectAll(userState.rooms);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (userState.user !== localStorage.getItem("authToken")) {
+    if (userState.userId === "" && "" !== localStorage.getItem("authToken")) {
       dispatch(loadCurrent());
     }
   }, []);

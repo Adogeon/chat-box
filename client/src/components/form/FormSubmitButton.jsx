@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { FormCtx } from "./Form";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 
 const FormSubmitButton = (props) => {
-  const { events, ...restProps } = props;
+  const { buttonType, events, children, ...restProps } = props;
   const { onSubmit } = events;
   const { fields, errors, validateAll } = useContext(FormCtx);
 
@@ -16,7 +16,18 @@ const FormSubmitButton = (props) => {
     }
   };
 
-  return (
+  return buttonType === "IconButton" ? (
+    <IconButton
+      type="submit"
+      onClick={(event) => {
+        event.preventDefault();
+        handleSubmit();
+      }}
+      {...restProps}
+    >
+      {children}
+    </IconButton>
+  ) : (
     <Button
       type="submit"
       onClick={(event) => {
@@ -25,7 +36,7 @@ const FormSubmitButton = (props) => {
       }}
       {...restProps}
     >
-      {props.children}
+      {children}
     </Button>
   );
 };

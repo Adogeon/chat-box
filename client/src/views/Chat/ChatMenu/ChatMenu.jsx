@@ -31,7 +31,7 @@ const ChatMenu = () => {
         <MenuItem
           type={"two-line"}
           key={room._id}
-          primarytext={generateRoomLabel(room, currentUserId)}
+          primaryText={generateRoomLabel(room, currentUserId)}
           subtext={room.latestMessage ? room.latestMessage.body : ""}
           extra={
             room.latestMessage ? dateParser(room.latestMessage.date) : "new"

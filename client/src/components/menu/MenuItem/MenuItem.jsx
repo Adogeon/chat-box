@@ -37,12 +37,48 @@ const TwoLineItem = (props) => {
   );
 };
 
-const MenuItem = ({ type, ...restProps }) => {
-  if (type === "two-line") {
-    return <TwoLineItem {...restProps} />;
-  } else {
-    return <OneLineItem {...restProps} />;
-  }
-};
+import {
+  ListItemButton,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Typography,
+  Grid,
+} from "@mui/material";
+
+const MenuItem = (props) => (
+  <ListItemButton alignItem="flex-start" onClick={props.onClick}>
+    <ListItemAvatar>
+      <Avatar />
+    </ListItemAvatar>
+    <ListItemText
+      primary={props.primaryText}
+      secondary={
+        <Grid container direction="column" alignItems="flex-start">
+          <Grid item flexGrow={1}>
+            <Typography
+              sx={{ maxWidth: "17em" }}
+              component="div"
+              variant="body2"
+              align="left"
+              noWrap
+            >
+              {props.subtext}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography
+              sx={{ display: "inline" }}
+              component="div"
+              variant="body2"
+            >
+              {props.extra}
+            </Typography>
+          </Grid>
+        </Grid>
+      }
+    />
+  </ListItemButton>
+);
 
 export default MenuItem;

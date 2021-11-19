@@ -3,12 +3,23 @@ import React, { useState, useEffect } from "react";
 import style from "./chatbox.module.css";
 import socket from "@services/socket";
 import { useSelector, useDispatch } from "react-redux";
-import { getRoom, updateLog } from "@store/room/room.slices.js";
+import { getRoom, updateLog } from "@store/room/room.slices";
 import LogArea from "../LogArea/LogArea";
 import InputArea from "../InputArea/InputArea";
 import { updateCurrentRoom } from "@store/user/user.slices";
+import { openModal } from "@store/app/app.slices";
 
-import { Paper, Box } from "@mui/material";
+import {
+  Paper,
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  IconButton,
+} from "@mui/material";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 const ChatPage = (props) => {
   const dispatch = useDispatch();
@@ -55,18 +66,22 @@ const ChatPage = (props) => {
   }, []);
 
   return (
-    <Box sx={{ height: "85vh" }}>
-      <Paper elevation="4">
-        <div className={style.header}>
-          <div className={style.label} role="header">
-            {roomState.currentRoom.name}
-          </div>
-          <button>Add people</button>
-        </div>
+    <Card elevation={4}>
+      <CardHeader
+        title={roomState.currentRoom.name}
+        action={
+          <IconButton onClick={() => dispatch(openModal("editConversation"))}>
+            <ModeEditIcon />
+          </IconButton>
+        }
+      />
+      <CardContent>
         <LogArea log={roomState.roomLog} currentUsername={userState.username} />
+      </CardContent>
+      <CardActions>
         <InputArea socket={socket} roomId={roomState.currentRoom._id} />
-      </Paper>
-    </Box>
+      </CardActions>
+    </Card>
   );
 };
 
