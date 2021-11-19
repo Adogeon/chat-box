@@ -1,4 +1,3 @@
-
 export const fetchWithAuth = (URL, ...fetchOption) => {
   const token = localStorage.getItem("authToken");
 
@@ -15,7 +14,7 @@ export const getWithAuth = async (URL) => {
 
   const response = await fetch(URL, {
     method: "GET",
-    header: {
+    headers: {
       authorization: `Bearer ${token}`,
     },
   });
@@ -23,15 +22,16 @@ export const getWithAuth = async (URL) => {
   return await response.json();
 };
 
-export const postWithAuth = async (URL, body) => {
+export const postWithAuth = async (URL, data) => {
   const token = localStorage.getItem("authToken");
 
   const response = await fetch(URL, {
     method: "POST",
-    header: {
+    headers: {
+      "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(data),
   });
 
   return await response.json();

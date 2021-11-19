@@ -20,7 +20,7 @@ const Modal = (props) => {
 
   if (appState.modalContent === "addContact") {
     return (
-      <Dialog open={appState.showModal} onClose={handleClose} size='md'>
+      <Dialog open={appState.showModal} onClose={handleClose} size="md">
         <AddContactModalForm handleClose={handleClose} />
       </Dialog>
     );
@@ -28,6 +28,12 @@ const Modal = (props) => {
     return (
       <Dialog open={appState.showModal} onClose={handleClose}>
         <EditConversationModalForm handleClose={handleClose} />
+      </Dialog>
+    );
+  } else if (appState.modalContent === "newConversation") {
+    return (
+      <Dialog open={appState.showModal} onClose={handleClose}>
+        <EditConversationModalForm new handleClose={handleClose} />
       </Dialog>
     );
   }

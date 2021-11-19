@@ -77,18 +77,20 @@ class UserService {
    */
   async addContact(newContactUsername) {
     if (!this.isLogin()) throw new Error("User is not logged in");
+    console.log(newContactUsername);
     const contactRecord = await this.UserModel.findOne({
       username: newContactUsername,
     });
-    if (!contactRecord) throw new Error("Invalid userId for new contact");
+    if (!contactRecord) throw new Error("Invalid username for new contact");
     await contactRecord.update({ $push: { contact: [this.currentUserId] } });
     const updateCurrentUserRecord = await this.UserModel.findByIdAndUpdate(
       this.currentUserId,
-      { $push: { contact: [newContactId] } },
+      { $push: { contact: [contactRecord._id] } },
       {
         new: true,
       }
     );
+    console.log(updateCurrentUserRecord);
     return updateCurrentUserRecord;
   }
 

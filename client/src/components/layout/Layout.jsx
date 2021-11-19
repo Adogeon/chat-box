@@ -68,7 +68,9 @@ const Layout = (props) => {
             }}
             open
           >
-            <SideBar />
+            <SideBar
+              deskStyle={{ backgroundColor: "inherit", color: "white" }}
+            />
           </Grid>
           <Grid item sm={12} md={9}>
             <div>{props.main}</div>

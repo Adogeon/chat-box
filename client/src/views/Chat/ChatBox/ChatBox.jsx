@@ -66,7 +66,7 @@ const ChatPage = (props) => {
   }, []);
 
   return (
-    <Card elevation={4}>
+    <Card elevation={4} sx={{ width: "100%", height: "85vh" }}>
       <CardHeader
         title={roomState.currentRoom.name}
         action={

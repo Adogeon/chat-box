@@ -7,7 +7,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 
 import LogInPage from "./views/LogIn/LogInPage/LogInPage";
 import ChatPage from "./views/Chat/ChatPage/ChatPage";
-import ContactPage from "./views/Contact/ContactPage/ContactPage";
+import ContactPage from "./views/Contact";
 
 import TestPage from "./views/TestPlayground/test";
 

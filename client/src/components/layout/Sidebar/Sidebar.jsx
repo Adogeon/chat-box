@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 //import action
 import { getRoom } from "@store/room/room.slices";
 import { roomSelector } from "@store/user/user.slices";
-import { toggleMobileSideBar } from "@store/app/app.slices";
+import { toggleMobileSideBar, openModal } from "@store/app/app.slices";
 //import components
 import { MenuItem, MenuList } from "@components/menu";
 import {
@@ -29,7 +29,7 @@ const generateRoomLabel = (room, currentUserId) => {
     : room.name;
 };
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const userState = useSelector((state) => state.user);
   const rooms = selectAllRooms(userState);
   const currentUserId = userState.userId;
@@ -45,6 +45,11 @@ const Sidebar = () => {
   const handleToggleSidebar = () => {
     dispatch(toggleMobileSideBar());
   };
+  const handleNewConversation = () => {
+    dispatch(openModal("newConversation"));
+  };
+
+  console.log(props.deskStyle);
 
   return (
     <MenuList>
@@ -66,7 +71,7 @@ const Sidebar = () => {
         </ListItemIcon>
         <ListItemText>Contacts</ListItemText>
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton onClick={handleNewConversation}>
         <ListItemIcon>
           <AddIcon />
         </ListItemIcon>
