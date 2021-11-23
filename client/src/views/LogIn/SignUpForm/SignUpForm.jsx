@@ -1,19 +1,20 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 //style import
 import style from "../../../styles/Form/form.module.css";
 //import component
-import Form from "../../../components/form/Form";
-import TextInput from "../../../components/form/TextInput";
-import FormSubmitButton from "../../../components/form/FormSubmitButton";
+import Form from "@components/form/Form";
+import TextInput from "@components/form/TextInput";
+import FormSubmitButton from "@components/form/FormSubmitButton";
 import SendIcon from "@mui/icons-material/Send";
 //import action
-import { signUpUser } from "../../../store/auth/auth.slices.js";
-import { loadCurrent } from "../../../store/user/user.slices.js";
+import { signUpUser } from "@store/auth/auth.slices.js";
+import { loadCurrent } from "@store/user/user.slices.js";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const handleSubmit = (data) => {
     dispatch(signUpUser(data))
       .then(() => dispatch(loadCurrent()))
@@ -27,7 +28,6 @@ const SignUpForm = () => {
         validate="required"
         label="Username"
         fullWidth
-        onChange={(data) => console.log(data)}
       />
       <TextInput
         name="email"

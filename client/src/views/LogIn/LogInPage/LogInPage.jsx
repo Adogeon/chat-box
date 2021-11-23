@@ -6,21 +6,50 @@ import style from "./LogInPage.module.css";
 //component import
 import SignInForm from "../SignInForm/SignInForm.jsx";
 import SignUpForm from "../SignUpForm/SignUpForm.jsx";
+import {
+  Container,
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  Box,
+} from "@mui/material";
 
 const SignInPage = () => {
   const authState = useSelector((state) => state.auth);
   const [mode, setMode] = useState("signIn");
-
+  const cardHeight = mode === "signIn" ? "400px" : "500px";
   return (
-    <main className={style.mainContainer}>
-      <div className={style.formContainer}>
-        <h1>Sign In</h1>
+    <Container
+      sx={{
+        display: "flex",
+        height: "100vh",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Card
+        sx={{
+          maxWidth: "300px",
+          height: "100vh",
+          maxHeight: cardHeight,
+          display: "flex",
+          flexFlow: "column",
+          justifyContent: "space-around",
+        }}
+      >
         {authState.loading ? (
           <>Logging you in...</>
         ) : mode === "signIn" ? (
           <>
-            <SignInForm />
-            <div>
+            <CardHeader
+              title={"Sign In"}
+              titleTypographyProps={{ variant: "h4", textAlign: "center" }}
+            />
+            <CardContent>
+              <SignInForm />
+            </CardContent>
+            <Box sx={{ padding: "1em", alignSelf: "flex-end" }}>
               Not a member ? Sign up{" "}
               <a
                 role="button"
@@ -30,13 +59,19 @@ const SignInPage = () => {
               >
                 here
               </a>
-            </div>
+            </Box>
           </>
         ) : (
           <>
-            <SignUpForm />
-            <div>
-              Already a member ? Sign in
+            <CardHeader
+              title={"Sign In"}
+              titleTypographyProps={{ variant: "h4", textAlign: "center" }}
+            />
+            <CardContent>
+              <SignUpForm />
+            </CardContent>
+            <Box sx={{ padding: "1em", alignSelf: "flex-end" }}>
+              Already a member ? Sign in{" "}
               <a
                 role="button"
                 onClick={() => {
@@ -45,11 +80,11 @@ const SignInPage = () => {
               >
                 here
               </a>
-            </div>
+            </Box>
           </>
         )}
-      </div>
-    </main>
+      </Card>
+    </Container>
   );
 };
 

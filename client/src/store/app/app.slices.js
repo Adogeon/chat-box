@@ -16,8 +16,12 @@ export const appSlices = createSlice({
       state.showModal = false;
       state.modalContent = "";
     },
-    toggleMobileSideBar: (state) => {
-      state.mobileSideBarOpen = !state.mobileSideBarOpen;
+    toggleMobileSideBar: (state, action) => {
+      if (typeof action.payload === "undefined") {
+        state.mobileSideBarOpen = !state.mobileSideBarOpen;
+      } else {
+        state.mobileSideBarOpen = action.payload;
+      }
     },
   },
 });

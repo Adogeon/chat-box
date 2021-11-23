@@ -12,7 +12,7 @@ import { postWithAuth } from "@services/APIAdapter";
 
 const AddContactModalForm = (props) => {
   const handleSubmitData = async (data) => {
-    const result = await postWithAuth("/api/user/addContact", {
+    const result = await postWithAuth("/api/user/request", {
       username: data.username.value,
     });
   };

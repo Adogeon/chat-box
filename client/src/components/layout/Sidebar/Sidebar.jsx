@@ -34,19 +34,23 @@ const Sidebar = (props) => {
   const rooms = selectAllRooms(userState);
   const currentUserId = userState.userId;
   const history = useHistory();
+  const dispatch = useDispatch();
+
   const handleContactClick = () => {
     history.push("/contact");
+    dispatch(toggleMobileSideBar(false));
   };
-  const dispatch = useDispatch();
   const handleItemClick = (id) => {
     dispatch(getRoom(id));
     history.push("/");
+    dispatch(toggleMobileSideBar(false));
   };
   const handleToggleSidebar = () => {
     dispatch(toggleMobileSideBar());
   };
   const handleNewConversation = () => {
     dispatch(openModal("newConversation"));
+    dispatch(toggleMobileSideBar(false));
   };
 
   console.log(props.deskStyle);

@@ -30,3 +30,17 @@ export const updateCurrentRoom = createAsyncThunk(
     return thunkAPI.fulfillWithValue(updatePayload);
   }
 );
+
+export const approveFriendReq = createAsyncThunk(
+  "user/approveFriendReq",
+  async (requestId, thunkAPI) => {
+    console.log(requestId);
+  }
+);
+
+export const deleteFriendReq = createAsyncThunk(
+  "user/deleteFriendReq",
+  async (requestId, thunkAPI) => {
+    console.log(requestId);
+  }
+);

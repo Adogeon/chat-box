@@ -27,7 +27,7 @@ class UserService {
    * @returns user information object
    */
   async get(userId) {
-    const user = await this.UserModel.findById(userId);
+    const user = await this.UserModel.findById(userId, "username");
     return user;
   }
 
@@ -71,6 +71,48 @@ class UserService {
   }
 
   /**
+   * Private, get current user contacts
+   * @returns populated contact list
+   */
+  async getCurrentContacts() {
+    if (this.isLogin()) {
+      const userRecord = await this.UserModel.findById(
+        this.currentUserId,
+        "-hash"
+      );
+      await userRecord.populate({
+        path: "contact",
+        select: "username id",
+      });
+
+      return userRecord.contact;
+    } else {
+      throw new Error("User is not logged in");
+    }
+  }
+
+  /**
+   * Private, get current user pending request
+   * @returns populated pending request
+   */
+  async getCurrentPendingReq() {
+    if (this.isLogin()) {
+      const userRecord = await this.UserModel.findById(
+        this.currentUserId,
+        "-hash"
+      );
+      await userRecord.populate({
+        path: "pending.user",
+        select: "username id",
+      });
+
+      return userRecord.pending;
+    } else {
+      throw new Error("User is not logged in");
+    }
+  }
+
+  /**
    * Private, add new contact to the current user and also update the other user contact list
    * @param {string} newContactId
    * @returns
@@ -99,9 +141,11 @@ class UserService {
    * @param {string} newContactId
    * @returns
    */
-  async sendFriendRequest(contactId) {
+  async sendFriendRequest(contactUsername) {
     if (!this.isLogin()) throw new Error("User is not logged in");
-    const contactRecord = await this.UserModel.findById(contactId);
+    const contactRecord = await this.UserModel.findOne({
+      username: contactUsername,
+    });
     if (!contactRecord) throw new Error("Invalid userId for new contact");
     await contactRecord.update({
       $push: { pending: { user: this.currentUserId, date: new Date() } },

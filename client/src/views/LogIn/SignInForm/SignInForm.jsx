@@ -43,7 +43,7 @@ const SignInForm = () => {
           variant="contained"
           endIcon={<SendIcon />}
         >
-          SIGN IN
+          Submit
         </FormSubmitButton>
       </div>
     </Form>

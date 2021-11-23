@@ -8,6 +8,7 @@ import { Box, Tabs, Tab, Typography, Card } from "@mui/material";
 
 import ContactList from "../ContactList/ContactList";
 import AddContact from "../AddContact/AddContact";
+import PendingList from "../PendingList/PendingList";
 import style from "./ContactPage.module.css";
 
 const TabPanel = (props) => {
@@ -66,7 +67,7 @@ const ContactView = (props) => {
         <ContactList contacts={contactList} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Pending
+        <PendingList />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <AddContact />

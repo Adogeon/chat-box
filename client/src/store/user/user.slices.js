@@ -19,6 +19,7 @@ export const userSlice = createSlice({
     username: "",
     userId: "",
     contacts: contactsAdapter.getInitialState(),
+    pending: [],
     rooms: roomsAdapter.getInitialState(),
   },
   reducers: {
@@ -38,6 +39,7 @@ export const userSlice = createSlice({
         state.username = action.payload.username;
         state.userId = action.payload._id;
         roomsAdapter.setAll(state.rooms, action.payload.box);
+        state.pending = action.payload.pending;
         action.payload.contact.map((contact) => {
           contactsAdapter.addOne(state.contacts, {
             status: "offline",

@@ -48,7 +48,7 @@ const MainAppBar = () => {
           <IconButton size="large" color="inherit">
             <InboxIcon />
           </IconButton>
-          <IconButton size="large" color="inherit">
+          <IconButton size="large" color="inherit" onClick={handleLogOut}>
             <ExitToAppIcon />
           </IconButton>
         </Toolbar>

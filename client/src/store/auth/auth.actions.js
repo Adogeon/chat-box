@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-
 export const signInUser = createAsyncThunk(
   "auth/signInRequest",
   async (userData, thunkAPI) => {
@@ -16,6 +15,7 @@ export const signInUser = createAsyncThunk(
       }),
     });
     const data = await fetchResponse.json();
+    console.log(data);
     if (data.error) {
       return thunkAPI.rejectWithValue(data);
     } else {
@@ -41,6 +41,7 @@ export const signUpUser = createAsyncThunk(
       }),
     });
     const data = await fetchResponse.json();
+    console.log(data);
     if (data.error) {
       return thunkAPI.rejectWithValue(data);
     } else {

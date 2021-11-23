@@ -14,7 +14,23 @@ router.get("/:id", (req, res) => {
   //return user data
 });
 
-router.post("/addContact", isAuth, async (req, res) => {
+router.get("/current/pending", isAuth, async (req, res) => {
+  const container = req.app.get("context");
+  container.register("currentUser", req.toke.userId);
+  const userService = container.get("userService");
+  const PopulatedPendingReq = await userService.getCurrentPendingReq();
+  res.json(PopulatedPendingReq);
+});
+
+router.get("/current/contact", isAuth, async (req, res) => {
+  const container = req.app.get("context");
+  container.register("currentUser", req.toke.userId);
+  const userService = container.get("userService");
+  const PopulatedContact = await userService.getCurrentContact();
+  res.json(PopulatedContact);
+});
+
+router.post("/asasdfasdf/addContact", isAuth, async (req, res) => {
   //add new contact for the user
   const container = req.app.get("context");
   container.register("currentUser", req.token.userId);
@@ -28,9 +44,9 @@ router.post("/request", isAuth, async (req, res) => {
   container.register("currentUser", req.token.userId);
   const userService = container.get("userService");
   try {
-    await userService.sendFriendRequest(req.body.contactId);
+    await userService.sendFriendRequest(req.body.username);
     res.status(200).json({
-      message: `Friend request has been sent to User ${req.body.contactId}`,
+      message: `Friend request has been sent to User ${req.body.username}`,
     });
   } catch (error) {
     res.status(500).json({ error });
