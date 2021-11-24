@@ -1,13 +1,10 @@
 import React from "react";
-
-import AppBar from "../navigation/Appbar/Appbar";
+import { useSelector, useDispatch } from "react-redux";
+//import component
+import AppBar from "./Appbar/Appbar";
 import SideBar from "./Sidebar/Sidebar";
 import Modal from "../modal";
-
 import { Grid, Drawer } from "@mui/material";
-import style from "./layout.module.css";
-
-import { useSelector, useDispatch } from "react-redux";
 
 const Layout = (props) => {
   const drawerWidth = "300px";

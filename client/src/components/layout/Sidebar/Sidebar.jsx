@@ -1,10 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-//import action
-import { getRoom } from "@store/room/room.slices";
-import { roomSelector } from "@store/user/user.slices";
-import { toggleMobileSideBar, openModal } from "@store/app/app.slices";
 //import components
 import { MenuItem, MenuList } from "@components/menu";
 import {
@@ -15,11 +11,14 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-
 import PeopleIcon from "@mui/icons-material/People";
 import AddIcon from "@mui/icons-material/Add";
 import MenuIcon from "@mui/icons-material/Menu";
-
+//import action
+import { getRoom } from "@store/room/room.slices";
+import { roomSelector } from "@store/user/user.slices";
+import { toggleMobileSideBar, openModal } from "@store/app/app.slices";
+//import service
 import dateParser from "@services/dateParser";
 
 const selectAllRooms = (state) => roomSelector.selectAll(state.rooms);
@@ -52,8 +51,6 @@ const Sidebar = (props) => {
     dispatch(openModal("newConversation"));
     dispatch(toggleMobileSideBar(false));
   };
-
-  console.log(props.deskStyle);
 
   return (
     <MenuList>

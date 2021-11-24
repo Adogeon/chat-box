@@ -18,6 +18,40 @@ export const loadCurrent = createAsyncThunk(
   }
 );
 
+export const loadContact = createAsyncThunk(
+  "user/loadContact",
+  async (_, thunkAPI) => {
+    const contactFetch = await APIAdapter.fetchWithAuth(
+      "/api/user/current/contact"
+    );
+    const contactData = await contactFetch.json();
+    if (userFetch.error) {
+      return thunkAPI.rejectWithValue(contactData);
+    } else {
+      socket.auth = { token: localStorage.getItem("authToken") };
+      socket.connect();
+      return thunkAPI.fulfillWithValue(contactData);
+    }
+  }
+);
+
+export const loadPending = createAsyncThunk(
+  "user/loadPending",
+  async (_, thunkAPI) => {
+    const pendingFetch = await APIAdapter.fetchWithAuth(
+      "/api/user/current/pending"
+    );
+    const pendingData = await pendingFetch.json();
+    if (pendingFetch.error) {
+      return thunkAPI.rejectWithValue(pendingData);
+    } else {
+      socket.auth = { token: localStorage.getItem("authToken") };
+      socket.connect();
+      return thunkAPI.fulfillWithValue(pendingData);
+    }
+  }
+);
+
 export const updateCurrentRoom = createAsyncThunk(
   "user/updateCurrentRoom",
   async (update, thunkAPI) => {
@@ -32,15 +66,31 @@ export const updateCurrentRoom = createAsyncThunk(
 );
 
 export const approveFriendReq = createAsyncThunk(
-  "user/approveFriendReq",
+  "user/approvePendingReq",
   async (requestId, thunkAPI) => {
-    console.log(requestId);
+    const acceptReq = await APIAdapter.postWithAuth(
+      "/api/user/request/accept",
+      { pendingId: requestId }
+    );
+    if (!acceptReq.error) {
+      return thunkAPI.fulfillWithValue(acceptReq.pending);
+    } else {
+      return thunkAPI.rejectWithValue({ error: "Something is wrong" });
+    }
   }
 );
 
 export const deleteFriendReq = createAsyncThunk(
-  "user/deleteFriendReq",
+  "user/deletePendingReq",
   async (requestId, thunkAPI) => {
-    console.log(requestId);
+    const deleteReq = await APIAdapter.postWithAuth(
+      "/api/user/request/delete",
+      { pendingId: requestId }
+    );
+    if (!deleteReq.error) {
+      return thunkAPI.fulfillWithValue(deleteReq.pending);
+    } else {
+      return thunkAPI.rejectWithValue({ error: "Something is wrong" });
+    }
   }
 );

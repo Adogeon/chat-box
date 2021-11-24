@@ -143,13 +143,26 @@ class UserService {
    */
   async sendFriendRequest(contactUsername) {
     if (!this.isLogin()) throw new Error("User is not logged in");
-    const contactRecord = await this.UserModel.findOne({
-      username: contactUsername,
-    });
-    if (!contactRecord) throw new Error("Invalid userId for new contact");
-    await contactRecord.update({
-      $push: { pending: { user: this.currentUserId, date: new Date() } },
-    });
+    try {
+      const contactRecord = await this.UserModel.findOne({
+        username: contactUsername,
+      });
+      if (!contactRecord) throw new Error("Invalid userId for new contact");
+      const friendRequest = {
+        to: contactRecord._id,
+        request: {
+          user: this.currentUserId,
+          date: new Date(),
+        },
+      };
+      await contactRecord.update({
+        $push: { pending: friendRequest.request },
+      });
+      return friendRequest;
+    } catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
   }
 
   /**
@@ -159,14 +172,39 @@ class UserService {
    */
   async acceptFriendRequest(requestId) {
     if (!this.isLogin()) throw new Error("User is not logged in");
-    const currentUserRecord = await this.UserModel.findById(this.currentUserId);
-    const request = currentUserRecord.pending.id(requestId);
-    currentUserRecord.contact.push(request.user);
-    await this.UserModel.findByIdAndUpdate(request.user, {
-      $push: { contact: this.currentUserId },
-    });
-    request.remove();
-    await currentUserRecord.save();
+    try {
+      const currentUserRecord = await this.UserModel.findById(
+        this.currentUserId,
+        "_id pending"
+      );
+      const request = currentUserRecord.pending.id(requestId);
+      currentUserRecord.contact.push(request.user);
+      await this.UserModel.findByIdAndUpdate(request.user, {
+        $push: { contact: this.currentUserId },
+      });
+      request.remove();
+      await currentUserRecord.save();
+      return currentUserRecord.pending;
+    } catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
+  }
+
+  async deleteFriendRequest(requestId) {
+    if (!this.isLogin()) throw new Error("User is not logged in");
+    try {
+      const currentUserRecord = await this.UserModel.findById(
+        this.currentUserId,
+        "_id pending"
+      );
+      currentUserRecord.pending.id(requestId).remove();
+      await currentUserRecord.save();
+      return currentUserRecord.pending;
+    } catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
   }
 
   /**
@@ -176,7 +214,7 @@ class UserService {
    */
   async joinRoom(roomId) {
     if (!this.isLogin()) throw new Error("User is not logged in");
-    const roomRecord = await this.BoxModel.findById(roomId);
+    const roomRecord = await this.BoxModel.findById(roomId, "_id pending");
     if (!roomRecord) throw new Error("Can't find room");
     await roomRecord.update({ $push: { member: [this.currentUserId] } });
     const updateCurrentUserRecord = await this.UserModel.findByIdAndUpdate(

@@ -13,12 +13,12 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 //import actions
-/*import {
-  approveFriendRequest,
-  deleteFriendRequest,
-  populateFriendRequest,
+import {
+  approveFriendReq,
+  deleteFriendReq,
+  loadPending,
 } from "@store/user/user.slices";
-*/
+
 const PendingList = () => {
   const pendingState = useSelector((state) => state.user.pending);
   const dispatch = useDispatch();
@@ -30,11 +30,11 @@ const PendingList = () => {
   }, []);
 
   const handleDelete = (requestId) => {
-    //    dispatch(approveFriendRequest(requestId));
+    dispatch(deleteFriendReq(requestId));
     console.log("delete request id", requestId);
   };
   const handleApprove = (requestId) => {
-    //    dispatch(deleteFriendRequest(requestId));
+    dispatch(approveFriendReq(requestId));
     console.log("approve requestid", requestId);
   };
 

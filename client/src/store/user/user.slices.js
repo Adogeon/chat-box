@@ -1,5 +1,11 @@
-import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
-import { loadCurrent, updateCurrentRoom } from "./user.actions.js";
+import { createSlice, createEntityAdapter, isAnyOf } from "@reduxjs/toolkit";
+import {
+  loadCurrent,
+  updateCurrentRoom,
+  loadPending,
+  approveFriendReq,
+  deleteFriendReq,
+} from "./user.actions.js";
 
 const roomsAdapter = createEntityAdapter({
   selectId: (room) => room._id,
@@ -54,6 +60,17 @@ export const userSlice = createSlice({
           state.loading = false;
           state.errorMessage = action.payload;
         }
+      )
+      .addMatcher(
+        isAnyOf(
+          loadPending.fulfilled,
+          approveFriendReq.fulfilled,
+          deleteFriendReq.fulfilled
+        ),
+        (state, action) => {
+          console.log(action);
+          state.pending = action.payload;
+        }
       );
   },
 });
@@ -61,6 +78,12 @@ export const userSlice = createSlice({
 export const { updateRoom, updateContact } = userSlice.actions;
 export const roomSelector = roomsAdapter.getSelectors();
 export const contactSelector = contactsAdapter.getSelectors();
-export { loadCurrent, updateCurrentRoom };
+export {
+  loadCurrent,
+  updateCurrentRoom,
+  loadPending,
+  approveFriendReq,
+  deleteFriendReq,
+};
 
 export default userSlice.reducer;

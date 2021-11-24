@@ -1,11 +1,11 @@
-const Container = require("../services/container");
+const Container = require("../services/container.service");
 
-const UserModel = require("../models/User");
-const BoxModel = require("../models/Box");
+const UserModel = require("../models/User.model");
+const BoxModel = require("../models/Box.model");
 
-const UserService = require("../services/user");
-const BoxService = require("../services/box");
-const AuthService = require("../services/auth");
+const UserService = require("../services/user.service");
+const BoxService = require("../services/box.service");
+const AuthService = require("../services/auth.service");
 
 module.exports = () => {
   const container = new Container();

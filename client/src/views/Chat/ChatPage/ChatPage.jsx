@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //import components
-import Layout from "@components/layout/Layout";
+import Layout from "@components/layout";
 import ChatBox from "../ChatBox/ChatBox";
 import ChatMenu from "../ChatMenu/ChatMenu";
 //import selector
