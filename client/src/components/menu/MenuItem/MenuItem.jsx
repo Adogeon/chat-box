@@ -47,36 +47,28 @@ import {
 } from "@mui/material";
 
 const MenuItem = (props) => (
-  <ListItemButton alignItem="flex-start" onClick={props.onClick}>
+  <ListItemButton alignItems="flex-start" onClick={props.onClick}>
     <ListItemAvatar>
       <Avatar />
     </ListItemAvatar>
     <ListItemText
       primary={props.primaryText}
       secondary={
-        <Grid container direction="column" alignItems="flex-start">
-          <Grid item flexGrow={1}>
-            <Typography
-              sx={{ maxWidth: "17em" }}
-              component="div"
-              variant="body2"
-              align="left"
-              noWrap
-            >
-              {props.subtext}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              sx={{ display: "inline" }}
-              component="div"
-              variant="body2"
-            >
-              {props.extra}
-            </Typography>
-          </Grid>
-        </Grid>
+        <>
+          <Typography
+            sx={{ maxWidth: "17em" }}
+            variant="body2"
+            align="left"
+            noWrap
+          >
+            {props.subtext}
+          </Typography>
+          <Typography sx={{ display: "inline" }} variant="body2">
+            {props.extra}
+          </Typography>
+        </>
       }
+      secondaryTypographyProps={{ component: "div" }}
     />
   </ListItemButton>
 );

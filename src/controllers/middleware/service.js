@@ -13,3 +13,5 @@ const getBoxService = (req, res, next) => {
   req.service = boxService;
   next();
 };
+
+module.exports = {getUserService, getBoxService};

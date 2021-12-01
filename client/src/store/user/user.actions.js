@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import * as APIAdapter from "@services/APIAdapter";
-import socket from "@services/socket";
 
 export const loadCurrent = createAsyncThunk(
   "user/loadUser",
@@ -11,8 +10,6 @@ export const loadCurrent = createAsyncThunk(
     if (userFetch.error) {
       return thunkAPI.rejectWithValue(userData);
     } else {
-      socket.auth = { token: localStorage.getItem("authToken") };
-      socket.connect();
       return thunkAPI.fulfillWithValue(userData);
     }
   }
@@ -28,8 +25,6 @@ export const loadContact = createAsyncThunk(
     if (userFetch.error) {
       return thunkAPI.rejectWithValue(contactData);
     } else {
-      socket.auth = { token: localStorage.getItem("authToken") };
-      socket.connect();
       return thunkAPI.fulfillWithValue(contactData);
     }
   }
@@ -45,8 +40,6 @@ export const loadPending = createAsyncThunk(
     if (pendingFetch.error) {
       return thunkAPI.rejectWithValue(pendingData);
     } else {
-      socket.auth = { token: localStorage.getItem("authToken") };
-      socket.connect();
       return thunkAPI.fulfillWithValue(pendingData);
     }
   }

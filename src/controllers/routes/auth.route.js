@@ -1,6 +1,8 @@
+const { createNextState } = require("@reduxjs/toolkit");
+
 const router = require("express").Router();
 
-router.post("/signin", async (req, res) => {
+router.post("/signin", async (req, res, next) => {
   try {
     const container = req.app.get("context");
     const authService = container.get("authService");
@@ -8,11 +10,12 @@ router.post("/signin", async (req, res) => {
     const token = await authService.generateToken(user);
     res.json({ token });
   } catch (error) {
-    res.json({ message: "error happen", error });
+    console.log(error);
+    next(error);
   }
 });
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", async (req, res, next) => {
   try {
     const container = req.app.get("context");
     const authService = container.get("authService");
@@ -21,7 +24,7 @@ router.post("/signup", async (req, res) => {
     res.json({ token });
   } catch (error) {
     console.log(error);
-    res.send({ error });
+    next(error);
   }
 });
 

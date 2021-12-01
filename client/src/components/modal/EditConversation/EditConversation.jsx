@@ -24,21 +24,19 @@ const selectAllContacts = (state) => contactSelector.selectAll(state.contacts);
 const EditConversationModalForm = (props) => {
   const userState = useSelector((state) => state.user);
   const contactList = selectAllContacts(userState);
+  console.log(contactList);
   const currentRoomState = useSelector((state) => state.room.currentRoom);
   const currentRoomMember = useSelector((state) => state.room.currentMember);
+
   const handleSubmitData = async (data) => {
     if (props.new) {
       await postWithAuth("/api/box/new", {
         detail: { name: data.name.value },
-        userList: data.member.value,
+        users: data.member.value.map((member) => member._id) || [],
       });
     } else {
       await postWithAuth(`/api/box/edit/${currentRoomState._id}`);
     }
-    const result = await postWithAuth("/api/user/addContact", {
-      detail: { name: data.name.value },
-      userList: data.member.value,
-    });
     props.handleClose();
   };
 
@@ -71,7 +69,7 @@ const EditConversationModalForm = (props) => {
               label="Member"
               name="member"
               options={contactList}
-              defaultValue={currentRoomMember}
+              value={currentRoomMember}
               getOptionLabel={(option) => option.username}
               filterSelectedOptions
             />

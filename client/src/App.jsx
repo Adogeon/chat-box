@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import store, context
 import store from "./store";
-import SocketContext, { socket } from "context/socket";
+import SocketContext, { socket } from "@services/socketContext";
 //import views
 import PrivateRoute from "./components/routing/PrivateRoute";
 import LogInPage from "./views/LogIn/LogInPage/LogInPage";

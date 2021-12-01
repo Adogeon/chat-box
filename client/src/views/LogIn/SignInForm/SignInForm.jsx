@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import socketContext from "@services/socketContext";
 //style import
 import style from "../../../styles/Form/form.module.css";
 //component import
@@ -15,10 +16,16 @@ import { loadCurrent } from "@store/user/user.slices.js";
 const SignInForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const socket = React.useContext(socketContext);
   const handleSubmit = (data) => {
     dispatch(signInUser(data))
       .then(() => dispatch(loadCurrent()))
-      .then(() => history.push("/"));
+      .then(() => {
+        socket.auth = { token: localStorage.getItem("authToken") };
+        socket.connect();
+        socket.once("User log in");
+        history.push("/");
+      });
   };
   return (
     <Form>

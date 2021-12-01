@@ -20,9 +20,6 @@ class BoxService {
     const newBoxDetail = detail
       ? { ...detail, member: userIdList }
       : { member: userIdList };
-    console.log(this.boxModel);
-    console.log(this.userModel);
-    console.log(this.currentUserId);
     const newBoxRecord = await this.boxModel.create(newBoxDetail);
     await this.userModel.updateMany(
       { _id: { $in: userIdList } },
@@ -44,7 +41,6 @@ class BoxService {
    * @returns
    */
   async storePrivateConversation(userId) {
-    if (!this.currentUserId) throw new Error("User is not loggin");
     let members = [this.currentUserId];
     if (typeof userId === "string") {
       members.push(userId);
@@ -79,9 +75,7 @@ class BoxService {
    *
    */
   async addMessage(boxId, newRecord) {
-    if (!this.currentUserId) throw new Error("User is not loggin");
     const boxRecord = await this.boxModel.findById(boxId);
-    if (!boxRecord) throw new Error("Can't find box with id " + boxId);
     boxRecord.log.push(newRecord);
     await boxRecord.save();
   }
@@ -91,9 +85,7 @@ class BoxService {
    * @param {Object} searchOption
    */
   async loadBox(searchOption) {
-    if (!this.currentUserId) throw new Error("User is not login");
     const boxRecord = await this.boxModel.findOne(searchOption);
-    if (!boxRecord) throw new Error("can't find the box");
     const { log, member, ...rest } = boxRecord.toObject();
     return {
       log,
@@ -108,9 +100,7 @@ class BoxService {
    * @param {*} update - update detail for the chat box
    */
   async editConversation(boxId, update) {
-    if (!this.currentUserId) throw new Error("User is not loggin");
     const boxRecord = this.boxModel.findById(boxId);
-    if (!boxRecord) throw new Error("Can't find box with id " + boxId);
     const updateBoxRecord = await boxRecord.update(update, {
       new: true,
     });
@@ -124,9 +114,6 @@ class BoxService {
    */
   async addMember(boxId, userId) {
     const boxRecord = this.boxModel.findById(boxId);
-    if (!boxRecord) throw new Error("Can't find box with id " + boxId);
-    if (boxRecord.creator !== this.currentUserId)
-      throw new Error("You can't add new member");
     let newMember = [];
     if (typeof userId === "string") {
       newMember.push(userId);

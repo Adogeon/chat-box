@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import socketContext from "@services/socket-context";
+import socketContext from "@services/socketContext";
 //import components
 import LogArea from "../LogArea/LogArea";
 import InputArea from "../InputArea/InputArea";
@@ -57,7 +57,7 @@ const ChatPage = (props) => {
   }, []);
 
   return (
-    <Card elevation={4} sx={{ width: "100%", height: "85vh" }}>
+    <Card elevation={4} sx={{ width: "100%" }}>
       <CardHeader
         title={roomState.currentRoom.name}
         action={

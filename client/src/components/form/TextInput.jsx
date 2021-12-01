@@ -14,7 +14,7 @@ const TextInput = (props) => {
     customrules,
     placeholder,
     label = "",
-    type = "text",
+    type,
     showValidate,
   } = field;
   const fieldError = errors[name];
@@ -44,6 +44,7 @@ const TextInput = (props) => {
     addField({
       field: props,
       value,
+      type: "text",
     });
   }, []);
 

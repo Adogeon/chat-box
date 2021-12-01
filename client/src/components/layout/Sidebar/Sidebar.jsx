@@ -62,7 +62,7 @@ const Sidebar = (props) => {
         <ListItemIcon onClick={handleToggleSidebar}>
           <MenuIcon />
         </ListItemIcon>
-        <Typography variant="h6" component="div" to="/" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" to="/" sx={{ flexGrow: 1 }}>
           Chat-Box
         </Typography>
       </Toolbar>
@@ -84,7 +84,7 @@ const Sidebar = (props) => {
         <MenuItem
           type={"two-line"}
           key={room._id}
-          primarytext={generateRoomLabel(room, currentUserId)}
+          primaryText={generateRoomLabel(room, currentUserId)}
           subtext={room.latestMessage ? room.latestMessage.body : ""}
           extra={
             room.latestMessage ? dateParser(room.latestMessage.date) : "new"

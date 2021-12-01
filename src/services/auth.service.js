@@ -34,9 +34,7 @@ class AuthService {
   async signIn(userInput) {
     const { username, password } = userInput;
     const userRecord = await this.UserModel.findOne({ username });
-    if (!userRecord) {
-      throw new Error("User not registered");
-    }
+    if (!userRecord) throw new Error("Invalid Username");
     const validPassword = await bcrypt.compare(password, userRecord.hash);
     if (validPassword) {
       const user = userRecord.toObject();
@@ -58,14 +56,10 @@ class AuthService {
   async validateToken(token) {
     const secret = "swordfishforhistoricalsake";
     const decoded = jsonwebtoken.verify(token, secret);
-    const userRecord = await this.UserModel.findById(decoded.userId);
-    if (!userRecord) {
-      throw new Error("Can't find user with id" + decoded.userId);
-    } else {
-      const user = userRecord.toObject();
-      delete user.hash;
-      return user;
-    }
+    const userRecord = await this.UserModel.findById(decoded.userId, "-hash");
+    if (!userRecord) throw new Error("Invalid token");
+    const user = userRecord.toObject();
+    return user;
   }
 }
 

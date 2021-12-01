@@ -1,5 +1,7 @@
 // User should be able to add new contact/ group; create a room; join a room;
 
+const { createNextState } = require("@reduxjs/toolkit");
+
 class UserService {
   /**
    * Create an instance of UserService
@@ -36,38 +38,32 @@ class UserService {
    * @returns user information object
    */
   async getCurrent() {
-    if (this.isLogin()) {
-      const userRecord = await this.UserModel.findById(
-        this.currentUserId,
-        "-hash"
-      );
-      await userRecord.populate({
-        path: "box",
-        select: "name id member log isDM",
-        populate: {
-          path: "member",
-          select: "username id",
-        },
-      });
-      await userRecord.populate({
-        path: "contact",
+    const userRecord = await this.UserModel.findById(
+      this.currentUserId,
+      "-hash"
+    );
+    await userRecord.populate({
+      path: "box",
+      select: "name id member log isDM",
+      populate: {
+        path: "member",
         select: "username id",
-      });
-      let user = userRecord.toObject();
-      user.box = user.box.map((box) => {
-        const latestMessage = box.log
-          .slice()
-          .sort((a, b) => b.date - a.date)[0];
-        delete box.log;
-        return {
-          ...box,
-          latestMessage,
-        };
-      });
-      return user;
-    } else {
-      throw new Error("User is not logged in");
-    }
+      },
+    });
+    await userRecord.populate({
+      path: "contact",
+      select: "username id",
+    });
+    let user = userRecord.toObject();
+    user.box = user.box.map((box) => {
+      const latestMessage = box.log.slice().sort((a, b) => b.date - a.date)[0];
+      delete box.log;
+      return {
+        ...box,
+        latestMessage,
+      };
+    });
+    return user;
   }
 
   /**
@@ -75,20 +71,16 @@ class UserService {
    * @returns populated contact list
    */
   async getCurrentContacts() {
-    if (this.isLogin()) {
-      const userRecord = await this.UserModel.findById(
-        this.currentUserId,
-        "-hash"
-      );
-      await userRecord.populate({
-        path: "contact",
-        select: "username id",
-      });
+    const userRecord = await this.UserModel.findById(
+      this.currentUserId,
+      "-hash"
+    );
+    await userRecord.populate({
+      path: "contact",
+      select: "username id",
+    });
 
-      return userRecord.contact;
-    } else {
-      throw new Error("User is not logged in");
-    }
+    return userRecord.contact;
   }
 
   /**
@@ -96,20 +88,16 @@ class UserService {
    * @returns populated pending request
    */
   async getCurrentPendingReq() {
-    if (this.isLogin()) {
-      const userRecord = await this.UserModel.findById(
-        this.currentUserId,
-        "-hash"
-      );
-      await userRecord.populate({
-        path: "pending.user",
-        select: "username id",
-      });
+    const userRecord = await this.UserModel.findById(
+      this.currentUserId,
+      "-hash"
+    );
+    await userRecord.populate({
+      path: "pending.user",
+      select: "username id",
+    });
 
-      return userRecord.pending;
-    } else {
-      throw new Error("User is not logged in");
-    }
+    return userRecord.pending;
   }
 
   /**
@@ -118,12 +106,9 @@ class UserService {
    * @returns
    */
   async addContact(newContactUsername) {
-    if (!this.isLogin()) throw new Error("User is not logged in");
-    console.log(newContactUsername);
     const contactRecord = await this.UserModel.findOne({
       username: newContactUsername,
     });
-    if (!contactRecord) throw new Error("Invalid username for new contact");
     await contactRecord.update({ $push: { contact: [this.currentUserId] } });
     const updateCurrentUserRecord = await this.UserModel.findByIdAndUpdate(
       this.currentUserId,
@@ -132,7 +117,6 @@ class UserService {
         new: true,
       }
     );
-    console.log(updateCurrentUserRecord);
     return updateCurrentUserRecord;
   }
 
@@ -142,12 +126,10 @@ class UserService {
    * @returns
    */
   async sendFriendRequest(contactUsername) {
-    if (!this.isLogin()) throw new Error("User is not logged in");
     try {
       const contactRecord = await this.UserModel.findOne({
         username: contactUsername,
       });
-      if (!contactRecord) throw new Error("Invalid userId for new contact");
       const friendRequest = {
         to: contactRecord._id,
         request: {
@@ -171,40 +153,28 @@ class UserService {
    * @returns
    */
   async acceptFriendRequest(requestId) {
-    if (!this.isLogin()) throw new Error("User is not logged in");
-    try {
-      const currentUserRecord = await this.UserModel.findById(
-        this.currentUserId,
-        "_id pending"
-      );
-      const request = currentUserRecord.pending.id(requestId);
-      currentUserRecord.contact.push(request.user);
-      await this.UserModel.findByIdAndUpdate(request.user, {
-        $push: { contact: this.currentUserId },
-      });
-      request.remove();
-      await currentUserRecord.save();
-      return currentUserRecord.pending;
-    } catch (error) {
-      console.log(error);
-      throw new Error(error);
-    }
+    const currentUserRecord = await this.UserModel.findById(
+      this.currentUserId,
+      "_id pending contact"
+    );
+    const request = currentUserRecord.pending.id(requestId);
+    currentUserRecord.contact.push(request.user);
+    await this.UserModel.findByIdAndUpdate(request.user, {
+      $push: { contact: this.currentUserId },
+    });
+    request.remove();
+    await currentUserRecord.save();
+    return currentUserRecord.pending;
   }
 
   async deleteFriendRequest(requestId) {
-    if (!this.isLogin()) throw new Error("User is not logged in");
-    try {
-      const currentUserRecord = await this.UserModel.findById(
-        this.currentUserId,
-        "_id pending"
-      );
-      currentUserRecord.pending.id(requestId).remove();
-      await currentUserRecord.save();
-      return currentUserRecord.pending;
-    } catch (error) {
-      console.log(error);
-      throw new Error(error);
-    }
+    const currentUserRecord = await this.UserModel.findById(
+      this.currentUserId,
+      "_id pending"
+    );
+    currentUserRecord.pending.id(requestId).remove();
+    await currentUserRecord.save();
+    return currentUserRecord.pending;
   }
 
   /**
@@ -213,7 +183,6 @@ class UserService {
    * @returns
    */
   async joinRoom(roomId) {
-    if (!this.isLogin()) throw new Error("User is not logged in");
     const roomRecord = await this.BoxModel.findById(roomId, "_id pending");
     if (!roomRecord) throw new Error("Can't find room");
     await roomRecord.update({ $push: { member: [this.currentUserId] } });

@@ -17,11 +17,20 @@ const Form = (props) => {
   const [errors, setErrors] = useState({});
 
   const addField = ({ field }) => {
-    const { name } = field;
-    field = {
-      value: "",
-      ...field,
-    };
+    const { name, type } = field;
+    console.log(field);
+    if (type === "autocomplete") {
+      field = {
+        value: [],
+        ...field,
+      };
+    } else {
+      field = {
+        value: "",
+        ...field,
+      };
+    }
+
     if (name) {
       setFields((prevField) => {
         return {
@@ -32,7 +41,6 @@ const Form = (props) => {
     } else {
       throw new Error(`Please add "name" field to the input: ${field}`);
     }
-    console.log(JSON.stringify(fields));
   };
 
   const validateAll = () => {
@@ -80,17 +88,28 @@ const Form = (props) => {
     });
   };
 
-  const updateFields = (event, { name, value }) => {
+  const updateFields = (event, { name, value, type }) => {
     if (event) {
       event.persist();
     }
+    console.log(value);
+    console.log(type);
     const field = fields[name];
-    addField({
-      field: {
-        ...field,
-        value: event ? event.currentTarget.value : value,
-      },
-    });
+    if (type === "autocomplete") {
+      addField({
+        field: {
+          ...field,
+          value: value,
+        },
+      });
+    } else {
+      addField({
+        field: {
+          ...field,
+          value: event ? event.currentTarget.value : value,
+        },
+      });
+    }
   };
 
   const formContextValue = {

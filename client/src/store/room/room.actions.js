@@ -6,17 +6,16 @@ export const getRoom = createAsyncThunk(
   async (boxId, thunkAPI) => {
     const currentBoxFetch = await APIAdapter.fetchWithAuth(`/api/box/${boxId}`);
     const boxData = await currentBoxFetch.json();
-    console.log("boxId", boxId);
-    console.log("boxData", boxData);
     return boxData;
   }
 );
 
+
+
 export const addNewRoom = createAsyncThunk(
   "addNewRoom",
   async (room, thunkAPI) => {
-    const newRoomFetch = await APIAdapter.fetchWithAuth("/api/user/");
-    const newRoomData = await newRoomFetch.json();
-    return boxData;
+    const newBoxData = await APIAdapter.postWithAuth("/api/box/new", room);
+    return newBoxData;
   }
 );

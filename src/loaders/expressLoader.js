@@ -3,6 +3,7 @@ const express = require("express");
 const authRouter = require("../controllers/routes/auth.route.js");
 const userRouter = require("../controllers/routes/user.route.js");
 const boxRouter = require("../controllers/routes/box.route.js");
+const errorHandler = require("../controllers/middleware/error.js");
 //Async loader to initilize express app;
 module.exports = (app) => {
   app.use(express.json());
@@ -11,6 +12,8 @@ module.exports = (app) => {
   app.use("/", authRouter);
   app.use("/user", userRouter);
   app.use("/box", boxRouter);
+
+  app.use("/", errorHandler);
 
   return app;
 };

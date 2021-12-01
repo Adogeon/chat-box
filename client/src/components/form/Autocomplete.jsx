@@ -9,17 +9,16 @@ const MultipleAutocomplete = (props) => {
 
   const field = fields[name] || { name };
 
-  const {
-    value = [],
-    validate,
-    customrules,
-    placeholder,
-    label = "",
-    type = "autocomplete",
-  } = field;
+  const { value, validate, customrules, placeholder, label = "", type } = field;
 
-  const handleChange = (event) => {
+  useEffect(() => {
+    console.log(field);
+  }, [field]);
+
+  const handleChange = (event, value) => {
     try {
+      field.value = value;
+      console.log(field);
       updateFields(event, field);
     } catch (error) {
       throw error;
@@ -28,15 +27,15 @@ const MultipleAutocomplete = (props) => {
     if (typeof onChange === "function") {
       onChange({
         ...field,
-        value: event.target.value,
+        value: [...value, event.target.value],
       });
     }
   };
 
   useEffect(() => {
     addField({
-      field: props,
-      value: defaultValue || [],
+      field: { ...props, type: "autocomplete" },
+      value: [],
     });
   }, []);
 
@@ -56,7 +55,7 @@ const MultipleAutocomplete = (props) => {
     <Autocomplete
       multiple
       id={name}
-      defaultValue={value}
+      value={value}
       renderInput={(params) => (
         <TextField {...params} variant="standard" label={fieldProps.label} />
       )}
