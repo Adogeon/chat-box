@@ -18,14 +18,11 @@ export const loadCurrent = createAsyncThunk(
 export const loadContact = createAsyncThunk(
   "user/loadContact",
   async (_, thunkAPI) => {
-    const contactFetch = await APIAdapter.fetchWithAuth(
-      "/api/user/current/contact"
-    );
-    const contactData = await contactFetch.json();
-    if (userFetch.error) {
-      return thunkAPI.rejectWithValue(contactData);
+    const contacts = await APIAdapter.getWithAuth("/api/user/current/contact");
+    if (contacts.error) {
+      return thunkAPI.rejectWithValue(contacts);
     } else {
-      return thunkAPI.fulfillWithValue(contactData);
+      return thunkAPI.fulfillWithValue(contacts);
     }
   }
 );
@@ -33,14 +30,11 @@ export const loadContact = createAsyncThunk(
 export const loadPending = createAsyncThunk(
   "user/loadPending",
   async (_, thunkAPI) => {
-    const pendingFetch = await APIAdapter.fetchWithAuth(
-      "/api/user/current/pending"
-    );
-    const pendingData = await pendingFetch.json();
-    if (pendingFetch.error) {
-      return thunkAPI.rejectWithValue(pendingData);
+    const pendings = await APIAdapter.getWithAuth("/api/user/current/pending");
+    if (pendings.error) {
+      return thunkAPI.rejectWithValue(pendings);
     } else {
-      return thunkAPI.fulfillWithValue(pendingData);
+      return thunkAPI.fulfillWithValue(pendings);
     }
   }
 );

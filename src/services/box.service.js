@@ -30,8 +30,12 @@ class BoxService {
         multi: true,
       }
     );
-
-    return newBoxRecord;
+    const { log, member, ...rest } = newBoxRecord.toObject();
+    return {
+      log,
+      member,
+      boxDetail: rest,
+    };
   }
 
   /**

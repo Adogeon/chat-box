@@ -48,7 +48,6 @@ export const authSlices = createSlice({
       .addMatcher(
         (action) => isAFulFilledAction(action),
         (state, action) => {
-          console.log(action);
           state.loading = false;
           state.token = action.payload.token;
           state.step = "loading";

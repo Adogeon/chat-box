@@ -1,5 +1,6 @@
 module.exports = (io, socket) => {
   const container = socket.request.container;
+  console.log("userId", socket.userId);
   container.register("currentUser", socket.userId);
   const boxService = container.get("boxService");
 
@@ -12,6 +13,7 @@ module.exports = (io, socket) => {
   };
 
   const newMessage = async ({ room, message }) => {
+    console.log("socket.currentUserid", this.currentUserId);
     const newRecord = {
       body: message,
       user: this.currentUserId,

@@ -21,7 +21,6 @@ const verifyToken = async (socket, next) => {
 
 const registerUserHandlers = (socket) => {
   socket.join(socket.userId);
-  console.log(socket.user);
   socket.user.contact.concat(socket.user.box).map((roomId) => {
     socket.to(roomId).emit("a user is online", { user: socket.userId });
   });

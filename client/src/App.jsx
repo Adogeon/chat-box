@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import store, context
 import store from "./store";
-import SocketContext, { socket } from "@services/socketContext";
+import SocketContext, { socketContextValue } from "@services/socketContext";
 //import views
 import PrivateRoute from "./components/routing/PrivateRoute";
 import LogInPage from "./views/LogIn/LogInPage/LogInPage";
@@ -12,7 +12,7 @@ import ContactPage from "./views/Contact";
 
 const App = () => (
   <Provider store={store}>
-    <SocketContext.Provider value={socket}>
+    <SocketContext.Provider value={socketContextValue}>
       <Router>
         <Switch>
           <Route path="/login">

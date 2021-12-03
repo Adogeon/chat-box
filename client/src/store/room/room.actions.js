@@ -4,13 +4,10 @@ import * as APIAdapter from "@services/APIAdapter";
 export const getRoom = createAsyncThunk(
   "room/getRoom",
   async (boxId, thunkAPI) => {
-    const currentBoxFetch = await APIAdapter.fetchWithAuth(`/api/box/${boxId}`);
-    const boxData = await currentBoxFetch.json();
+    const boxData = await APIAdapter.getWithAuth(`/api/box/${boxId}`);
     return boxData;
   }
 );
-
-
 
 export const addNewRoom = createAsyncThunk(
   "addNewRoom",

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { getRoom, addNewRoom } from "./room.actions";
 import { logOut } from "../auth/auth.slices";
 
@@ -18,9 +18,6 @@ export const roomSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getRoom.pending, (state, action) => {
-        state.fetchingCurrent = true;
-      })
       .addCase(getRoom.fulfilled, (state, action) => {
         state.fetchingCurrent = false;
         state.roomLog = action.payload.log ?? [];
@@ -34,10 +31,17 @@ export const roomSlice = createSlice({
         state.populated = false;
       })
       .addCase(addNewRoom.fulfilled, (state, action) => {
+        state.fetchingCurrent = false;
         state.roomLog = [];
         state.roomMember = action.payload.member;
         state.currentRoom = action.payload.boxDetail;
-      });
+      })
+      .addMatcher(
+        isAnyOf(getRoom.pending, addNewRoom.pending),
+        (state, action) => {
+          state.fetchingCurrent = true;
+        }
+      );
   },
 });
 

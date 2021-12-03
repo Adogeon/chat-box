@@ -9,7 +9,6 @@ import { Box, Tabs, Tab, Typography, Card } from "@mui/material";
 import ContactList from "../ContactList/ContactList";
 import AddContact from "../AddContact/AddContact";
 import PendingList from "../PendingList/PendingList";
-import style from "./ContactPage.module.css";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;

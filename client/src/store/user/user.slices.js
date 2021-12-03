@@ -1,6 +1,7 @@
 import { createSlice, createEntityAdapter, isAnyOf } from "@reduxjs/toolkit";
 import {
   loadCurrent,
+  loadContact,
   updateCurrentRoom,
   loadPending,
   approveFriendReq,
@@ -9,8 +10,6 @@ import {
 
 const roomsAdapter = createEntityAdapter({
   selectId: (room) => room._id,
-  sortComparer: (a, b) =>
-    a.latestMessage.date.localCompare(b.latestMessage.date),
 });
 
 const contactsAdapter = createEntityAdapter({
@@ -80,6 +79,7 @@ export const roomSelector = roomsAdapter.getSelectors();
 export const contactSelector = contactsAdapter.getSelectors();
 export {
   loadCurrent,
+  loadContact,
   updateCurrentRoom,
   loadPending,
   approveFriendReq,

@@ -1,12 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { contactSelector } from "@store/user/user.slices";
+import { addNewRoom } from "@store/room/room.actions";
 import { closeModal } from "@store/app/app.slices";
+
 import { postWithAuth } from "@services/APIAdapter";
 import {
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   Button,
 } from "@mui/material";
@@ -23,17 +25,19 @@ const selectAllContacts = (state) => contactSelector.selectAll(state.contacts);
 
 const EditConversationModalForm = (props) => {
   const userState = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const contactList = selectAllContacts(userState);
-  console.log(contactList);
   const currentRoomState = useSelector((state) => state.room.currentRoom);
   const currentRoomMember = useSelector((state) => state.room.currentMember);
 
   const handleSubmitData = async (data) => {
     if (props.new) {
-      await postWithAuth("/api/box/new", {
-        detail: { name: data.name.value },
-        users: data.member.value.map((member) => member._id) || [],
-      });
+      dispatch(
+        addNewRoom({
+          detail: { name: data.name.value },
+          users: data.member.value.map((member) => member._id) || [],
+        })
+      );
     } else {
       await postWithAuth(`/api/box/edit/${currentRoomState._id}`);
     }

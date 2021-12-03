@@ -2,6 +2,7 @@
   display: flex;
   flex-flow: column;
   justify-content: flex-end;
+  height: 100%;
 }
 
 /* Let's get this party started */
@@ -23,7 +24,7 @@
 }
 
 .container {
-  max-height: calc(80vh - 8em);
+  height: calc(85vh - 14em);
   padding: 1em;
   overflow: auto;
   margin: 0.5em 0;

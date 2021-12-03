@@ -16,14 +16,12 @@ import { loadCurrent } from "@store/user/user.slices.js";
 const SignInForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const socket = React.useContext(socketContext);
+  const { connectSocket } = React.useContext(socketContext);
   const handleSubmit = (data) => {
     dispatch(signInUser(data))
       .then(() => dispatch(loadCurrent()))
-      .then(() => {
-        socket.auth = { token: localStorage.getItem("authToken") };
-        socket.connect();
-        socket.once("User log in");
+      .then((result) => {
+        connectSocket();
         history.push("/");
       });
   };
