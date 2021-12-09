@@ -51,6 +51,7 @@ const Layout = (props) => {
                 width: drawerWidth,
               },
             }}
+            data-testid="mobile-sidebar"
           >
             <SideBar />
           </Drawer>
@@ -64,6 +65,7 @@ const Layout = (props) => {
               },
             }}
             open
+            data-testid="desktop-sidebar"
           >
             <SideBar
               deskStyle={{ backgroundColor: "inherit", color: "white" }}

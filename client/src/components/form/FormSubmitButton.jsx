@@ -17,25 +17,11 @@ const FormSubmitButton = (props) => {
   };
 
   return buttonType === "IconButton" ? (
-    <IconButton
-      type="submit"
-      onClick={(event) => {
-        event.preventDefault();
-        handleSubmit();
-      }}
-      {...restProps}
-    >
+    <IconButton type="submit" {...restProps}>
       {children}
     </IconButton>
   ) : (
-    <Button
-      type="submit"
-      onClick={(event) => {
-        event.preventDefault();
-        handleSubmit();
-      }}
-      {...restProps}
-    >
+    <Button type="submit" {...restProps}>
       {children}
     </Button>
   );

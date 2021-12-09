@@ -16,7 +16,15 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
+
+const { seedTestChat } = require("../../src/seeder/chatSeeder");
+
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-}
+  on("task", {
+    "seed:db": async () => {
+      return await seedTestChat();
+    },
+  });
+};

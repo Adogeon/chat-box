@@ -11,6 +11,7 @@ export const fetchWithAuth = (URL, ...fetchOption) => {
 
 export const getWithAuth = async (URL) => {
   const token = localStorage.getItem("authToken");
+  console.log(token);
 
   const response = await fetch(URL, {
     method: "GET",

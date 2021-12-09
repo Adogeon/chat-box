@@ -32,6 +32,7 @@ const MainAppBar = () => {
             sx={{
               display: { xs: "block", lg: "none" },
             }}
+            data-testid="mobile-menu-toggle-app"
           >
             <MenuIcon />
           </IconButton>
@@ -41,7 +42,12 @@ const MainAppBar = () => {
           <IconButton size="large" color="inherit">
             <InboxIcon />
           </IconButton>
-          <IconButton size="large" color="inherit" onClick={handleLogOut}>
+          <IconButton
+            size="large"
+            color="inherit"
+            onClick={handleLogOut}
+            data-testid="sign-out-button"
+          >
             <ExitToAppIcon />
           </IconButton>
         </Toolbar>

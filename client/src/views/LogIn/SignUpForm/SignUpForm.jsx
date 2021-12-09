@@ -22,7 +22,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <TextInput
         name="username"
         validate="required"

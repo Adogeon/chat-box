@@ -59,7 +59,10 @@ const Sidebar = (props) => {
           display: { xs: "flex", lg: "none" },
         }}
       >
-        <ListItemIcon onClick={handleToggleSidebar}>
+        <ListItemIcon
+          onClick={handleToggleSidebar}
+          data-testid="mobile-menu-toggle-side"
+        >
           <MenuIcon />
         </ListItemIcon>
         <Typography variant="h6" to="/" sx={{ flexGrow: 1 }}>
@@ -72,7 +75,10 @@ const Sidebar = (props) => {
         </ListItemIcon>
         <ListItemText>Contacts</ListItemText>
       </ListItemButton>
-      <ListItemButton onClick={handleNewConversation}>
+      <ListItemButton
+        onClick={handleNewConversation}
+        data-testid="create-room-button"
+      >
         <ListItemIcon>
           <AddIcon />
         </ListItemIcon>

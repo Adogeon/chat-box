@@ -46,7 +46,7 @@ const SignInPage = () => {
               title={"Sign In"}
               titleTypographyProps={{ variant: "h4", textAlign: "center" }}
             />
-            <CardContent>
+            <CardContent data-testid="sign-in-form" id="sign-in-form">
               <SignInForm />
             </CardContent>
             <Box sx={{ padding: "1em", alignSelf: "flex-end" }}>
@@ -56,6 +56,7 @@ const SignInPage = () => {
                 onClick={() => {
                   setMode("signUp");
                 }}
+                data-testid="login-mode-switch"
               >
                 here
               </a>
@@ -64,10 +65,10 @@ const SignInPage = () => {
         ) : (
           <>
             <CardHeader
-              title={"Sign In"}
+              title={"Sign Up"}
               titleTypographyProps={{ variant: "h4", textAlign: "center" }}
             />
-            <CardContent>
+            <CardContent data-testid="sign-up-form" id="sign-up-form">
               <SignUpForm />
             </CardContent>
             <Box sx={{ padding: "1em", alignSelf: "flex-end" }}>
@@ -77,6 +78,7 @@ const SignInPage = () => {
                 onClick={() => {
                   setMode("signIn");
                 }}
+                data-testid="login-mode-switch"
               >
                 here
               </a>

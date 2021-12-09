@@ -12,7 +12,7 @@ export const useFormValue = (fieldname) => {
   return formValue.fields[fieldname].value;
 };
 
-const Form = (props) => {
+const Form = ({ children, onSubmit }) => {
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -92,8 +92,6 @@ const Form = (props) => {
     if (event) {
       event.persist();
     }
-    console.log(value);
-    console.log(type);
     const field = fields[name];
     if (type === "autocomplete") {
       addField({
@@ -121,10 +119,20 @@ const Form = (props) => {
     validateAll,
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    validateAll();
+    if (errors && Object.values(errors).join("").length !== 0) {
+      console.error(errors);
+    } else {
+      onSubmit(fields);
+    }
+  };
+
   return (
-    <FormCtx.Provider value={formContextValue}>
-      {props.children}
-    </FormCtx.Provider>
+    <form onSubmit={handleSubmit}>
+      <FormCtx.Provider value={formContextValue}>{children}</FormCtx.Provider>
+    </form>
   );
 };
 

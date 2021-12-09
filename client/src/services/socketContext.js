@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { io } from "socket.io-client";
 
 const URL = "/";
-const socket = io(URL, { autoConnect: false });
+const socket = io(URL, { autoConnect: false, transports: ["websocket"] });
 
 const connectSocket = () => {
   socket.auth = { token: localStorage.getItem("authToken") };

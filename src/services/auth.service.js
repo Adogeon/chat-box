@@ -11,7 +11,7 @@ class AuthService {
    * @returns User object
    */
   async signUp(userInput) {
-    try {
+  try {
       const { username, email, password } = userInput;
       const hash = await bcrypt.hash(password, 10);
       const userRecord = await this.UserModel.create({

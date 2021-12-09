@@ -26,7 +26,7 @@ const SignInForm = () => {
       });
   };
   return (
-    <Form>
+    <Form data-testid="sign-in-form" onSubmit={handleSubmit}>
       <TextInput
         name="username"
         validate="required"
